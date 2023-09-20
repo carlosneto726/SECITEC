@@ -16,4 +16,17 @@ class Controller extends BaseController
 
         return view("home.view", compact("alunos"));
     }
+
+    public function viewSobre(){
+        return view("sobre.view");
+    }
+
+    public function viewLocal(){
+        return view("local.view");
+    }
+
+    public function viewProgramacao(){
+        return view("programacao.view");
+    }
+
 }

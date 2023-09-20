@@ -14,3 +14,6 @@ use App\Http\Controllers\Controller;
 */
 
 Route::get('/', [Controller::class, 'viewHome']);
+Route::get('/sobre', [Controller::class, 'viewSobre']);
+Route::get('/local', [Controller::class, 'viewLocal']);
+Route::get('/programacao', [Controller::class, 'viewProgramacao']);

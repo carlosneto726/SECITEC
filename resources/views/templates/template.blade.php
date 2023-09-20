@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{asset("css\app.css")}}">
     <link rel="stylesheet" href="{{asset("css\bootstrap\bootstrap.css")}}">
+    <link rel="stylesheet" href="{{asset('css\templatemo-leadership-event.css')}}">
     <title>SECITEC</title>
 </head>
 <body>
