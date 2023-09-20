@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ProgramacaoController;
 use App\Http\Controllers\AdministradorController;
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,7 @@ use App\Http\Controllers\AdministradorController;
 Route::get('/', [Controller::class, 'viewHome']);
 Route::get('/sobre', [Controller::class, 'viewSobre']);
 Route::get('/local', [Controller::class, 'viewLocal']);
-Route::get('/programacao', [Controller::class, 'viewProgramacao']);
+Route::get('/programacao', [ProgramacaoController::class, 'viewProgramacao']);
 
 Route::get('/admin', [AdministradorController::class, 'viewAdm']);
 Route::post('/admin/entrar', [AdministradorController::class, 'entrar']);
