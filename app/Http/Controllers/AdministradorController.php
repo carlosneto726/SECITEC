@@ -5,8 +5,49 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+session_start();
+
 class AdministradorController extends Controller
 {
+
+    public function viewAdm(){
+        $login = @$_COOKIE['nome_usuario'];
+        $senha = @$_COOKIE['senha_usuario'];
+        if(isset($login) && isset($senha)){
+            if($this->validarLogin($login, $senha)){
+                return view("admin.view");
+            }
+        }else{
+            return view("admin.entrar");
+        }
+    }
+
+    public function entrar(){
+        $login = request("txtNome");
+        $senha = request("txtSenha");
+        if($this->validarLogin($login, $senha)){
+            return redirect("/admin");
+        }else{
+            return redirect("/admin");
+        }
+    }
+
+    public function validarLogin($login, $senha){
+        if($login == "SECITECADM" && $senha == "acjmop"){
+            setcookie("nome_usuario", $login, time() + (86400 * 30), "/");
+            setcookie("senha_usuario", $senha, time() + (86400 * 30), "/");
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function sair(){
+        setcookie("nome_usuario", "", time() - 3600, "/");
+        setcookie("senha_usuario", "", time() - 3600, "/");
+        return redirect("/admin");
+    }
+
     public function updateEvento(){
         $id = request("id");
         $titulo = request("txtTitulo");
@@ -95,4 +136,5 @@ class AdministradorController extends Controller
         
         return $ideventoaluno[0]->ida;
     }
+
 }
