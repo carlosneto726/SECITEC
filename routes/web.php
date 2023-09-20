@@ -15,6 +15,9 @@ use App\Http\Controllers\AdministradorController;
 */
 
 Route::get('/', [Controller::class, 'viewHome']);
+Route::get('/sobre', [Controller::class, 'viewSobre']);
+Route::get('/local', [Controller::class, 'viewLocal']);
+Route::get('/programacao', [Controller::class, 'viewProgramacao']);
 
 Route::get('/admin', [AdministradorController::class, 'viewAdm']);
 Route::post('/admin/entrar', [AdministradorController::class, 'entrar']);
