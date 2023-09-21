@@ -10,35 +10,14 @@ session_start();
 class AdministradorController extends Controller
 {
 
-    public function viewAdm(){
-        $login = @$_COOKIE['nome_usuario'];
-        $senha = @$_COOKIE['senha_usuario'];
-        if(isset($login) && isset($senha)){
-            if($this->validarLogin($login, $senha)){
-                return view("admin.view");
-            }
-        }else{
-            return view("admin.entrar");
-        }
-    }
+    public $nome_usuario; 
+    public $senha_usuario;
+    public function __construct() {
+        $this->nome_usuario = $_COOKIE['nome_usuario'];
+        $this->senha_usuario = $_COOKIE['senha_usuario'];
 
-    public function entrar(){
-        $login = request("txtNome");
-        $senha = request("txtSenha");
-        if($this->validarLogin($login, $senha)){
-            return redirect("/admin");
-        }else{
-            return redirect("/admin");
-        }
-    }
-
-    public function validarLogin($login, $senha){
-        if($login == "SECITECADM" && $senha == "acjmop"){
-            setcookie("nome_usuario", $login, time() + (86400 * 30), "/");
-            setcookie("senha_usuario", $senha, time() + (86400 * 30), "/");
-            return true;
-        }else{
-            return false;
+        if(!isset($this->nome_usuario) && !isset($this->senha_usuario)){
+            redirect("/admin");
         }
     }
 
@@ -46,6 +25,14 @@ class AdministradorController extends Controller
         setcookie("nome_usuario", "", time() - 3600, "/");
         setcookie("senha_usuario", "", time() - 3600, "/");
         return redirect("/admin");
+    }
+
+
+    // Eventos
+    public function viewEventos(){
+        $eventos = DB::select("SELECT * FROM tb_evento");
+        $palestrantes = DB::select("SELECT * FROM tb_palestrante");
+        return view("admin.events.view", compact("eventos", "palestrantes"));
     }
 
     public function updateEvento(){
@@ -59,10 +46,12 @@ class AdministradorController extends Controller
         $hrHoras = request("numHoras");
 
         DB::update("UPDATE tb_evento 
-                    WHERE id = ?
-                    SET titulo = ?, descricao = ?, dia = ?, horarioI = ?, horarioF = ?, vagas= ?, horas = ?)", 
-                    [$id, $titulo, $descricao, $diaEvento, $hrInicio, $hrFim, $numVagas, $hrHoras]
+                    SET titulo = ?, descricao = ?, dia = ?, horarioI = ?, horarioF = ?, vagas= ?, horas = ?
+                    WHERE id = ?", 
+                    [$titulo, $descricao, $diaEvento, $hrInicio, $hrFim, $numVagas, $hrHoras, $id]
                 );
+
+        return redirect("/admin/eventos");
     }
 
     public function insertEvento(Request $request): string{
@@ -77,7 +66,8 @@ class AdministradorController extends Controller
         $local = request("txtLocal");
         $nomepalestrante = request("cbxPalestrante");
         $idpalestrante = DB::select("SELECT * FROM tb_palestrante WHERE nome = ?;", [$nomepalestrante])[0]->id;
-        $url = $request->file('arquivo')->storeAs('storage/images/schedule/', "evento".$titulo.".".$request->file('imagem')->extension(), 'public');
+        $path = $request->file('arquivo')->storeAs('images/schedule', "evento".$titulo.".".$request->file('arquivo')->extension(), 'public');
+        $url = "storage/".$path;
         $types = array("png", "jpg", "jpeg", "webp", "avif", "jfif");
 
         DB::insert("INSERT INTO 
@@ -85,19 +75,13 @@ class AdministradorController extends Controller
                     VALUES (?,?,?,?,?,?,?,?,?,?);", 
                     [$titulo,$descricao,$dia,$hrInicio,$hrFim,$numVagas,$numHoras,$local,$url,$idpalestrante]);
 
-        return false;
+        return redirect("/admin/eventos");
     }
-    
-    public function insertPalestrante(Request $request): string{
-        $nome = request("txtNome");
-        $titulacao = request("txtTitulacao");
-        $url = $request->file('arquivo')->storeAs('storage/images/avatar/', "palestra".$nome.".".$request->file('arquivo')->extension(), 'public');
-        DB::insert("INSERT INTO 
-                    tb_palestrante(nome,titulacao,url) 
-                    VALUES(?,?,?);", 
-                    [$nome,$titulacao,$url]);
 
-        return false;
+    public function deleteEvento(){
+        $id = request("id");
+        DB::delete("DELETE FROM tb_evento WHERE id = ?", [$id]);
+        return redirect("/admin/eventos");
     }
 
     public function checkIn(){
@@ -136,5 +120,33 @@ class AdministradorController extends Controller
         
         return $ideventoaluno[0]->ida;
     }
+
+
+    // Proponente
+
+    public function viewProponente(){
+        $palestrantes = DB::select("SELECT * FROM tb_palestrante");
+        return view("admin.proponente.view", compact("palestrantes"));
+    }
+
+    public function insertProponente(Request $request): string{
+        $nome = request("txtNome");
+        $titulacao = request("txtTitulacao");
+        $path = $request->file('arquivo')->storeAs('images/avatar', "palestra".$nome.".".$request->file('arquivo')->extension(), 'public');
+        $url = "storage/".$path;
+        DB::insert("INSERT INTO 
+                    tb_palestrante(nome,titulacao,url) 
+                    VALUES(?,?,?);", 
+                    [$nome,$titulacao,$url]);
+
+                    return redirect("/admin/proponente");
+    }
+
+    public function deleteProponente(){
+        $id = request("id");
+        DB::delete("DELETE FROM tb_palestrante WHERE id = ?", [$id]);
+        return redirect("/admin/proponente");
+    }
+
 
 }
