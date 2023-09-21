@@ -10,11 +10,11 @@
                 <!-- Pills navs -->
                   <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
                     <li class="nav-item" role="presentation">
-                      <a class="nav-link text-dark" id="tab-login" data-mdb-toggle="pill" href="?secao=alunoLogin" role="tab"
+                      <a class="nav-link text-dark" id="tab-login" data-mdb-toggle="pill" href="{{ url('/loginUser') }}" role="tab"
                         aria-controls="pills-login" aria-selected="true">ENTRAR</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                      <a class="nav-link text-dark " id="tab-register" data-mdb-toggle="pill" href="?secao=aluno" role="tab"
+                      <a class="nav-link text-dark " id="tab-register" data-mdb-toggle="pill" href="{{ url('/cadastrarUser') }}" role="tab"
                         aria-controls="pills-register" aria-selected="false">CADASTRAR</a>
                     </li>
                     </ul>
@@ -48,5 +48,5 @@
           </div>
         </div>
       </div>
-      
+
 @endsection

@@ -33,3 +33,4 @@ Route::post('/admin/proponente/cadastrar', [AdministradorController::class, 'ins
 Route::post('/admin/proponente/deletar', [AdministradorController::class, 'deleteProponente']);
 
 Route::get('/loginUser', [ProgramacaoController::class, 'viewLogin']);
+Route::get('/cadastrarUser', [ProgramacaoController::class, 'viewCadastrar']);

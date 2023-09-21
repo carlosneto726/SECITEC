@@ -29,5 +29,8 @@ class Controller extends BaseController
     public function viewLogin(){
         return view("usuarios.loginUser.view");
     }
+    public function viewCadastrar(){
+        return view("usuarios.cadastrarUser.view");
+    }
 
 }
