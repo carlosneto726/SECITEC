@@ -26,5 +26,8 @@ class Controller extends BaseController
     public function viewProgramacao(){
         return view("programacao.view");
     }
+    public function viewLogin(){
+        return view("usuarios.loginUser.view");
+    }
 
 }

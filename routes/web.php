@@ -31,3 +31,5 @@ Route::post('/admin/eventos/deletar', [AdministradorController::class, 'deleteEv
 Route::get('/admin/proponente', [AdministradorController::class, 'viewProponente']);
 Route::post('/admin/proponente/cadastrar', [AdministradorController::class, 'insertProponente']);
 Route::post('/admin/proponente/deletar', [AdministradorController::class, 'deleteProponente']);
+
+Route::get('/loginUser', [ProgramacaoController::class, 'viewLogin']);

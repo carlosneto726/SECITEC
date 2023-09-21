@@ -29,7 +29,7 @@
                     <a class="nav-link click-scroll"  href="{{ url('/local') }}">Local</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link custom-btn btn d-none d-lg-block" href="?secao=alunoLogin">Entrar</a>
+                    <a class="nav-link custom-btn btn d-none d-lg-block" href="{{ url('/loginUser') }}">Entrar</a>
                 </li>
             </ul>
         <div>
