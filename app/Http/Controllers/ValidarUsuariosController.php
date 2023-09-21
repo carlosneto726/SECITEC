@@ -31,13 +31,10 @@ class ValidarUsuariosController extends Controller
     }
 
     public function validarLogin($login, $senha){
-        $this->sql ="SELECT * FROM tb_aluno WHERE nome='$login' and senha='$senha'";
-        if($login == $login && $senha == $senha){
-            setcookie("nome_usuario", $login, time() + (86400 * 30), "/");
-            setcookie("senha_usuario", $senha, time() + (86400 * 30), "/");
-            return true;
-        }else{
-            return false;
-        }
+        
+        setcookie("nome_usuario", $login, time() + (86400 * 30), "/");
+        setcookie("senha_usuario", $senha, time() + (86400 * 30), "/");
+        return true;
+      
     }
 }
