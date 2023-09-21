@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProgramacaoController;
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\ValidarAdmController;
+use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\ValidarUsuariosController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,5 +34,8 @@ Route::get('/admin/proponente', [AdministradorController::class, 'viewProponente
 Route::post('/admin/proponente/cadastrar', [AdministradorController::class, 'insertProponente']);
 Route::post('/admin/proponente/deletar', [AdministradorController::class, 'deleteProponente']);
 
-Route::get('/loginUser', [ProgramacaoController::class, 'viewLogin']);
-Route::get('/cadastrarUser', [ProgramacaoController::class, 'viewCadastrar']);
+Route::get('/loginUser', [Controller::class, 'viewLogin']);
+Route::get('/cadastrarUser', [Controller::class, 'viewCadastrar']);
+Route::get('/usuarios', [ValidarUsuariosController::class, 'viewUsuarios']);
+Route::post('/usuarios/cadastarUser/view', [UsuariosController::class, 'cadastrarUser']);
+Route::post('/usuarios/loginUser/view', [ValidarUsuariosController::class, 'loginUser']);
