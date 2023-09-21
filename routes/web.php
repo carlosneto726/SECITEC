@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ProgramacaoController;
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\ValidarAdmController;
 /*
@@ -18,7 +19,7 @@ use App\Http\Controllers\ValidarAdmController;
 Route::get('/', [Controller::class, 'viewHome']);
 Route::get('/sobre', [Controller::class, 'viewSobre']);
 Route::get('/local', [Controller::class, 'viewLocal']);
-Route::get('/programacao', [Controller::class, 'viewProgramacao']);
+Route::get('/programacao', [ProgramacaoController::class, 'viewProgramacao']);
 
 Route::get('/admin', [ValidarAdmController::class, 'viewAdm']);
 Route::post('/admin/entrar', [ValidarAdmController::class, 'entrar']);
