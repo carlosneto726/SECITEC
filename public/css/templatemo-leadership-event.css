@@ -40,6 +40,10 @@ https://templatemo.com/tm-575-leadership-event
 body {
     background: var(--white-color);
     font-family: var(--body-font-family); 
+    display: flex; 
+    flex-direction: column; 
+    min-height: 100vh;
+    overflow-x: hidden; /* Prevent scroll on narrow devices */
 }
 
 

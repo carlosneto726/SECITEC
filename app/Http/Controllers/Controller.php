@@ -12,9 +12,7 @@ class Controller extends BaseController
     use AuthorizesRequests, ValidatesRequests;
 
     public function viewHome(){
-        $alunos = DB::select("SELECT * FROM tb_aluno");
-
-        return view("home.view", compact("alunos"));
+        return view("home.view");
     }
 
     public function viewSobre(){
