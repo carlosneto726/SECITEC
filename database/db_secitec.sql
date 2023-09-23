@@ -42,6 +42,21 @@ CREATE TABLE tb_proponente (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela tb_proponente
+--
+
+CREATE TABLE tb_redes_proponente(
+    id_proponente int(11) NOT NULL,
+    rede1 varchar(255),
+    rede2 varchar(255),
+    rede3 varchar(255),
+    PRIMARY KEY(id_proponente),
+    FOREIGN KEY(id_proponente) REFERENCES tb_proponente(id) ON DELETE CASCADE
+);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela tb_tipo_evento
 --
 
