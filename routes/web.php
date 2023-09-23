@@ -32,7 +32,13 @@ Route::post('/admin/eventos/alterar', [AdministradorController::class, 'updateEv
 Route::post('/admin/eventos/deletar', [AdministradorController::class, 'deleteEvento']);
 Route::get('/admin/proponente', [AdministradorController::class, 'viewProponente']);
 Route::post('/admin/proponente/cadastrar', [AdministradorController::class, 'insertProponente']);
+Route::put('/admin/proponente/atualizar/{id_proponente}', [AdministradorController::class, 'updateProponente']);
 Route::post('/admin/proponente/deletar', [AdministradorController::class, 'deleteProponente']);
+Route::get('/admin/presenca/{id_evento}', [AdministradorController::class, 'viewPresenca']);
+Route::post('/admin/presenca/checkin', [AdministradorController::class, 'checkin']);
+Route::post('/admin/presenca/checkout', [AdministradorController::class, 'checkout']);
+
+Route::get('/teste', [AdministradorController::class, 'enviarEmail']);
 
 Route::get('/loginUser', [Controller::class, 'viewLogin']);
 Route::get('/cadastrarUser', [Controller::class, 'viewCadastrar']);
