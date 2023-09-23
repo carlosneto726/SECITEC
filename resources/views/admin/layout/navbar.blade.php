@@ -16,10 +16,10 @@
                             <a class="nav-link active px-3 fw-bold" href="{{url('/admin')}}">INÍCIO</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active px-3 fw-bold" href="{{url('/admin/eventos')}}">EVENTOS</a>
+                            <a class="nav-link active px-3 fw-bold" href="{{url('/admin/proponente')}}">PROPONENTES</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active px-3 fw-bold" href="{{url('/admin/proponente')}}">CADASTRAR PROPONENTE</a>
+                            <a class="nav-link active px-3 fw-bold" href="{{url('/admin/eventos')}}">EVENTOS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active px-3 fw-bold  " href="{{url('/admin/sair')}}">LOGOUT</a>

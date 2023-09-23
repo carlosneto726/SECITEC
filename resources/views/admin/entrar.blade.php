@@ -11,6 +11,19 @@
 </head>
 <body style="background-color: rgba(150, 150, 150, 0.192);">
 
+@if(@$_SESSION['mensagem'] != "")
+    <div class="z-3 position-fixed top-0 end-0" id="alerta">            
+        <div class="alert alert-{{@$_SESSION['tipo']}} alert-dismissible" role="alert">
+            <div>{{$_SESSION['mensagem']}}</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    @php
+        @$_SESSION['mensagem'] = "";
+        @$_SESSION['tipo'] = "";
+    @endphp
+@endif
+
 <div class="container">
     <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -46,6 +59,9 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/desvg@1.0.2/desvg.min.js"></script>
 
 </body>
 </html>

@@ -1,8 +1,8 @@
 @extends('admin.template')
 @section('content')
 
-<div class="container shadow p-3 mb-5 bg-body rounded" style="margin-top: 8.6%;">
-    <div class="d-flex h5">Eventos <a class="ms-auto" href="#staticBackdrop" data-bs-toggle="modal">Cadastrar evento</a></div>
+<div class="container shadow p-3 mb-5 bg-body rounded">
+    <div class="d-flex h5">Eventos <a class="btn btn-primary ms-auto" href="#staticBackdrop" data-bs-toggle="modal">Cadastrar evento</a></div>
 
     <table class="table table-bordered">
         <tr>
@@ -29,9 +29,9 @@
                 <td>{{$dados->vagas}}</td>
                 <td>{{$dados->horas}}</td>
                 @include('admin.events.alterarModal')
-                <td><a href="#" class="btn btn-primary" data-bs-toggle="modal">Registrar presença</a></td>
+                <td><a href="{{url('/admin/presenca/'.$dados->id)}}" class="btn btn-primary">Registrar presença</a></td>
                 <td><a href="#staticBackdrop{{$dados->id}}" class="btn btn-success" data-bs-toggle="modal">Alterar</a></td>
-                <form action="/admin/eventos/deletar" method="post">
+                <form action="{{url('/admin/eventos/deletar')}}" method="post">
                     @csrf
                     @method('POST')
                     <input type="hidden" name="id" value="{{$dados->id}}"/>
