@@ -20,7 +20,6 @@ CREATE TABLE tb_usuario (
   id int(11) NOT NULL AUTO_INCREMENT,
   nome varchar(200) NOT NULL,
   senha varchar(8) NOT NULL,
-  matricula varchar(200) NOT NULL,
   cpf varchar(200) NOT NULL,
   email varchar(200) DEFAULT NULL,
   PRIMARY KEY (id)
