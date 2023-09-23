@@ -31,7 +31,7 @@ class AdministradorController extends Controller
     // Eventos
     public function viewEventos(){
         $eventos = DB::select("SELECT * FROM tb_evento");
-        $palestrantes = DB::select("SELECT * FROM tb_palestrante");
+        $palestrantes = DB::select("SELECT * FROM tb_proponente");
         return view("admin.events.view", compact("eventos", "palestrantes"));
     }
 
@@ -65,15 +65,16 @@ class AdministradorController extends Controller
         $numHoras = request("numHoras");
         $local = request("txtLocal");
         $nomepalestrante = request("cbxPalestrante");
-        $idpalestrante = DB::select("SELECT * FROM tb_palestrante WHERE nome = ?;", [$nomepalestrante])[0]->id;
+        $id_proponente = DB::select("SELECT * FROM tb_proponente WHERE nome = ?;", [$nomepalestrante])[0]->id;
         $path = $request->file('arquivo')->storeAs('images/schedule', "evento".$titulo.".".$request->file('arquivo')->extension(), 'public');
         $url = "storage/".$path;
         $types = array("png", "jpg", "jpeg", "webp", "avif", "jfif");
 
+        // Maycon alterar a funcionalidade de alterar o tipo de cadastro
         DB::insert("INSERT INTO 
-                    tb_evento(titulo,descricao,dia,horarioI,horarioF,vagas,horas,local,url,id_palestrante)
-                    VALUES (?,?,?,?,?,?,?,?,?,?);", 
-                    [$titulo,$descricao,$dia,$hrInicio,$hrFim,$numVagas,$numHoras,$local,$url,$idpalestrante]);
+                    tb_evento(titulo,descricao,dia,horarioI,horarioF,vagas,horas,local,url,id_proponente,id_tipo_evento)
+                    VALUES (?,?,?,?,?,?,?,?,?,?,?);", 
+                    [$titulo,$descricao,$dia,$hrInicio,$hrFim,$numVagas,$numHoras,$local,$url,$id_proponente,1]);
 
         return redirect("/admin/eventos");
     }
@@ -125,7 +126,7 @@ class AdministradorController extends Controller
     // Proponente
 
     public function viewProponente(){
-        $palestrantes = DB::select("SELECT * FROM tb_palestrante");
+        $palestrantes = DB::select("SELECT * FROM tb_proponente");
         return view("admin.proponente.view", compact("palestrantes"));
     }
 
@@ -135,7 +136,7 @@ class AdministradorController extends Controller
         $path = $request->file('arquivo')->storeAs('images/avatar', "palestra".$nome.".".$request->file('arquivo')->extension(), 'public');
         $url = "storage/".$path;
         DB::insert("INSERT INTO 
-                    tb_palestrante(nome,titulacao,url) 
+                    tb_proponente(nome,titulacao,url) 
                     VALUES(?,?,?);", 
                     [$nome,$titulacao,$url]);
 
@@ -144,7 +145,7 @@ class AdministradorController extends Controller
 
     public function deleteProponente(){
         $id = request("id");
-        DB::delete("DELETE FROM tb_palestrante WHERE id = ?", [$id]);
+        DB::delete("DELETE FROM tb_proponente WHERE id = ?", [$id]);
         return redirect("/admin/proponente");
     }
 
