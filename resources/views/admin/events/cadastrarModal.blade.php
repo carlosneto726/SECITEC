@@ -33,7 +33,7 @@
                         <p><input class="form-control" type="file" name="arquivo" required/></p>
 
                         <select class="form-control" name="cbxPalestrante" required>
-                            <option>--Selecionar--</option>
+                            <option>--Selecionar proponente--</option>
                             @foreach ($palestrantes as $palestrante)
                                 <option>{{$palestrante->nome}}</option>
                             @endforeach
