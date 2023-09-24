@@ -47,3 +47,5 @@ Route::get('/cadastrarUser', [Controller::class, 'viewCadastrar']);
 Route::get('/usuarios', [ValidarUsuariosController::class, 'viewUsuarios']);
 Route::post('/usuarios/cadastarUser/view', [UsuariosController::class, 'cadastrarUser']);
 Route::post('/usuarios/loginUser/view', [ValidarUsuariosController::class, 'loginUser']);
+
+Route::post('/usuarios/cadastarEvento', [UsuariosController::class, 'cadastrarEvento']);
