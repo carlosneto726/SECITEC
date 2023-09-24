@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-session_start();
-
 class UsuariosController extends Controller
 {
     public $nome_usuario; 

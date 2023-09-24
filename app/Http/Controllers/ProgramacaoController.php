@@ -9,10 +9,8 @@ class ProgramacaoController extends Controller
 {
     public function viewProgramacao()
     {
-        $programacoes = DB::select("SELECT * FROM vw_evento_palestrante");
+        $programacoes = DB::select("SELECT * FROM vw_evento_proponente");
         json_encode($programacoes);
         return view("programacao.view", compact("programacoes"));
-        
     }
-        
 }

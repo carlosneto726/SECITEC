@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\AlertController;
 
 use Illuminate\Http\Request;
 
@@ -22,8 +23,10 @@ class ValidarAdmController extends Controller
         $login = request("txtNome");
         $senha = request("txtSenha");
         if($this->validarLogin($login, $senha)){
+            AlertController::alert('Logado com sucesso.', 'success');
             return redirect("/admin");
         }else{
+            AlertController::alert('Usuáio ou senha incorreto(s)', 'danger');
             return redirect("/admin");
         }
     }
