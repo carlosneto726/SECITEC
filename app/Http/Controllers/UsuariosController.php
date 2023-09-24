@@ -38,9 +38,25 @@ class UsuariosController extends Controller
         return redirect("/loginUser");
     }
 
+    // verificar se ja foi cadastro, e cadastrar ou descadastrar
     public function cadastrarEvento(Request $request)
     {
-        $nome = $request->input('nome');
-        return response()->json(['mensagem' => 'Requisição bem-sucedida']);
+        $usuarioId = $request->input('usuarioId');
+        $eventoID = $request->input('eventoId');
+
+        if($request->input('cadastrado')) {
+            // descadastra
+        } else {
+            try {
+                DB::insert("INSERT INTO 
+                tb_evento_usuario(id_evento, id_usuario, status) 
+                VALUES(?,?,?);", 
+                [$eventoID,$usuarioId, 0]);
+            } catch (\Throwable $th) {
+                return response()->json(['mensagem' => $th]);
+            }
+        }
+
+        return response()->json(['mensagem' => $request->input('cadastrado')]);
     }
 }
