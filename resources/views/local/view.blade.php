@@ -6,13 +6,14 @@
         <div class="row">
 
             <div class="col-lg-12 col-12">
-                <h2 class="mb-5">Veja o <u class="text-info">Local</u></h2>
+                <h2 class="mb-5">Veja o <u class="text-success">Local</u></h2>
             </div>
 
-            <div class="col-lg-6 col-12">
+            <div class="col-lg-12 col-12">
                 <iframe class="google-map" src="https://maps.google.com/maps?q=ifgformosa&t=&z=10&ie=UTF8&iwloc=&output=embed" width="100%" height="371.59" allowfullscreen="" loading="lazy"></iframe>
             </div>
 
+            <!--
             <div class="col-lg-6 col-12 mt-5 mt-lg-0">
                 <div class="venue-thumb bg-white shadow-lg">
                     
@@ -42,7 +43,7 @@
                     </div>
                 </div>
             </div>
-
+            -->
         </div>
     </div>
 </section>
