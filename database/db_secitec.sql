@@ -20,7 +20,6 @@ CREATE TABLE tb_usuario (
   id int(11) NOT NULL AUTO_INCREMENT,
   nome varchar(200) NOT NULL,
   senha varchar(8) NOT NULL,
-  matricula varchar(200) NOT NULL,
   cpf varchar(200) NOT NULL,
   email varchar(200) DEFAULT NULL,
   PRIMARY KEY (id)
@@ -38,6 +37,21 @@ CREATE TABLE tb_proponente (
   titulacao varchar(255) NOT NULL,
   url varchar(255) NOT NULL,
   PRIMARY KEY (id)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela tb_proponente
+--
+
+CREATE TABLE tb_redes_proponente(
+    id_proponente int(11) NOT NULL,
+    rede1 varchar(255),
+    rede2 varchar(255),
+    rede3 varchar(255),
+    PRIMARY KEY(id_proponente),
+    FOREIGN KEY(id_proponente) REFERENCES tb_proponente(id) ON DELETE CASCADE
 );
 
 -- --------------------------------------------------------

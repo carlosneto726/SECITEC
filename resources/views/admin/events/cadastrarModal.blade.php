@@ -12,6 +12,20 @@
                 @csrf
                 @method('POST')
                 <div class="modal-body">
+
+                    <div class="d-flex">
+                        <select class="form-control" name="cbxPalestrante" required style="width: fit-content;">
+                            <option>--Selecione um proponente--</option>
+                            @foreach ($palestrantes as $palestrante)
+                                <option>{{$palestrante->nome}}</option>
+                            @endforeach
+                        </select>
+                        <span class="ms-2 mt-2">
+                            ou
+                            <a href="{{url('/admin/proponente')}}" class="border-bottom">Cadastre um proponente</a>
+                        </span>
+                    </div>
+
                     <div class="form-floating mb-3">
                         <p><label for="titulo">Informe o titulo do evento</label></p>
                         <p><input class="form-control " type="text" name="txtTitulo" required /></p>
@@ -30,6 +44,7 @@
                         <p><label for="local">Informe o local do evento</label></p>
                         <p><input class="form-control " type="text" name="txtLocal" required /></p>
                         <p><label>Escolha a foto que representa o Evento</label></p>
+                        <p><input class="form-control" type="file" name="arquivo" required/></p>
                         <p><input class="form-control" type="file" name="arquivo" required /></p>
                         <p>
                             <label for="tipoEvento">Tipo de Evento</label>

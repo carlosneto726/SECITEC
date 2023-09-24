@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-session_start();
+use App\Mail\AtivarConta;
+use Illuminate\Support\Facades\Mail;
 
 class AdministradorController extends Controller
 {
@@ -56,6 +57,7 @@ class AdministradorController extends Controller
                     [$titulo, $descricao, $diaEvento, $hrInicio, $hrFim, $numVagas, $hrHoras, $id]
                 );
 
+        AlertController::alert('Evento atualizado com sucesso.', 'success');
         return redirect("/admin/eventos");
     }
 
@@ -81,62 +83,81 @@ class AdministradorController extends Controller
                     VALUES (?,?,?,?,?,?,?,?,?,?,?);", 
                     [$titulo,$descricao,$dia,$hrInicio,$hrFim,$numVagas,$numHoras,$local,$url,$id_proponente, $id_tipo_evento]);
 
+        AlertController::alert('Evento adicionado com sucesso.', 'success');
         return redirect("/admin/eventos");
     }
 
     public function deleteEvento(){
         $id = request("id");
         DB::delete("DELETE FROM tb_evento WHERE id = ?", [$id]);
-        return redirect("/admin/eventos");
+        AlertController::alert('Evento deletado sucesso.', 'warning');
+        return response()->json(
+            [
+                'message' => 'Evento deletado com sucesso.',
+                'type' => 'warning'
+            ]
+        );
+    }
+
+    public function viewPresenca(){
+        return view("admin.events.presenca");
     }
 
     public function checkIn(){
-        $dado = request("txtCheckin");
-        $idevento = request("txtId");
-        $ideventoaluno = $this->getAlunoId($dado, $idevento);
-        DB::update("UPDATE tb_evento_aluno
+        $cpf = request("cpf"); // CPF
+        $id_evento = request("id_evento");
+        $id_eventousuario = $this->getusUarioId($cpf, $id_evento);
+        DB::update("UPDATE tb_evento_usuario
                     WHERE id = ?
                     SET checkin = sysdate();",
-                    [$ideventoaluno]
+                    [$id_eventousuario]
         );
     }
 
     public function checkOut(){
-        $dado = request("txtCheckin");
-        $idevento = request("txtId");
-        $ideventoaluno = $this->getAlunoId($dado, $idevento);
+        $cpf = request("cpf"); // CPF
+        $id_evento = request("id_evento");
+        $id_eventousuario = $this->getusUarioId($cpf, $id_evento);
 
-        DB::update("UPDATE tb_evento_aluno
+        DB::update("UPDATE tb_evento_usuario
                     WHERE id = ?
-                    SET status = 1, checkout = sysdate();",
-        [$ideventoaluno]);
+                    SET status = 1, 
+                    checkout = sysdate();",
+        [$id_eventousuario]);
     }
 
 
-    function getAlunoId($dado, $idevento){
-        $ideventoaluno = DB::select("   SELECT a.id AS ida 
-                                        FROM tb_evento_aluno a
-                                        LEFT JOIN tb_aluno b
-                                        ON a.id_aluno = b.id
-                                        LEFT JOIN tb_evento c
-                                        ON a.id_evento = c.id
-                                        WHERE b.matricula = ? and c.id = ?;", 
-                                        [$dado, $idevento]
+    function getusUarioId($cpf, $idevento){
+        $ideventousuario = DB::select("   SELECT tb_evento_usuario.id AS id_usuario
+                                        FROM tb_evento_usuario
+                                        LEFT JOIN tb_usuario
+                                        ON tb_evento_usuario.id_usuario = tb_usuario.id
+                                        LEFT JOIN tb_evento
+                                        ON tb_evento_usuario.id_evento = tb_evento.id
+                                        WHERE tb_usuario.cpf = ? and tb_evento.id = ?;", 
+                                        [$cpf, $idevento]
         );
         
-        return $ideventoaluno[0]->ida;
+        return $ideventousuario[0]->ida;
     }
 
 
     // Proponente
     public function viewProponente(){
-        $palestrantes = DB::select("SELECT * FROM tb_proponente");
-        return view("admin.proponente.view", compact("palestrantes"));
+        $proponentes = DB::select("SELECT * FROM tb_proponente");
+        foreach ($proponentes as $proponente) {
+            $redes = DB::select("SELECT * FROM tb_redes_proponente WHERE id_proponente = ?;", [$proponente->id]);
+            $proponente->redes = $redes;
+        }
+        return view("admin.proponente.view", compact("proponentes"));
     }
 
     public function insertProponente(Request $request): string{
         $nome = request("txtNome");
         $titulacao = request("txtTitulacao");
+        $rede1 = request("rede1");
+        $rede2 = request("rede2");
+        $rede3 = request("rede3");
         $path = $request->file('arquivo')->storeAs('images/avatar', "palestra".$nome.".".$request->file('arquivo')->extension(), 'public');
         $url = "storage/".$path;
         DB::insert("INSERT INTO 
@@ -144,13 +165,60 @@ class AdministradorController extends Controller
                     VALUES(?,?,?);", 
                     [$nome,$titulacao,$url]);
 
-                    return redirect("/admin/proponente");
+        $id_proponente = DB::getPdo()->lastInsertId();
+
+        DB::insert("INSERT INTO
+                    tb_redes_proponente(id_proponente,rede1,rede2,rede3)
+                    VALUES(?,?,?,?);",
+                    [$id_proponente,$rede1,$rede2,$rede3]);
+
+        AlertController::alert('Proponente adicionado com sucesso.', 'success');
+        return redirect("/admin/proponente");
+    }
+
+    public function updateProponente(Request $request): string{
+        $id_proponente = request('id_proponente');
+        $nome = request("nome");
+        $titulacao = request("titulacao");
+        $rede1 = request("rede1");
+        $rede2 = request("rede2");
+        $rede3 = request("rede3");
+        if($request->file('arquivo')){
+            $path = $request->file('arquivo')->storeAs('images/avatar', "palestra".$nome.".".$request->file('arquivo')->extension(), 'public');
+            $url = "storage/".$path;
+            DB::update("UPDATE tb_proponente
+                        SET nome = ?, titulacao = ?, url = ? WHERE id = ?;", 
+                        [$nome,$titulacao,$url,$id_proponente]);
+        }else{
+            DB::update("UPDATE tb_proponente
+                        SET nome = ?, titulacao = ? WHERE id = ?;", 
+                        [$nome,$titulacao,$id_proponente]);
+        }
+
+        DB::update("UPDATE tb_redes_proponente
+                    SET rede1 = ?, rede2 = ?, rede3 = ?
+                    WHERE id_proponente = ?",
+                    [$rede1,$rede2,$rede3,$id_proponente]);
+
+        AlertController::alert('Proponente atualizado com sucesso.', 'success');
+        return redirect("/admin/proponente");
     }
 
     public function deleteProponente(){
         $id = request("id");
         DB::delete("DELETE FROM tb_proponente WHERE id = ?", [$id]);
-        return redirect("/admin/proponente");
+        AlertController::alert('Proponente deletado com sucesso.', 'warning');
+        return response()->json(
+            [
+                'message' => 'Proponente deletado com sucesso.',
+                'type' => 'warning'
+            ]
+        );
     }
 
+    public function enviarEmail(){
+        $dados = "https://www.youtube.com/watch?v=yhtLGnExKYk&t=12s";
+        $email = "contasdocaique@gmail.com";
+        Mail::to($email)->send(new AtivarConta($dados, 'ativarConta'));
+    }
 }
