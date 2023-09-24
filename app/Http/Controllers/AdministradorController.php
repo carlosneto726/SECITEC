@@ -31,9 +31,14 @@ class AdministradorController extends Controller
 
     // Eventos
     public function viewEventos(){
-        $eventos = DB::select("SELECT * FROM tb_evento");
+        $eventos = DB::select("
+        SELECT e.*, te.nome AS tipo_evento_nome
+        FROM tb_evento AS e
+        INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
+        ");
         $palestrantes = DB::select("SELECT * FROM tb_proponente");
-        return view("admin.events.view", compact("eventos", "palestrantes"));
+        $tipoEventos = DB::select("SELECT * FROM tb_tipo_evento");
+        return view("admin.events.view", compact("eventos", "palestrantes", "tipoEventos"));
     }
 
     public function updateEvento(){
@@ -68,15 +73,15 @@ class AdministradorController extends Controller
         $local = request("txtLocal");
         $nomepalestrante = request("cbxPalestrante");
         $id_proponente = DB::select("SELECT * FROM tb_proponente WHERE nome = ?;", [$nomepalestrante])[0]->id;
+        $id_tipo_evento = request("cbxTipoEvento");
         $path = $request->file('arquivo')->storeAs('images/schedule', "evento".$titulo.".".$request->file('arquivo')->extension(), 'public');
         $url = "storage/".$path;
         $types = array("png", "jpg", "jpeg", "webp", "avif", "jfif");
 
-        // Maycon alterar a funcionalidade de alterar o tipo de cadastro
         DB::insert("INSERT INTO 
                     tb_evento(titulo,descricao,dia,horarioI,horarioF,vagas,horas,local,url,id_proponente,id_tipo_evento)
                     VALUES (?,?,?,?,?,?,?,?,?,?,?);", 
-                    [$titulo,$descricao,$dia,$hrInicio,$hrFim,$numVagas,$numHoras,$local,$url,$id_proponente,1]);
+                    [$titulo,$descricao,$dia,$hrInicio,$hrFim,$numVagas,$numHoras,$local,$url,$id_proponente, $id_tipo_evento]);
 
         AlertController::alert('Evento adicionado com sucesso.', 'success');
         return redirect("/admin/eventos");
@@ -138,7 +143,6 @@ class AdministradorController extends Controller
 
 
     // Proponente
-
     public function viewProponente(){
         $proponentes = DB::select("SELECT * FROM tb_proponente");
         foreach ($proponentes as $proponente) {

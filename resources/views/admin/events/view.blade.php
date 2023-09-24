@@ -12,6 +12,7 @@
         <tr>
             <th>Id</th>
             <th>Titulo</th>
+            <th>Tipo de Evento</th>
             <th>Descrição</th>
             <th>Dia</th>
             <th>Horário Inicio</th>
@@ -26,6 +27,7 @@
             <tr>
                 <td>{{$dados->id}}</td>
                 <td>{{$dados->titulo}}</td>
+                <td style="text-transform:capitalize;">{{$dados->tipo_evento_nome}}</td>
                 <td>{{$dados->descricao}}</td>
                 <td>{{$dados->dia}}</td>
                 <td>{{$dados->horarioI}}</td>
