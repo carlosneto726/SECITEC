@@ -86,7 +86,12 @@ class AdministradorController extends Controller
         $id = request("id");
         DB::delete("DELETE FROM tb_evento WHERE id = ?", [$id]);
         AlertController::alert('Evento deletado sucesso.', 'warning');
-        return redirect("/admin/eventos");
+        return response()->json(
+            [
+                'message' => 'Evento deletado com sucesso.',
+                'type' => 'warning'
+            ]
+        );
     }
 
     public function viewPresenca(){
@@ -199,15 +204,17 @@ class AdministradorController extends Controller
         $id = request("id");
         DB::delete("DELETE FROM tb_proponente WHERE id = ?", [$id]);
         AlertController::alert('Proponente deletado com sucesso.', 'warning');
-        return redirect("/admin/proponente");
+        return response()->json(
+            [
+                'message' => 'Proponente deletado com sucesso.',
+                'type' => 'warning'
+            ]
+        );
     }
-
-
 
     public function enviarEmail(){
         $dados = "https://www.youtube.com/watch?v=yhtLGnExKYk&t=12s";
         $email = "contasdocaique@gmail.com";
         Mail::to($email)->send(new AtivarConta($dados, 'ativarConta'));
     }
-
 }

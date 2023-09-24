@@ -38,6 +38,8 @@ Route::get('/admin/presenca/{id_evento}', [AdministradorController::class, 'view
 Route::post('/admin/presenca/checkin', [AdministradorController::class, 'checkin']);
 Route::post('/admin/presenca/checkout', [AdministradorController::class, 'checkout']);
 
+Route::post('/admin/teste', [AdministradorController::class, 'teste']);
+
 Route::get('/teste', [AdministradorController::class, 'enviarEmail']);
 
 Route::get('/loginUser', [Controller::class, 'viewLogin']);

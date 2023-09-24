@@ -1,10 +1,8 @@
 @extends('admin.template')
 @section('content')
 
-<script>
-    var proponentes = {{ Js::from($proponentes)}};
-</script>
-<script src="{{asset('js/adm_proponentes.js')}}"></script>
+<script src="{{asset('js/admin.js')}}"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <div class="container">
     <div class="my-3 p-3 bg-body rounded shadow-sm">
@@ -26,17 +24,50 @@
                                     <path d="M4.5 9a3.5 3.5 0 1 0 0 7h7a3.5 3.5 0 1 0 0-7h-7zm7 6a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm-7-14a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm2.45 0A3.49 3.49 0 0 1 8 3.5 3.49 3.49 0 0 1 6.95 6h4.55a2.5 2.5 0 0 0 0-5H6.95zM4.5 0h7a3.5 3.5 0 1 1 0 7h-7a3.5 3.5 0 1 1 0-7z"/>
                                 </svg>
                             </button>
-                            <form method="POST" action="{{url('/admin/proponente/deletar')}}">
-                                @csrf
-                                @method('POST')
-                                <input type="hidden" name="id" value="{{$proponente->id}}"/>
-                                <button type="submit" class="btn btn-danger btn-sm" title="deletar">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                                    </svg>
-                                </button>
-                            </form>
+
+                            <button type="button" class="btn btn-danger btn-sm" title="deletar" data-bs-toggle="modal" data-bs-target="#exampleModal{{$proponente->id}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                </svg>
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{$proponente->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Deletar Evento</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <span class="fw-bold fs-4">
+                                                Tem certeza que você deseja deletar este proponente?
+                                                Essa é uma ação permanente e sem volta.
+                                            </span>
+                                            <hr>
+                                            <p class="mt-3">
+                                                Para deletar este proponente, digite extamente o nome do mesmo no campo abaixo.
+                                            </p>
+                                            <div class="text-danger">
+                                                <div class="fw-bold fs-6 ms-2" id="alert{{$proponente->id}}"></div>
+                                                <div class="fw-bold fs-6 ms-2 border border-danger rounded p-1 m-1" id="nome{{$proponente->id}}" style="width: fit-content;">{{$proponente->nome}}</div>
+
+                                                <div class="form-floating mb-3">
+                                                    <input type="email" class="form-control" id="input{{$proponente->id}}">
+                                                    <label>Digite o nome acima</label>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-danger" onclick="excluirBtn({{$proponente->id}}, 'admin/proponente/deletar')">Deletar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <span class="d-block ms-1">{{$proponente->titulacao}}</span>
@@ -54,4 +85,4 @@
 @include('admin.proponente.cadastrarModal')
 
 
-@endsection
+@endsection               

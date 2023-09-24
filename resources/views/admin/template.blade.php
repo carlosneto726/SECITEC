@@ -17,18 +17,7 @@
         @include('admin.layout.navbar')
     </header>
 
-    @if(@$_SESSION['mensagem'] != "")
-        <div class="z-3 position-fixed top-0 end-0" id="alerta" style="margin-top: 100px;">            
-            <div class="alert alert-{{@$_SESSION['tipo']}} alert-dismissible" role="alert">
-                <div>{{$_SESSION['mensagem']}}</div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
-        @php
-            @$_SESSION['mensagem'] = "";
-            @$_SESSION['tipo'] = "";
-        @endphp
-    @endif
+    <div class="z-3 position-fixed top-0 end-0" id="alert" style="margin-top: 100px;"></div>
 
     <section class="section-padding">
         @yield('content')
