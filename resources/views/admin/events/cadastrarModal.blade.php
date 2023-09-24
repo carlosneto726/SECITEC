@@ -44,9 +44,7 @@
                         <p><label for="local">Informe o local do evento</label></p>
                         <p><input class="form-control " type="text" name="txtLocal" required /></p>
                         <p><label>Escolha a foto que representa o Evento</label></p>
-<<<<<<< HEAD
                         <p><input class="form-control" type="file" name="arquivo" required/></p>
-=======
                         <p><input class="form-control" type="file" name="arquivo" required /></p>
                         <p>
                             <label for="tipoEvento">Tipo de Evento</label>
@@ -70,7 +68,6 @@
                                 @endforeach
                             </select>
                         </p>
->>>>>>> main
                     </div>
                 </div>
                 <div class="modal-footer">
