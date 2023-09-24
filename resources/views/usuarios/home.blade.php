@@ -12,7 +12,7 @@
                             <p>{{ $evento->descricao }}</p>
                         </div>
                         <hr>
-                        <button id="btnCadastrar" onclick="enviarRequisicao({{ $evento->id }}, {{ $evento->usuario_cadastrado }})" type="button"
+                        <button id="{{ $evento->id }}" onclick="enviarRequisicao({{ $evento->id }})" type="button"
                             class="btn {{ $evento->usuario_cadastrado ? 'btn-danger' : 'btn-success' }}">{{ $evento->usuario_cadastrado ? 'Descadastrar' : 'Cadastrar' }}</button>
                     </div>
                     <div class="event-image col-4">
@@ -23,7 +23,7 @@
         </section>
     </div>
     <script>
-        function enviarRequisicao(eventoId, cadastrado) {
+        function enviarRequisicao(eventoId) {
             var usuarioId = `{{ $usuario->id }}`;
 
             $.ajax({
@@ -32,14 +32,29 @@
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content'), // Obtém o token CSRF do meta tag
                     usuarioId: usuarioId,
-                    eventoId: eventoId,
-                    cadastrado: cadastrado
+                    eventoId: eventoId
                 },
                 success: function(data) {
-                    // Manipular a resposta aqui
-                    console.log(data);
+                    if(data.mensagem == 'Cadastrado com sucesso!') {
+                        handleCadastro(true, data.evento)
+                    } else if (data.mensagem == 'Descadastrado com sucesso!') {
+                        handleCadastro(false, data.evento)
+                    }
                 }
             });
+        }
+
+        const handleCadastro = (cadastrar, evento) =>{
+            const eventoBtn = document.getElementById(`${evento}`)
+            if(cadastrar) {
+                eventoBtn.classList.remove('btn-success');
+                eventoBtn.classList.add('btn-danger');
+                eventoBtn.innerHTML = 'Descadastrar'
+            } else {
+                eventoBtn.classList.remove('btn-danger');
+                eventoBtn.classList.add('btn-success');
+                eventoBtn.innerHTML = 'Cadastrar'
+            }
         }
     </script>
 @endsection

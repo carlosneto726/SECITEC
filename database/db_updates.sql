@@ -17,3 +17,9 @@ CREATE TABLE tb_redes_proponente(
     PRIMARY KEY(id_proponente),
     FOREIGN KEY(id_proponente) REFERENCES tb_proponente(id) ON DELETE CASCADE
 );
+
+-- Query 3:
+-- Alterando os valores da coluna checkin e checkout da tabela tb_evento_usuario para aceitar null 
+
+ALTER TABLE tb_evento_usuario MODIFY checkin time;
+ALTER TABLE tb_evento_usuario MODIFY checkout time;

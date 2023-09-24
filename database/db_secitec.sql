@@ -101,8 +101,8 @@ CREATE TABLE tb_evento_usuario (
   id_evento int(11) NOT NULL,
   id_usuario int(11) NOT NULL,
   status int(11) NOT NULL,
-  checkin time NOT NULL,
-  checkout time NOT NULL,
+  checkin time,
+  checkout time,
   PRIMARY KEY (id),
   FOREIGN KEY (id_usuario) REFERENCES tb_usuario (id),
   FOREIGN KEY (id_evento) REFERENCES tb_evento (id)

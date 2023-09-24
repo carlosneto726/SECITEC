@@ -36,25 +36,38 @@ class UsuariosController extends Controller
         return redirect("/loginUser");
     }
 
-    // verificar se ja foi cadastro, e cadastrar ou descadastrar
     public function cadastrarEvento(Request $request)
     {
         $usuarioId = $request->input('usuarioId');
         $eventoID = $request->input('eventoId');
 
-        if($request->input('cadastrado')) {
-            // descadastra
+        if($this->verificaCadastro( $request->input('usuarioId'),$request->input('eventoId'))) {
+            try {
+                DB::delete("DELETE FROM tb_evento_usuario WHERE id_evento = ? AND id_usuario = ?", [$eventoID, $usuarioId]);
+                return response()->json(['mensagem' => 'Descadastrado com sucesso!', 'evento' => $eventoID]);
+            } catch (\Throwable $th) {
+                return response()->json(['mensagem' => $th]);
+            }
         } else {
             try {
                 DB::insert("INSERT INTO 
                 tb_evento_usuario(id_evento, id_usuario, status) 
                 VALUES(?,?,?);", 
                 [$eventoID,$usuarioId, 0]);
+                return response()->json(['mensagem' => 'Cadastrado com sucesso!', 'evento' => $eventoID]);
             } catch (\Throwable $th) {
                 return response()->json(['mensagem' => $th]);
             }
         }
+    }
 
-        return response()->json(['mensagem' => $request->input('cadastrado')]);
+    public function verificaCadastro($usuarioId,  $eventoID) {
+        $resultados = DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ? AND id_usuario = ?", [$eventoID, $usuarioId]);
+
+        if (count($resultados) > 0) {
+            return true; 
+        } else {
+            return false;
+        }
     }
 }
