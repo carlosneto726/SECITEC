@@ -77,7 +77,8 @@ class ValidarUsuariosController extends Controller
                 $evento->id_proponente,
                 $evento->id_tipo_evento,
                 false,
-                $evento->tipo_evento_nome
+                $evento->tipo_evento_nome,
+                $this->calcularVagasRestantes($evento->id, $evento->vagas)
             );
             foreach ($eventosCadastrados as $eventoCadastrado) {
                 if ($evento->id == $eventoCadastrado->id_evento) {
@@ -88,6 +89,11 @@ class ValidarUsuariosController extends Controller
             $eventosMapeados[] = $eventoMapeado;
         }
         return $eventosMapeados;
+    }
+
+    function calcularVagasRestantes($eventoId, $eventoVagasTotais){
+        $vagasOcupadas = count(DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ?;", [$eventoId]));
+        return $eventoVagasTotais - $vagasOcupadas;
     }
 }
 
@@ -106,6 +112,7 @@ class EventoDto {
     public $id_tipo_evento;
     public $usuario_cadastrado;
     public $tipo_evento_nome;
+    public $vagas_restantes;
 
     public function __construct(
         $id,
@@ -121,7 +128,8 @@ class EventoDto {
         $id_proponente,
         $id_tipo_evento,
         $usuario_cadastrado,
-        $tipo_evento_nome
+        $tipo_evento_nome,
+        $vagas_restantes
     ) {
         $this->id = $id;
         $this->titulo = $titulo;
@@ -138,5 +146,6 @@ class EventoDto {
         $this->id_tipo_evento = $id_tipo_evento;
         $this->usuario_cadastrado = $usuario_cadastrado;
         $this->tipo_evento_nome = $tipo_evento_nome;
+        $this->vagas_restantes = $vagas_restantes;
     }
 }
