@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-12">
-                <h2 class="mb-5 text-center">Nossa <u class="text-info">Programação</u></h2>
+                <h2 class="mb-5 text-center">Nossa <u class="text-success">Programação</u></h2>
                 <div class="tab-content mt-5" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-DayOne" role="tabpanel" aria-labelledby="nav-DayOne-tab">
                         <div class="row border-bottom pb-5 mb-5">                                 

@@ -10,6 +10,8 @@ https://templatemo.com/tm-575-leadership-event
 /*---------------------------------------
   CUSTOM PROPERTIES ( VARIABLES )             
 -----------------------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@1,700&display=swap');
+
 :root {
     --white-color:                  #ffffff;
     --primary-color:                var(--ifg-color-secundary);
@@ -18,7 +20,7 @@ https://templatemo.com/tm-575-leadership-event
     --dark-color:                   #000000;
     --navbar-bg-color:              #0d2c12;
     --p-color:                      #717275;
-    --highlight-icon-color:         #ff0100;
+    --highlight-icon-color:         #0693e3;
 
     /*NOVAS CORES*/
     --ifg-color-primary:            #17882c;
@@ -928,6 +930,11 @@ https://templatemo.com/tm-575-leadership-event
     list-style: none;
     display: inline-block;
     vertical-align: top;
+  }
+
+  .cronometro{
+    font-family: 'Quantico', sans-serif;
+    height: 10o0px;
   }
   
   .social-icon-link {
