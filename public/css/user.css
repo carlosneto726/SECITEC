@@ -7,8 +7,27 @@
     margin: 0 !important;
 }
 
-.bem-vindo-user {
-    
+.user-name {
+    margin: 30px 0;
+
+}
+
+.link-modal-user {
+    text-decoration: underline;
+    font-weight: bolder;
+    color:#0693e3;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.user-page-title {
+    font-size: 3rem;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.user-page-title > strong {
+    color: green;
 }
 
 .event-card {
@@ -18,7 +37,6 @@
     margin-bottom: 10px;
     border: 1px solid rgba(0, 0, 0, 0.247);
     border-radius: 5px;
-    margin-bottom: 20px;
     padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background-color: rgb(228, 238, 228);
@@ -46,4 +64,35 @@
     text-transform: capitalize;
     margin-left: auto !important;
     border-radius: 5px;
+}
+
+#regras-list {
+    list-style: none !important;
+    padding-left: 0 !important;
+}
+
+.aviso-presenca {
+    font-size: 1.5rem;
+}
+
+.vagas-evento {
+    text-align: end;
+    font-size: 1.5rem;
+}
+
+.vagas-evento > span > strong {
+    color: green;
+}
+
+.esgotadas {
+    font-size: 16px;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 50px;
+    background-color: #FF4500;
+    visibility: hidden;
+}
+
+.esgotadas.show {
+    visibility:visible;
 }
