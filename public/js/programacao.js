@@ -11,24 +11,29 @@ window.onload = function () {
         
             '<div class="col-lg-8 col-12 mt-3 mt-lg-0">' +
                                                         
-                                                    
-            '     <h4 class="mb-2"> '+programacoes[i]['titulo']+'</h4>' +
-            '     <p>'+programacoes[i]['descricao']+'</p>' +
+            '      <span class="mx-1 mx-lg-2">' +
+            '          <i class="bi-clock me-2"></i>' +
+            '          '+horai+' às '+horaf+' ' +
+            '      </span>' +                                 
+            '     <p><h5 class="mx-1 mx-lg-2"> '+programacoes[i]['titulo']+'</h5></p>' +
+            '     <p class="mx-1 mx-lg-2" >'+programacoes[i]['descricao']+'</p>' +
             '     <div class="d-flex align-items-center mt-4">' +
             '         <div class="avatar-group d-flex">' +
-            '             <img src="'+programacoes[i]['url_p']+'" class="img-fluid avatar-image" class="img-fluid avatar-image" alt="">' +
+            '             <img src="'+programacoes[i]['url_p']+'" class="img-fluid avatar-image mx-1 mx-lg-2" class="img-fluid avatar-image" alt="">' +
             '             <div class="ms-3">' +
                             programacoes[i]['proponente']+
             '                 <p class="speakers-text mb-0">'+programacoes[i]['titulacao']+'</p>' +
             '             </div>' +
             '         </div>' +
-            '         <span class="mx-3 mx-lg-5">' +
-            '             <i class="bi-clock me-2"></i>' +
-            '              '+horai+' - '+horaf+' ' +
-            '         </span>' +
-            '         <span class="mx-1 mx-lg-5">' +
+
+            '         <span class="mx-4 mx-lg-5 ">' +
             '             <i class="bi-layout-sidebar me-2"></i>' +
                             programacoes[i]['local']+
+            '         </span>' +
+            '         </span>' +
+            '         <span class="mx-10 mx-lg-20">' +
+            '             <i class="bi-hash me-2 "></i>' +
+                            programacoes[i]['nome_tipo_evento']+
             '         </span>' +
             '     </div>' +
             '   </div>' +
@@ -39,24 +44,29 @@ window.onload = function () {
         
             '<div class="col-lg-8 col-12 mt-3 mt-lg-0">' +
                                                         
-                                                    
-            '     <h4 class="mb-2"> '+programacoes[i]['titulo']+'</h4>' +
-            '     <p>'+programacoes[i]['descricao']+'</p>' +
+            '      <span class="mx-1 mx-lg-2">' +
+            '          <i class="bi-clock me-2"></i>' +
+            '          '+horai+' às '+horaf+' ' +
+            '      </span>' +                                 
+            '     <p><h5 class="mx-1 mx-lg-2"> '+programacoes[i]['titulo']+'</h5></p>' +
+            '     <p class="mx-1 mx-lg-2" >'+programacoes[i]['descricao']+'</p>' +
             '     <div class="d-flex align-items-center mt-4">' +
             '         <div class="avatar-group d-flex">' +
-            '             <img src="'+programacoes[i]['url_p']+'" class="img-fluid avatar-image" class="img-fluid avatar-image" alt="">' +
+            '             <img src="'+programacoes[i]['url_p']+'" class="img-fluid avatar-image mx-1 mx-lg-2" class="img-fluid avatar-image" alt="">' +
             '             <div class="ms-3">' +
                             programacoes[i]['proponente']+
             '                 <p class="speakers-text mb-0">'+programacoes[i]['titulacao']+'</p>' +
             '             </div>' +
             '         </div>' +
-            '         <span class="mx-3 mx-lg-5">' +
-            '             <i class="bi-clock me-2"></i>' +
-            '              '+horai+' - '+horaf+' ' +
-            '         </span>' +
+
             '         <span class="mx-1 mx-lg-5">' +
             '             <i class="bi-layout-sidebar me-2"></i>' +
                             programacoes[i]['local']+
+            '         </span>' +
+            '         </span>' +
+            '         <span class="mx-1 mx-lg-5">' +
+            '             <i class="bi-hash me-2"></i>' +
+                            programacoes[i]['nome_tipo_evento']+
             '         </span>' +
             '     </div>' +
             '   </div>' +
@@ -68,24 +78,29 @@ window.onload = function () {
         
             '<div class="col-lg-8 col-12 mt-3 mt-lg-0">' +
                                                         
-                                                    
-            '     <h4 class="mb-2"> '+programacoes[i]['titulo']+'</h4>' +
-            '     <p>'+programacoes[i]['descricao']+'</p>' +
+            '      <span class="mx-1 mx-lg-2">' +
+            '          <i class="bi-clock me-2"></i>' +
+            '          '+horai+' às '+horaf+' ' +
+            '      </span>' +                                 
+            '     <p><h5 class="mx-1 mx-lg-2"> '+programacoes[i]['titulo']+'</h5></p>' +
+            '     <p class="mx-1 mx-lg-2" >'+programacoes[i]['descricao']+'</p>' +
             '     <div class="d-flex align-items-center mt-4">' +
             '         <div class="avatar-group d-flex">' +
-            '             <img src="'+programacoes[i]['url_p']+'" class="img-fluid avatar-image" class="img-fluid avatar-image" alt="">' +
+            '             <img src="'+programacoes[i]['url_p']+'" class="img-fluid avatar-image mx-1 mx-lg-2" class="img-fluid avatar-image" alt="">' +
             '             <div class="ms-3">' +
                             programacoes[i]['proponente']+
             '                 <p class="speakers-text mb-0">'+programacoes[i]['titulacao']+'</p>' +
             '             </div>' +
             '         </div>' +
-            '         <span class="mx-3 mx-lg-5">' +
-            '             <i class="bi-clock me-2"></i>' +
-            '              '+horai+' - '+horaf+' ' +
-            '         </span>' +
+
             '         <span class="mx-1 mx-lg-5">' +
             '             <i class="bi-layout-sidebar me-2"></i>' +
                             programacoes[i]['local']+
+            '         </span>' +
+            '         </span>' +
+            '         <span class="mx-1 mx-lg-5">' +
+            '             <i class="bi-hash me-2"></i>' +
+                            programacoes[i]['nome_tipo_evento']+
             '         </span>' +
             '     </div>' +
             '   </div>' +
@@ -97,24 +112,29 @@ window.onload = function () {
         
             '<div class="col-lg-8 col-12 mt-3 mt-lg-0">' +
                                                         
-                                                    
-            '     <h4 class="mb-2"> '+programacoes[i]['titulo']+'</h4>' +
-            '     <p>'+programacoes[i]['descricao']+'</p>' +
+            '      <span class="mx-1 mx-lg-2">' +
+            '          <i class="bi-clock me-2"></i>' +
+            '          '+horai+' às '+horaf+' ' +
+            '      </span>' +                                 
+            '     <p><h5 class="mx-1 mx-lg-2"> '+programacoes[i]['titulo']+'</h5></p>' +
+            '     <p class="mx-1 mx-lg-2" >'+programacoes[i]['descricao']+'</p>' +
             '     <div class="d-flex align-items-center mt-4">' +
             '         <div class="avatar-group d-flex">' +
-            '             <img src="'+programacoes[i]['url_p']+'" class="img-fluid avatar-image" class="img-fluid avatar-image" alt="">' +
+            '             <img src="'+programacoes[i]['url_p']+'" class="img-fluid avatar-image mx-1 mx-lg-2" class="img-fluid avatar-image" alt="">' +
             '             <div class="ms-3">' +
                             programacoes[i]['proponente']+
             '                 <p class="speakers-text mb-0">'+programacoes[i]['titulacao']+'</p>' +
             '             </div>' +
             '         </div>' +
-            '         <span class="mx-3 mx-lg-5">' +
-            '             <i class="bi-clock me-2"></i>' +
-            '              '+horai+' - '+horaf+' ' +
-            '         </span>' +
+
             '         <span class="mx-1 mx-lg-5">' +
             '             <i class="bi-layout-sidebar me-2"></i>' +
                             programacoes[i]['local']+
+            '         </span>' +
+            '         </span>' +
+            '         <span class="mx-1 mx-lg-5">' +
+            '             <i class="bi-hash me-2"></i>' +
+                            programacoes[i]['nome_tipo_evento']+
             '         </span>' +
             '     </div>' +
             '   </div>' +
