@@ -7,11 +7,21 @@
     margin: 0 !important;
 }
 
+.bem-vindo-user {
+    
+}
+
 .event-card {
     display: flex;
     height: max-content;
     padding: 10px !important;
     margin-bottom: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.247);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: rgb(228, 238, 228);
 }
 
 .event-content {
@@ -21,10 +31,19 @@
     padding-right: 10px;
 }
 
-.event-image {
-    background-color: black;
-}
-
 .event-content > button {
     width: 200px;
+}
+
+.tipo-evento-wrapper {
+    display: flex;
+    justify-content: end;
+}
+
+.tipo-evento {
+    color: #0693e3;
+    font-weight: bolder;
+    text-transform: capitalize;
+    margin-left: auto !important;
+    border-radius: 5px;
 }
