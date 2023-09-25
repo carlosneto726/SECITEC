@@ -8,7 +8,6 @@
 
 </script>
 
-
 <section class="schedule section-padding" id="section_4">
     <div class="container">
         <div class="row">
