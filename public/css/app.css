@@ -342,7 +342,7 @@ https://templatemo.com/tm-575-leadership-event
     border: 0;
     padding: 0;
     cursor: pointer;
-    margin: 0;
+    margin: 1;
     width: 30px;
     height: 35px;
     outline: none;
@@ -376,7 +376,6 @@ https://templatemo.com/tm-575-leadership-event
   .navbar-toggler .navbar-toggler-icon {
     background: var(--white-color);
     transition: background 10ms 300ms ease;
-    display: block;
     width: 30px;
     height: 2px;
     position: relative;
