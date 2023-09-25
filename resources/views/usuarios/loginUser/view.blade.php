@@ -38,7 +38,7 @@
                       </label>
                     </div>
                     <div class="d-grid">
-                      <input type="submit" value="Entrar" class="btn  text-light bg-dark btn-login text-uppercase fw-bold" type="submit"> <br>
+                      <input type="submit" value="Entrar" class="btn  text-light btn-success text-uppercase fw-bold" type="submit"> <br>
                         <input type="reset" value="Limpar" class="btn  text-light bg-dark btn-login text-uppercase fw-bold" type="submit"><br>
                 
                     </div>
