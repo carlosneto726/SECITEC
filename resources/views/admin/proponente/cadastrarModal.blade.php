@@ -22,20 +22,24 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input class="form-control " type="text" name="rede1" placeholder="https://www.instagram.com/carlosneto726/" required/>
+                        <input class="form-control " type="text" name="rede1" placeholder="https://www.instagram.com/carlosneto726/"/>
                         <label>Rede Social 1</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input class="form-control " type="text" name="rede2" placeholder="https://www.instagram.com/carlosneto726/" required/>
+                        <input class="form-control " type="text" name="rede2" placeholder="https://www.instagram.com/carlosneto726/"/>
                         <label>Rede Social 2</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input class="form-control " type="text" name="rede3" placeholder="https://www.instagram.com/carlosneto726/" required/>
+                        <input class="form-control " type="text" name="rede3" placeholder="https://www.instagram.com/carlosneto726/"/>
                         <label>Rede Social 3</label>
                     </div>
-
-                    <p><label>Escolha uma foto da palestrante</label></p>
-                    <p><input class="form-control" type="file" name="arquivo" required/></p>
+                    <div class="mb-2">
+                        <label for="basic-url" class="form-label">Escolha uma foto da palestrante</label>
+                        <div class="input-group">
+                            <input class="form-control" type="file" name="arquivo" id="formFile" accept=".png, .jpg, .jpeg, .webp, .avif, .jfif">
+                        </div>
+                        <div class="form-text" id="basic-addon4">.png, .jpg, .jpeg, .webp, .avif, .jfif</div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <input class="btn btn-dark" type="submit" value="Enviar"/>

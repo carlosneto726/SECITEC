@@ -1,17 +1,21 @@
 
-function cadastrarBtn(endpoint){
-    var nome = document.getElementById("nome").value;
-    var cpf = document.getElementById("cpf").value;
-    var email = document.getElementById("email").value;
-    var senha = document.getElementById("senha").value;
-
+function postHandler(endpoint, tipo){
     const url = 'http://127.0.0.1:8000/'+endpoint;
-    const dados = {
-        nome: nome,
-        cpf: cpf,
-        email: email,
-        senha: senha
-    };
+    var dados;
+
+    if(tipo === 'cadastrar'){
+        dados = {
+            nome: document.getElementById("nome").value,
+            cpf: document.getElementById("cpf").value,
+            email: document.getElementById("email").value,
+            senha: document.getElementById("senha").value
+        };
+    }else if(tipo === 'login'){
+        dados = {
+            email: document.getElementById("email").value,
+            senha: document.getElementById("senha").value
+        };
+    }
 
     const configuracao = {
         method: 'POST',
@@ -27,7 +31,7 @@ function cadastrarBtn(endpoint){
     .then(data => {
         localStorage.setItem("message", data['message']);
         localStorage.setItem("type", data['type']);
-        window.location.href = "/cadastrar";
+        window.location.href = data['endpoint'];
     })
     .catch(erro => console.error('Erro:', erro));
 }

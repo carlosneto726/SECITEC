@@ -9,7 +9,7 @@
                         <!-- Pills navs -->
                         <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link text-dark" id="tab-login" data-mdb-toggle="pill"
+                                <a class="nav-link text-dark border rounded" id="tab-login" data-mdb-toggle="pill"
                                     href="{{ url('/login') }}" role="tab" aria-controls="pills-login"
                                     aria-selected="true">ENTRAR</a>
                             </li>
@@ -20,36 +20,20 @@
                             </li>
                         </ul>
 
-                        <form method="post" action="{{ url('/usuarios/login') }}" class="login">
-                            @csrf
-                            @method('POST')
-                            <div class="form-floating mb-3">
-                                <input type="text" name="email" placeholder="Informe o Email" class="form-control"
-                                    required>
-                                <label for="floatingInput">E-mail</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="password" name="senha" placeholder="Informe a senha" class="form-control"
-                                    required>
-                                <label for="floatingPassword">Senha</label>
-                            </div>
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="E-Mail" name="email" id="email" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" placeholder="Senha" id="senha" name="senha" maxlength="255" required>
+                            <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off" onclick="verSenha()">
+                            <label class="btn btn-outline-secondary h-50" for="btn-check"><img src="{{asset("icons/eye.svg")}}" width="16" height="16"></label>
+                        </div>
 
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
-                                <label class="form-check-label" for="rememberPasswordCheck">
-                                    Lembrar senha
-                                </label>
-                            </div>
-                            <div class="d-grid">
-                                <input type="submit" value="Entrar"
-                                    class="btn  text-light bg-dark btn-login text-uppercase fw-bold" type="submit"> <br>
-                                <input type="reset" value="Limpar"
-                                    class="btn  text-light bg-dark btn-login text-uppercase fw-bold" type="submit"><br>
-
-                            </div>
-                            <hr class="my-4">
-
-                        </form>
+                        <div class="d-grid">
+                            <button class="btn btn-success" onclick="postHandler('usuarios/login', 'login')"> 
+                                Entrar
+                            </button>
+                        <hr class="my-4">
                     </div>
                 </div>
             </div>

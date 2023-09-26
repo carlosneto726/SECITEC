@@ -5,10 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 use App\Mail\AtivarConta;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+
+/*
+|--------------------------------------------------------------------------
+| ValidarUsuáriosController
+|--------------------------------------------------------------------------
+|
+| Este Controller é responsável por executar funções relacionadas a validação
+| no quesito de login e email, criação de contas, validação de cpf e etc.
+|
+*/
 
 class ValidarUsuariosController extends Controller
 {
@@ -17,15 +26,16 @@ class ValidarUsuariosController extends Controller
         $nome = $request->input("nome");
         $email = $request->input("email");
         $cpf = $request->input("cpf");
-        $senha = Hash::make($request->input("senha"));
-        $token = Str::random(60);
+        $senha = Hash::make($request->input("senha")); // Senha criptografada
+        $token = Str::random(60); // Token gerado aleatoriamente
 
         // condição para verificar caso o cpf seja válido ou não
         if($this->validaCPF($cpf)){
             return response()->json(
                 [
                     'message' => 'CPF inválido',
-                    'type' => 'danger'
+                    'type' => 'danger',
+                    'endpoint' => '/cadastrar'
                 ]
             );
         }
@@ -36,7 +46,8 @@ class ValidarUsuariosController extends Controller
             return response()->json(
                 [
                     'message' => 'Email ou CPF já cadastrado(s)',
-                    'type' => 'danger'
+                    'type' => 'danger',
+                    'endpoint' => '/cadastrar'
                 ]
             );
         }else{
@@ -47,7 +58,8 @@ class ValidarUsuariosController extends Controller
             return response()->json(
                 [
                     'message' => 'Enviamos um Email para '.$email.' para a ativação da conta.',
-                    'type' => 'warning'
+                    'type' => 'warning',
+                    'endpoint' => '/login'
                 ]
             );
         }
@@ -56,7 +68,13 @@ class ValidarUsuariosController extends Controller
     public function validarEmail(){
         $token = request("token");
         DB::update("UPDATE tb_usuario SET status = 1, token = '' WHERE token = ?", [$token]);
-        return redirect("/login");
+        return response()->json(
+            [
+                'message' => 'Conta ativada com sucesso. Por favor faça login.',
+                'type' => 'success',
+                'endpoint' => '/login'
+            ]
+        );
     }
 
     public function validarLogin(){
@@ -67,21 +85,37 @@ class ValidarUsuariosController extends Controller
         [$email]);
 
         if(count($usuarios) > 0){
-            if(Hash::check($senha, $usuarios[0]->senha)){
+            if(Hash::check($senha, $usuarios[0]->senha)){ // A função Hasg::check compara o hash da senha do bd e a senha que o usário digitou.
                 setcookie("usuario", $usuarios[0]->id, time() + (86400 * 30), "/");
                 setcookie("nome_usuario", explode(" ", $usuarios[0]->nome)[0], time() + (86400 * 30), "/");
-                echo "validado com sucesso";
-                return redirect("/");
+                return response()->json(
+                    [
+                        'message' => 'Usuário validado com sucesso.',
+                        'type' => 'success',
+                        'endpoint' => '/eventos'
+                    ]
+                );
             }else{
-                echo "E-mail ou senha incorreto(s)";
-                return redirect("/entrar");
+                return response()->json(
+                    [
+                        'message' => 'Email ou senha incorreto(s).',
+                        'type' => 'danger',
+                        'endpoint' => '/login'
+                    ]
+                );
             }
         }else{
-            echo "E-mail ou senha incorreto(s)";
-            return redirect("/entrar");
+            return response()->json(
+                [
+                    'message' => 'Email ou senha incorreto(s).',
+                    'type' => 'danger',
+                    'endpoint' => '/login'
+                ]
+            );
         }
     }
 
+    // Esvazia todos os cookies
     public function sair(){
         setcookie("usuario", "", time() - 3600, "/");
         setcookie("nome_usuario", "", time() - 3600, "/");
@@ -90,11 +124,15 @@ class ValidarUsuariosController extends Controller
         return redirect("/");
     }
 
+    // Função que envia um email para a ativação da conta, o token no 
+    // link é o mesmo armazenado no bando de dados na tb_usuario, quando o 
+    // usuário acessar o link, a conta dele é ativada e o token é apagado
     public function enviarEmail($email, $token){
         $url = "http://127.0.0.1:8000/validar/usuario/".$token;
         Mail::to($email)->send(new AtivarConta($url, 'ativarConta'));
     }
 
+    // Skynet kkkkk
     function validaCPF($cpf) {
         // Remove caracteres não numéricos
         $cpf = preg_replace('/[^0-9]/', '', $cpf);
