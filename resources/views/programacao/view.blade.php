@@ -15,7 +15,7 @@
                 <h2 class="mb-5 ">Nossa <u class="text-success">Programação</u></h2>
                 <div class="tab-content mt-5" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-DayOne" role="tabpanel" aria-labelledby="nav-DayOne-tab">
-                        <div class="row border-bottom pb-5 mb-5">  
+                        <div class="row pb-5 mb-5">  
                             <div class="accordion" id="accordionExample">
                                 <div class="accordion-item">
                                   <h2 class="accordion-header">
@@ -66,7 +66,7 @@
                                   </div>
                                 </div>
                               </div>                               
-                            <div class="row border-bottom pb-5 mb-5" id="programacoes">     
+                            <div class="pb-5 mb-5" id="programacoes">     
                                                  
                             </div>
                         </div>

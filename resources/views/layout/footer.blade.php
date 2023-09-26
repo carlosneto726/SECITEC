@@ -1,15 +1,15 @@
 <!-- Remove the container if you want to extend the Footer to full width. -->
   <!-- Footer -->
   <footer
-          class="text-center text-lg-start text-light footer-bg pt-4"
+          class="text-center text-lg-start bg-text-light"
           style="background-color: dark"
           style="background-color: rgba(0, 0, 0, 0.2)"
           >
     <!-- Grid container -->
-    <div class="container p-3">
+    <div class="container border-top pt-5">
       <!-- Section: Links -->
         <!--Grid row-->
-        <div class="row justify-content-md-center text-center border-bottom pb-3">
+        <div class="row justify-content-md-center text-center border-bottom mt-3 pb-3">
           <!--Grid column-->
           <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
@@ -44,10 +44,10 @@
     <!-- Grid container -->
 
     <!-- Copyright -->
-    <div class="text-center p-3" >
+    <div class="text-center p-4" >
       <p class="fs-6">
         © 2023 Copyright:
-        <a class="text-light" href="https://www.ifg.edu.br/"
+        <a class="text-dark" href="https://www.ifg.edu.br/"
           >ifg.edu.br</a
           >
       </p>
