@@ -48,5 +48,5 @@ Route::post('/usuarios/login', [ValidarUsuariosController::class, 'validarLogin'
 Route::get('/usuarios/sair', [ValidarUsuariosController::class, 'sair']);
 Route::get('/validar/usuario/{token}', [ValidarUsuariosController::class, 'validarEmail']);
 // Rotas do UsuariosController para funções do usuário como visualizar, cadastrar eventos
-Route::get('/usuarios', [UsuariosController::class, 'viewUsuarios']);
+Route::get('/eventos', [UsuariosController::class, 'viewEventos']);
 Route::post('/usuarios/cadastarEvento', [UsuariosController::class, 'cadastrarEvento']);

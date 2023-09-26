@@ -4,21 +4,39 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Mail\AtivarConta;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+
+/*
+|--------------------------------------------------------------------------
+| UsuáriosController
+|--------------------------------------------------------------------------
+|
+| Este Controller é responsável por executar funções relacionadas ao usuário
+| Coisas tipo, visualização de eventos cadastrados, cadastramento e decadastramento
+| de eventos, contabilidade de vagas, atualização de perfil e etc
+|
+*/
 
 class UsuariosController extends Controller
 {
     public $id_usuario;
     public $nome_usuario;
 
+    // Método construtor que impede usuários não validados à 
+    // acessar recursos que precisam de validação.
+    // Para cada função que o usuário usar nesse controller, primeiramente 
+    // ele terá que ser validado pelo o método construtor.
+    // Neste caso, o método contrutor verifica a todo instante se o id armazenado
+    // no $_COOKIE['usuario'] (onde é armazenado o id no client-side) 
+    // existe e está ativado no Banco de dados
     public function __construct() {
         $this->id_usuario = $_COOKIE['usuario'];
         $this->nome_usuario = $_COOKIE['nome_usuario'];
-    }
 
+        $query = DB::select("SELECT id, nome FROM tb_usuario WHERE id = ? AND status = 1;", [$this->id_usuario]);
+        if(count($query) == 0){
+            abort(404, "Tem que se validar meu chapinha");
+        }
+    }
 
     // status da tabela tb_evento_usuario: 0 = Cadastrado e 1 = Cadastro reserva
     public function cadastrarEvento(Request $request)
@@ -63,31 +81,20 @@ class UsuariosController extends Controller
         }
     }
 
-    public function viewUsuarios(){
-        $login = @$_COOKIE['nome_user'];
-        $senha = @$_COOKIE['senha_user'];
-
-        if(isset($login) && isset($senha)){
-            if($this->validarLogin($login, $senha)){
-                $eventos = DB::select("
-                SELECT e.*, te.nome AS tipo_evento_nome
-                FROM tb_evento AS e
-                INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
-                ");
-                $usuario = DB::select("SELECT * FROM tb_usuario WHERE nome = ?;", [$login])[0];
-                $eventosCadastrados = DB::select("SELECT * FROM tb_evento_usuario WHERE id_usuario = ?;", [$usuario->id]);
-                $eventosMapeados = $this->mapearEventos($eventos, $eventosCadastrados);
-                return view("usuarios.home", compact("eventosMapeados", "usuario"));
-            }
-        }else{
-            return view("usuarios.loginUser.view");
-        }
-        return view("home.view");
+    public function viewEventos(){
+        $eventos = DB::select(" SELECT e.*, te.nome AS tipo_evento_nome
+                                FROM tb_evento AS e
+                                INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
+        ");
+        $usuario = DB::select("SELECT * FROM tb_usuario WHERE id = ?;", [$this->id_usuario])[0];
+        $eventosCadastrados = DB::select("SELECT * FROM tb_evento_usuario WHERE id_usuario = ?;", [$usuario->id]);
+        $eventosMapeados = $this->mapearEventos($eventos, $eventosCadastrados);
+        return view("usuarios.home", compact("eventosMapeados", "usuario"));
     }
 
     function mapearEventos($eventos, $eventosCadastrados) {
         $eventosMapeados = [];
-
+    
         foreach ($eventos as $evento) {
             $eventoMapeado = new EventoDto(
                 $evento->id,
@@ -103,7 +110,8 @@ class UsuariosController extends Controller
                 $evento->id_proponente,
                 $evento->id_tipo_evento,
                 false,
-                $evento->tipo_evento_nome
+                $evento->tipo_evento_nome,
+                $this->calcularVagasRestantes($evento->id, $evento->vagas)
             );
             foreach ($eventosCadastrados as $eventoCadastrado) {
                 if ($evento->id == $eventoCadastrado->id_evento) {
@@ -115,9 +123,14 @@ class UsuariosController extends Controller
         }
         return $eventosMapeados;
     }
-}
-
-class EventoDto {
+    
+    function calcularVagasRestantes($eventoId, $eventoVagasTotais){
+        $vagasOcupadas = count(DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ?;", [$eventoId]));
+        return $eventoVagasTotais - $vagasOcupadas;
+    }
+    }
+    
+    class EventoDto {
     public $id;
     public $titulo;
     public $descricao;
@@ -132,7 +145,8 @@ class EventoDto {
     public $id_tipo_evento;
     public $usuario_cadastrado;
     public $tipo_evento_nome;
-
+    public $vagas_restantes;
+    
     public function __construct(
         $id,
         $titulo,
@@ -147,7 +161,8 @@ class EventoDto {
         $id_proponente,
         $id_tipo_evento,
         $usuario_cadastrado,
-        $tipo_evento_nome
+        $tipo_evento_nome,
+        $vagas_restantes
     ) {
         $this->id = $id;
         $this->titulo = $titulo;
@@ -164,6 +179,6 @@ class EventoDto {
         $this->id_tipo_evento = $id_tipo_evento;
         $this->usuario_cadastrado = $usuario_cadastrado;
         $this->tipo_evento_nome = $tipo_evento_nome;
+        $this->vagas_restantes = $vagas_restantes;
     }
-    
-}
+    }

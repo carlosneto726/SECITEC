@@ -29,7 +29,7 @@
 
                 @if(isset($_COOKIE['usuario']) && isset($_COOKIE['nome_usuario']))
                     <li class="nav-item">
-                        <a class="nav-link click-scroll"  href="{{ url('/local') }}">Eventos</a>
+                        <a class="nav-link click-scroll"  href="{{ url('/eventos') }}">Eventos</a>
                     </li>
 
                     <li class="nav-item">

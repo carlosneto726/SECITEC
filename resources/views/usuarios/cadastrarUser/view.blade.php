@@ -14,37 +14,37 @@
                                 href="{{ url('/login') }}" role="tab" aria-controls="pills-login"
                                 aria-selected="true">ENTRAR</a>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link text-dark " id="tab-register" data-mdb-toggle="pill"
+                        <li class="nav-item border rounded" role="presentation">
+                            <a class="nav-link text-dark" id="tab-register" data-mdb-toggle="pill"
                                 href="{{ url('/cadastrar') }}" role="tab" aria-controls="pills-register"
                                 aria-selected="false">CADASTRAR</a>
                         </li>
                     </ul>
 
-                    <div class="form-floating mb-3">
-                        <input type="text" name="nome" id="nome" placeholder="Informe o Nome:" class="form-control"
-                            required>
-                        <label for="floatingInput">Nome</label>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" placeholder="Nome" name="nome" id="nome" required>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" name="cpf" id="cpf" placeholder="Informe o CPF:" class="form-control"
-                            required>
-                        <label for="floatingImput">CPF</label>
+
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" maxlength="11" onkeypress="return /[0-9]/i.test(event.key)" required>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" name="email" id="email" placeholder="Informe o email:" class="form-control"
-                            required>
-                        <label for="floatingImput">Email</label>
+                    <small class="ms-1 mb-3 opacity-50">Apenas números. Sem símbolos.</small>
+
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="E-Mail" name="email" id="email" required>
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" class="form-control" placeholder="Senha" id="senha" name="senha" maxlength="255" required>
                         <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off" onclick="verSenha()">
-                        <label class="btn btn-outline-secondary shadow h-50" for="btn-check"><img src="{{asset("icons/eye.svg")}}" width="16" height="16"></label>
+                        <label class="btn btn-outline-secondary h-50" for="btn-check"><img src="{{asset("icons/eye.svg")}}" width="16" height="16"></label>
                     </div>
 
-                    <button class="btn btn-success w-100" onclick="cadastrarBtn('usuarios/cadastrar')">    
+                    <button class="btn btn-success w-100" onclick="postHandler('usuarios/cadastrar', 'cadastrar')">
                         Cadastrar
                     </button>
+                    <small>
+                        Ao clicar em <strong>Cadastrar</strong>, você concorda com nossos <a href="{{("/termos")}}" target="_blank">Termos, Política de Privacidade e Política de Cookies</a>. Você poderá receber E-mails.
+                    </small>
                     <hr class="my-4">
                 </div>
             </div>
