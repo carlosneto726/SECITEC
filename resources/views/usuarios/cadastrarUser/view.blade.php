@@ -1,6 +1,5 @@
 @extends('templates.template')
 @section('content')
-<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <div class="container mt-5 mb-5 pt-5 pb-5">
     <div class="row">
@@ -39,7 +38,7 @@
                         <label class="btn btn-outline-secondary h-50" for="btn-check"><img src="{{asset("icons/eye.svg")}}" width="16" height="16"></label>
                     </div>
 
-                    <button class="btn btn-success w-100" onclick="postHandler('usuarios/cadastrar', 'cadastrar')">
+                    <button class="btn btn-success w-100" onclick="postHandler('/usuarios/cadastrar', 'cadastrar')">
                         Cadastrar
                     </button>
                     <small>
