@@ -1,6 +1,6 @@
 
 function postHandler(endpoint, tipo){
-    const url = 'http://127.0.0.1:8000/'+endpoint;
+    const url = window.location.origin + endpoint;
     var dados;
 
     if(tipo === 'cadastrar'){
