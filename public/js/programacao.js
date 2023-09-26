@@ -6,7 +6,7 @@ window.onload = function () {
         var horaf = programacoes[i]['horarioF'];
         var dia = programacoes[i]['dia'];
 
-        if(dia == 23){
+        if(dia == '2023-10-23'){
             document.getElementById("programacoes23").innerHTML += 
         
             '<div class="container">' +            
@@ -45,7 +45,7 @@ window.onload = function () {
             '   </div>' +
             ' </div>' +
             ' <div class="row border-bottom pb-5 mb-5">';
-        }if(dia == 24){
+        }if(dia == '2023-10-24'){
             document.getElementById("programacoes24").innerHTML += 
         
             '<div class="container">' +            
@@ -85,7 +85,7 @@ window.onload = function () {
             ' </div>' +
             ' <div class="row border-bottom pb-5 mb-5">';
 
-        }if(dia == 25){
+        }if(dia == '2023-10-25'){
             document.getElementById("programacoes25").innerHTML += 
         
             '<div class="container">' +            
@@ -125,7 +125,7 @@ window.onload = function () {
             ' </div>' +
             ' <div class="row border-bottom pb-5 mb-5">';
         }
-        if(dia == 26){
+        if(dia == '2023-10-26'){
             document.getElementById("programacoes26").innerHTML += 
         
             '<div class="container">' +            
