@@ -47,8 +47,10 @@
     </div>
 
         <div class="video-wrap">
-            <video autoplay="" loop="" muted="" class="custom-video" poster="">
+            <!--<video autoplay="" loop="" muted="" class="custom-video" poster="">
             </video>
+                    -->
+            <img src="{{asset('images/banner_ideia.gif')}}" alt="" class="custom-video">
         </div>
 </section>
                                     
