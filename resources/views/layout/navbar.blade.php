@@ -4,7 +4,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <a href="{{ url('/') }}" class="navbar-brand mx-auto mx-lg-0 d-flex align-items-center">
+        <a href="{{ url('/') }}" class="onavbar-brand mx-auto mx-lg-0 d-flex align-items-center">
             <img src="{{asset('images/logo_ifg.png')}}" class="logo" alt="">
             <span class="text-light">SECITEC 2023</span>
         </a>

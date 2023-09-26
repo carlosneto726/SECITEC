@@ -342,7 +342,7 @@ https://templatemo.com/tm-575-leadership-event
     border: 0;
     padding: 0;
     cursor: pointer;
-    margin: 1;
+    margin: 0;
     width: 30px;
     height: 35px;
     outline: none;
@@ -376,6 +376,7 @@ https://templatemo.com/tm-575-leadership-event
   .navbar-toggler .navbar-toggler-icon {
     background: var(--white-color);
     transition: background 10ms 300ms ease;
+    display: block;
     width: 30px;
     height: 2px;
     position: relative;
@@ -409,7 +410,7 @@ https://templatemo.com/tm-575-leadership-event
 
   .navbar-bg{
     background: var(--ifg-color-primary);
-    background: linear-gradient(90deg, var(--ifg-color-secundary) 0%, var(--ifg-color-primary) 100%);
+    background: url(../images/circuito.png), linear-gradient(90deg, var(--ifg-color-secundary) 0%, var(--ifg-color-primary) 100%);
   }
   
   /*---------------------------------------
