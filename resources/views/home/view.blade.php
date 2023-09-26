@@ -23,7 +23,7 @@
 
                             if (timeLeft <= 0) {
                                 clearInterval(countdown);
-                                document.getElementById('countdown').innerHTML = 'Tempo esgotado!';
+                                document.getElementById('countdown').innerHTML = 'Nosso evento já começou!';
                             } else {
                                 const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
                                 const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -83,7 +83,7 @@
 
                     <div class="highlight-info">
                         <h6 class="highlight-title">CALIANDRAS DIGITAIS I SIMPÓSIO, 2024</h6>
-                        <a href="https://www.facebook.com/ifgformosa" class="bi-plus-circle highlight-icon"></a>
+                        <a href="https://caliandrasdigitais.com.br/?secao=sobre" class="bi-plus-circle highlight-icon"></a>
                     </div>
                 </div>
             </div>      
