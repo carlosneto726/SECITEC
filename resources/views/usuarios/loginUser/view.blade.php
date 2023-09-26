@@ -1,6 +1,6 @@
 @extends('templates.template')
 @section('content')
-    <div class="container">
+    <div class="container mt-5 mb-5 pt-5 pb-5">
 
         <div class="row">
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
