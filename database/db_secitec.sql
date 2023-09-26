@@ -163,9 +163,11 @@ tb_evento.url AS url,
 tb_evento.id_proponente AS id_proponente, 
 tb_proponente.nome AS proponente, 
 tb_proponente.titulacao AS titulacao, 
-tb_proponente.url AS url_p 
+tb_proponente.url AS url_p,
+tb_tipo_evento.nome AS nome_tipo_evento
 FROM (tb_evento JOIN tb_proponente 
-  ON(tb_evento.id_proponente = tb_proponente.id));
+  ON(tb_evento.id_proponente = tb_proponente.id))
+  INNER JOIN tb_tipo_evento ON tb_evento.id_tipo_evento = tb_tipo_evento.id;
 
 -- --------------------------------------------------------
 
