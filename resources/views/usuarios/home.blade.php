@@ -75,6 +75,24 @@
         </div>
     </div>
 
+    <!-- Modal Aviso -->
+    <div id="conflitoModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Aviso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>"O horário deste evento coincide com o horário de um evento ao qual você já está cadastrado."</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Regras -->
     <div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -178,6 +196,10 @@
                             eventoBtn.innerHTML = 'Entrar na Fila'
                             break;
                             // cadastro reserva
+                        case "conflito":
+                            var myModal = new bootstrap.Modal(document.getElementById('conflitoModal'))
+                            myModal.show()
+                            break;
                         default:
                             eventoBtn.classList.remove('btn-warning');
                             eventoBtn.classList.add('btn-danger');
