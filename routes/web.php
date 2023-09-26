@@ -21,10 +21,15 @@ use App\Http\Controllers\ValidarUsuariosController;
 Route::get('/', [Controller::class, 'viewHome']);
 Route::get('/sobre', [Controller::class, 'viewSobre']);
 Route::get('/local', [Controller::class, 'viewLocal']);
+Route::get('/login', [Controller::class, 'viewLogin']);
+Route::get('/cadastrar', [Controller::class, 'viewCadastrar']);
+
 Route::get('/programacao', [ProgramacaoController::class, 'viewProgramacao']);
 
+// Rotas do ValidarAdmController para validar o administrador
 Route::get('/admin', [ValidarAdmController::class, 'viewAdm']);
 Route::post('/admin/entrar', [ValidarAdmController::class, 'entrar']);
+// Rotas do AdministradorController para funções do administrador
 Route::get('/admin/sair', [AdministradorController::class, 'sair']);
 Route::get('/admin/eventos', [AdministradorController::class, 'viewEventos']);
 Route::post('/admin/eventos/cadastrar', [AdministradorController::class, 'insertEvento']);
@@ -37,15 +42,11 @@ Route::post('/admin/proponente/deletar', [AdministradorController::class, 'delet
 Route::get('/admin/presenca/{id_evento}', [AdministradorController::class, 'viewPresenca']);
 Route::post('/admin/presenca/checkin', [AdministradorController::class, 'checkin']);
 Route::post('/admin/presenca/checkout', [AdministradorController::class, 'checkout']);
-
-Route::post('/admin/teste', [AdministradorController::class, 'teste']);
-
-Route::get('/teste', [AdministradorController::class, 'enviarEmail']);
-
-Route::get('/loginUser', [Controller::class, 'viewLogin']);
-Route::get('/cadastrarUser', [Controller::class, 'viewCadastrar']);
-Route::get('/usuarios', [ValidarUsuariosController::class, 'viewUsuarios']);
-Route::post('/usuarios/cadastarUser/view', [UsuariosController::class, 'cadastrarUser']);
-Route::post('/usuarios/loginUser/view', [ValidarUsuariosController::class, 'loginUser']);
-
+// Rotas do ValidarUsuariosController para validar o usuário, criar conta, validar email
+Route::post('/usuarios/cadastrar', [ValidarUsuariosController::class, 'addUsuario']);
+Route::post('/usuarios/login', [ValidarUsuariosController::class, 'validarLogin']);
+Route::get('/usuarios/sair', [ValidarUsuariosController::class, 'sair']);
+Route::get('/validar/usuario/{token}', [ValidarUsuariosController::class, 'validarEmail']);
+// Rotas do UsuariosController para funções do usuário como visualizar, cadastrar eventos
+Route::get('/eventos', [UsuariosController::class, 'viewEventos']);
 Route::post('/usuarios/cadastarEvento', [UsuariosController::class, 'cadastrarEvento']);

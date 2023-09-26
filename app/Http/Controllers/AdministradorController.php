@@ -10,24 +10,22 @@ use Illuminate\Support\Facades\Mail;
 
 class AdministradorController extends Controller
 {
-
     public $nome_usuario; 
     public $senha_usuario;
     public function __construct() {
-        $this->nome_usuario = $_COOKIE['nome_usuario'];
-        $this->senha_usuario = $_COOKIE['senha_usuario'];
+        $this->nome_usuario = $_COOKIE['ADM_USER'];
+        $this->senha_usuario = $_COOKIE['ADM_PASSWORD'];
 
         if(!isset($this->nome_usuario) && !isset($this->senha_usuario)){
-            redirect("/admin");
+            abort(404, "Tem que se validar meu chapinha");
         }
     }
 
     public function sair(){
-        setcookie("nome_usuario", "", time() - 3600, "/");
-        setcookie("senha_usuario", "", time() - 3600, "/");
+        setcookie("ADM_USER", "", time() - 3600, "/");
+        setcookie("ADM_PASSWORD", "", time() - 3600, "/");
         return redirect("/admin");
     }
-
 
     // Eventos
     public function viewEventos(){
@@ -126,7 +124,6 @@ class AdministradorController extends Controller
         [$id_eventousuario]);
     }
 
-
     function getusUarioId($cpf, $idevento){
         $ideventousuario = DB::select("   SELECT tb_evento_usuario.id AS id_usuario
                                         FROM tb_evento_usuario
@@ -140,7 +137,6 @@ class AdministradorController extends Controller
         
         return $ideventousuario[0]->ida;
     }
-
 
     // Proponente
     public function viewProponente(){
@@ -214,11 +210,5 @@ class AdministradorController extends Controller
                 'type' => 'warning'
             ]
         );
-    }
-
-    public function enviarEmail(){
-        $dados = "https://www.youtube.com/watch?v=yhtLGnExKYk&t=12s";
-        $email = "contasdocaique@gmail.com";
-        Mail::to($email)->send(new AtivarConta($dados, 'ativarConta'));
     }
 }

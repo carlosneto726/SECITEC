@@ -24,6 +24,14 @@ CREATE TABLE tb_redes_proponente(
 ALTER TABLE tb_evento_usuario MODIFY checkin time;
 ALTER TABLE tb_evento_usuario MODIFY checkout time;
 
+
+-- Query 4:
+-- Adicionando colunas para a validação e ativação da conta do usuário
+ALTER TABLE tb_usuario 
+ADD COLUMN token varchar(255),
+ADD COLUMN status int(11),
+MODIFY COLUMN senha varchar(255) NOT NULL;
+
 ALTER VIEW vw_evento_proponente AS
 SELECT tb_evento.id AS id, 
 tb_evento.titulo AS titulo, 

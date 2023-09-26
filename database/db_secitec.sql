@@ -19,9 +19,11 @@
 CREATE TABLE tb_usuario (
   id int(11) NOT NULL AUTO_INCREMENT,
   nome varchar(200) NOT NULL,
-  senha varchar(8) NOT NULL,
+  senha varchar(255) NOT NULL,
   cpf varchar(200) NOT NULL,
   email varchar(200) DEFAULT NULL,
+  token varchar(255),
+  status int(11),
   PRIMARY KEY (id)
 );
 
