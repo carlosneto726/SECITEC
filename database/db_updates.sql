@@ -32,6 +32,8 @@ ADD COLUMN token varchar(255),
 ADD COLUMN status int(11),
 MODIFY COLUMN senha varchar(255) NOT NULL;
 
+-- Query 5:
+-- Alterando a view da view para mostrar o nome do tipo de evento
 ALTER VIEW vw_evento_proponente AS
 SELECT tb_evento.id AS id, 
 tb_evento.titulo AS titulo, 
