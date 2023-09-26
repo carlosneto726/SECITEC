@@ -33,11 +33,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link custom-btn btn d-none d-lg-block" href="{{ url('/usuarios/sair') }}">Sair</a>
+                        <a class="nav-link custom-btn btn btn-danger" href="{{ url('/usuarios/sair') }}">Sair</a>
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link custom-btn btn btn-danger d-none d-lg-block" href="{{ url('/login') }}">Entrar</a>
+                        <a class="nav-link custom-btn btn btn-danger" href="{{ url('/login') }}">Entrar</a>
                     </li>
                 @endif
             </ul>
