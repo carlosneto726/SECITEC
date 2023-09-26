@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-bg text-light">
-    <div class="container ">
-
-        <button class="navbar-toggler bg-primary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -9,11 +8,10 @@
             <img src="{{asset('images/logo_ifg.png')}}" class="logo" alt="">
             <span class="text-light">SECITEC 2023</span>
         </a>
-        
         <!-- <a class="nav-link custom-btn btn d-lg-none" href="#">Inscrever</a> -->
 
-        <div class="collapse navbar-collapse " id="navbarNav">
-            <ul class="navbar-nav ms-auto d-flex align-items-center">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto d-flex align-items-lg-center align-items-md-center">
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="{{ url('/') }}">Home</a>
                 </li>
@@ -43,8 +41,7 @@
                     </li>
                 @endif
             </ul>
-        <div>
-                
+        <div>    
     </div>
 </nav>
         
