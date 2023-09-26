@@ -49,14 +49,22 @@ class UsuariosController extends Controller
         if($this->verificaCadastro( $request->input('usuarioId'),$request->input('eventoId'))) {
             // Descadastrar o usuario no evento
             // Ao descadastrar verificar a fila e adicionar o proximo da reserva a lista de cadastrados.
+            $usuarioCadastrado = DB::select("SELECT status FROM tb_evento_usuario WHERE id_evento = ? AND id_usuario = ?", [$eventoID, $usuarioId]) == 0;
             try {
-                DB::delete("DELETE FROM tb_evento_usuario WHERE id_evento = ? AND id_usuario = ?", [$eventoID, $usuarioId]);
+                $temFila = !($vagasOcupadas < $vagasTotais);
+                if($temFila && $usuarioCadastrado){
+                    // procura o proximo da fila para cadastrar
+                    DB::delete("DELETE FROM tb_evento_usuario WHERE id_evento = ? AND id_usuario = ?", [$eventoID, $usuarioId]);
+                } else {
+                    DB::delete("DELETE FROM tb_evento_usuario WHERE id_evento = ? AND id_usuario = ?", [$eventoID, $usuarioId]);
+                }
                 return response()->json(['mensagem' => 'Descadastrado com sucesso!', 'evento' => $eventoID]);
             } catch (\Throwable $th) {
                 return response()->json(['mensagem' => $th]);
             }
         } else {
             // Cadastra o usuario no evento
+            // validar conflito de horario
             try {
                 $status = $vagasOcupadas < $vagasTotais ? 0 : 1;    
                 DB::insert("INSERT INTO 
@@ -125,7 +133,7 @@ class UsuariosController extends Controller
     }
     
     function calcularVagasRestantes($eventoId, $eventoVagasTotais){
-        $vagasOcupadas = count(DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ?;", [$eventoId]));
+        $vagasOcupadas = count(DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ? AND status = 0", [$eventoId])); 
         return $eventoVagasTotais - $vagasOcupadas;
     }
     }

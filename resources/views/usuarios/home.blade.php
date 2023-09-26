@@ -141,18 +141,12 @@
                     vagasEsgotadasAlert.classList.add('show');
                 }
             } else {
-                if (parseInt(vagas.innerHTML) == 0) {
-                    eventoBtn.classList.remove('btn-danger');
-                    eventoBtn.classList.add('btn-warning');
-                    eventoBtn.innerHTML = 'Entrar na Fila'
-                } else {
-                    eventoBtn.classList.remove('btn-danger');
-                    eventoBtn.classList.add('btn-success');
-                    eventoBtn.innerHTML = 'Cadastrar'
-                    vagas.innerHTML = parseInt(vagas.innerHTML) + 1;
-                    if (parseInt(vagas.innerHTML) > 0 && vagasEsgotadasAlert.classList.contains('show')) {
-                        vagasEsgotadasAlert.classList.remove('show');
-                    }
+                eventoBtn.classList.remove('btn-danger');
+                eventoBtn.classList.add('btn-success');
+                eventoBtn.innerHTML = 'Cadastrar'
+                vagas.innerHTML = parseInt(vagas.innerHTML) + 1;
+                if (parseInt(vagas.innerHTML) > 0 && vagasEsgotadasAlert.classList.contains('show')) {
+                    vagasEsgotadasAlert.classList.remove('show');
                 }
             }
         }

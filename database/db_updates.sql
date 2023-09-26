@@ -52,3 +52,7 @@ FROM (tb_evento JOIN tb_proponente
   ON(tb_evento.id_proponente = tb_proponente.id))
   INNER JOIN tb_tipo_evento ON tb_evento.id_tipo_evento = tb_tipo_evento.id;
 
+
+ALTER TABLE tb_evento_usuario
+ADD COLUMN data_insercao DATE;
+
