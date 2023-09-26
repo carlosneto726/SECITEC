@@ -32,6 +32,8 @@ ADD COLUMN token varchar(255),
 ADD COLUMN status int(11),
 MODIFY COLUMN senha varchar(255) NOT NULL;
 
+-- Query 5:
+-- Alterando a view da view para mostrar o nome do tipo de evento
 ALTER VIEW vw_evento_proponente AS
 SELECT tb_evento.id AS id, 
 tb_evento.titulo AS titulo, 
@@ -51,4 +53,8 @@ tb_tipo_evento.nome AS nome_tipo_evento
 FROM (tb_evento JOIN tb_proponente 
   ON(tb_evento.id_proponente = tb_proponente.id))
   INNER JOIN tb_tipo_evento ON tb_evento.id_tipo_evento = tb_tipo_evento.id;
+
+
+ALTER TABLE tb_evento_usuario
+ADD COLUMN data_insercao DATE;
 
