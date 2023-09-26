@@ -26,9 +26,20 @@
                 <li class="nav-item">
                     <a class="nav-link click-scroll"  href="{{ url('/local') }}">Local</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link custom-btn btn d-none d-lg-block" href="{{ url('/loginUser') }}">Entrar</a>
-                </li>
+
+                @if(isset($_COOKIE['usuario']) && isset($_COOKIE['nome_usuario']))
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll"  href="{{ url('/local') }}">Eventos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link custom-btn btn d-none d-lg-block" href="{{ url('/usuarios/sair') }}">Sair</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link custom-btn btn btn-danger d-none d-lg-block" href="{{ url('/login') }}">Entrar</a>
+                    </li>
+                @endif
             </ul>
         <div>    
     </div>
