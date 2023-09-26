@@ -55,7 +55,17 @@
 <section class="highlight">
     <div class="container">
         <div class="row">
-        <div class="col-lg-4 col-md-6 col-12">
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="highlight-thumb">
+                    <img src="{{asset('images/ifg_secitec_2022.png')}}" class="highlight-image img-fluid" alt="">
+
+                    <div class="highlight-info">
+                        <h6 class="highlight-title">SECITEC, 2022</h6>
+                        <a href="https://www.ifg.edu.br/component/content/article/158-ifg/campus/formosa/noticias-campus-formosa/32193-xiii-secitec-discute-educacao-profissional-e-tecnologica-e-inclusao-de-pessoas-com-deficiencia?highlight=WyJzZWNpdGVjIiwyMDIyLCJzZWNpdGVjIDIwMjIiXQ==" class="bi-plus-circle highlight-icon"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-12">
                 <div class="highlight-thumb">
                     <img src="{{asset('images/hackathon.png')}}" class="highlight-image img-fluid" alt="">
 
@@ -74,19 +84,7 @@
                         <a href="https://www.facebook.com/ifgformosa" class="bi-plus-circle highlight-icon"></a>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 col-12">
-                <div class="highlight-thumb">
-                    <img src="{{asset('images/ifg_secitec_2022.png')}}" class="highlight-image img-fluid" alt="">
-
-                    <div class="highlight-info">
-                        <h6 class="highlight-title">SECITEC, 2022</h6>
-                        <a href="https://www.ifg.edu.br/component/content/article/158-ifg/campus/formosa/noticias-campus-formosa/32193-xiii-secitec-discute-educacao-profissional-e-tecnologica-e-inclusao-de-pessoas-com-deficiencia?highlight=WyJzZWNpdGVjIiwyMDIyLCJzZWNpdGVjIDIwMjIiXQ==" class="bi-plus-circle highlight-icon"></a>
-                    </div>
-                </div>
-            </div>
-
+            </div>      
         </div>
     </div>
 </section> 

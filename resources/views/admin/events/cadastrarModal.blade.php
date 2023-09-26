@@ -43,9 +43,13 @@
                         <p><input class="form-control" type="number" name="numHoras" required /></p>
                         <p><label for="local">Informe o local do evento</label></p>
                         <p><input class="form-control " type="text" name="txtLocal" required /></p>
-                        <p><label>Escolha a foto que representa o Evento</label></p>
-                        <p><input class="form-control" type="file" name="arquivo" required/></p>
-                        <p><input class="form-control" type="file" name="arquivo" required /></p>
+                        <div class="mb-2">
+                            <label for="basic-url" class="form-label">Escolha a foto que representa o Evento</label>
+                            <div class="input-group">
+                                <input class="form-control" type="file" name="arquivo" id="formFile" accept=".png, .jpg, .jpeg, .webp, .avif, .jfif">
+                            </div>
+                            <div class="form-text" id="basic-addon4">.png, .jpg, .jpeg, .webp, .avif, .jfif</div>
+                        </div>
                         <p>
                             <label for="tipoEvento">Tipo de Evento</label>
                         </p>
@@ -54,17 +58,6 @@
                                 <option>--Selecionar tipo do evento--</option>
                                 @foreach ($tipoEventos as $tipoEvento)
                                     <option style="text-transform:capitalize;" value="{{ $tipoEvento->id }}">{{ $tipoEvento->nome }}</option>
-                                @endforeach
-                            </select>
-                        </p>
-                        <p>
-                            <label for="proponente">Proponente</label>
-                        </p>
-                        <p>
-                            <select class="form-control" name="cbxPalestrante" id="proponente" required>
-                                <option>--Selecionar proponente--</option>
-                                @foreach ($palestrantes as $palestrante)
-                                    <option>{{ $palestrante->nome }}</option>
                                 @endforeach
                             </select>
                         </p>
