@@ -65,6 +65,9 @@ class UsuariosController extends Controller
         } else {
             // Cadastra o usuario no evento
             try {
+                if($this->verificaConflito($eventoID, $usuarioId)) {
+                    return response()->json(['mensagem' => "conflito", 'evento' => $eventoID]);
+                }
                 $status = $vagasOcupadas < $vagasTotais ? 0 : 1;    
                 $mensagemResponse = $vagasOcupadas < $vagasTotais ? "cadastroNormal" : "cadastroReserva";
                 DB::insert("INSERT INTO 
@@ -103,6 +106,29 @@ class UsuariosController extends Controller
             return false;
         }
     }
+
+    public function verificaConflito($eventoId, $usuarioId) {
+        $evento = DB::select("SELECT * FROM tb_evento WHERE id = ?;", [$eventoId])[0];
+        if($evento->id_tipo_evento == 4){
+            return false;
+        }
+        $dia = $evento->dia;
+        $horarioI = $evento->horarioI;
+        $horarioF = "$evento->horarioF";
+        $query = "SELECT COUNT(*) AS total_conflitos FROM tb_evento AS evento
+                  INNER JOIN tb_evento_usuario AS eventoRelacao ON evento.id = eventoRelacao.id_evento
+                  WHERE eventoRelacao.id_usuario = ? 
+                  AND evento.dia = ? 
+                  AND evento.id_tipo_evento != 4
+                  AND ('$horarioI' < evento.horarioF) AND ('$horarioF' > evento.horarioI)";
+        $resultado = DB::select($query, [$usuarioId, $dia]);
+        if ($resultado[0]->total_conflitos > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 
     public function viewEventos(){
         $eventos = DB::select(" SELECT e.*, te.nome AS tipo_evento_nome
