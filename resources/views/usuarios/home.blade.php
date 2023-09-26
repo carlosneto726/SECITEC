@@ -9,7 +9,7 @@
         <h3 class="user-page-title">Eventos da <strong>SECITEC 2023</strong></h3>
         <section class="user-eventos container row">
             @foreach ($eventosMapeados as $evento)
-                <div style="margin-bottom: 30px;" class="evento">
+                <div class="evento">
                     <div style="margin-bottom: 5px;" class="horario-evento">
                         <span class="d-flex align-items-center">
                             <i class="bi bi-clock text-primary me-2"></i>
@@ -17,7 +17,8 @@
                                 - {{ $evento->horarioF }}</span>
                         </span>
                     </div>
-                    <div class="event-card col-12">
+                    <div id="event-card{{ $evento->id }}"
+                        class="event-card {{ $evento->usuario_cadastrado ? 'cadastrado' : ($evento->vagas_restantes == 0 ? 'fila' : '') }} col-12">
                         <div class="event-content col-lg-10 col-8">
                             <div class="text">
                                 <h3>{{ $evento->titulo }}</h3>
@@ -51,7 +52,30 @@
         </section>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Aviso -->
+    <div id="avisoModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Aviso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Você entrou na fila de espera .Se, ao chegar no evento, vagas adicionais estiverem disponíveis devido
+                        a
+                        cancelamentos ou mudanças, você terá a oportunidade de participar. Daremos prioridade aos
+                        participantes na lista de espera com base na ordem de inscrição. Portanto, mesmo que as
+                        vagas estejam esgotadas inicialmente, ainda há a chance de participar do evento se vagas
+                        adicionais se tornarem disponíveis.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Regras -->
     <div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -117,44 +141,52 @@
                     eventoId: eventoId
                 },
                 success: function(data) {
-                    if (data.mensagem == 'Cadastrado com sucesso!') {
-                        handleCadastro(true, data.evento)
-                    } else if (data.mensagem == 'Descadastrado com sucesso!') {
-                        handleCadastro(false, data.evento)
+                    const eventoBtn = document.getElementById(`${data.evento}`);
+                    const vagas = document.getElementById(`vagas_restantes${data.evento}`);
+                    const vagasEsgotadasAlert = document.getElementById(`vagas_esgotadas_alert${data.evento}`)
+                    switch (data.mensagem) {
+                        case "descadastroSemFila":
+                            eventoBtn.classList.remove('btn-danger');
+                            eventoBtn.classList.add('btn-success');
+                            eventoBtn.innerHTML = 'Cadastrar'
+                            vagas.innerHTML = parseInt(vagas.innerHTML) + 1;
+                            if (vagasEsgotadasAlert.classList.contains(
+                                    'show')) {
+                                vagasEsgotadasAlert.classList.remove('show');
+                            }
+                            break;
+                        case "saiuFila":
+                            eventoBtn.classList.remove('btn-danger');
+                            eventoBtn.classList.add('btn-warning');
+                            eventoBtn.innerHTML = 'Entrar na Fila'
+                            break;
+                        case "cadastroNormal":
+                            eventoBtn.classList.remove('btn-success');
+                            eventoBtn.classList.add('btn-danger');
+                            eventoBtn.innerHTML = 'Descadastrar'
+                            if (parseInt(vagas.innerHTML) > 0) {
+                                vagas.innerHTML = parseInt(vagas.innerHTML) - 1;
+                            }
+                            if (parseInt(vagas.innerHTML) < 1 && !vagasEsgotadasAlert.classList.contains(
+                                    'show')) {
+                                vagasEsgotadasAlert.classList.add('show');
+                            }
+                            break;
+                        case "removidoFila":
+                            eventoBtn.classList.remove('btn-danger');
+                            eventoBtn.classList.add('btn-warning');
+                            eventoBtn.innerHTML = 'Entrar na Fila'
+                            break;
+                            // cadastro reserva
+                        default:
+                            eventoBtn.classList.remove('btn-warning');
+                            eventoBtn.classList.add('btn-danger');
+                            eventoBtn.innerHTML = 'Descadastrar'
+                            var myModal = new bootstrap.Modal(document.getElementById('avisoModal'))
+                            myModal.show()
                     }
                 }
             });
-        }
-
-        const handleCadastro = (cadastrar, evento) => {
-            const eventoBtn = document.getElementById(`${evento}`);
-            const vagas = document.getElementById(`vagas_restantes${evento}`);
-            const vagasEsgotadasAlert = document.getElementById(`vagas_esgotadas_alert${evento}`)
-            if (cadastrar) {
-                eventoBtn.classList.remove('btn-success');
-                eventoBtn.classList.add('btn-danger');
-                eventoBtn.innerHTML = 'Descadastrar'
-                if (parseInt(vagas.innerHTML) > 0) {
-                    vagas.innerHTML = parseInt(vagas.innerHTML) - 1;
-                }
-                if (parseInt(vagas.innerHTML) < 1 && !vagasEsgotadasAlert.classList.contains('show')) {
-                    vagasEsgotadasAlert.classList.add('show');
-                }
-            } else {
-                if (parseInt(vagas.innerHTML) == 0) {
-                    eventoBtn.classList.remove('btn-danger');
-                    eventoBtn.classList.add('btn-warning');
-                    eventoBtn.innerHTML = 'Entrar na Fila'
-                } else {
-                    eventoBtn.classList.remove('btn-danger');
-                    eventoBtn.classList.add('btn-success');
-                    eventoBtn.innerHTML = 'Cadastrar'
-                    vagas.innerHTML = parseInt(vagas.innerHTML) + 1;
-                    if (parseInt(vagas.innerHTML) > 0 && vagasEsgotadasAlert.classList.contains('show')) {
-                        vagasEsgotadasAlert.classList.remove('show');
-                    }
-                }
-            }
         }
     </script>
 @endsection
