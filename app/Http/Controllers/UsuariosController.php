@@ -131,9 +131,6 @@ class UsuariosController extends Controller
     
 
     public function viewEventos(){
-        if(!isset($id_usuario) && !isset($nome_usuario)){
-            return redirect("/login");
-        }
         $eventos = DB::select(" SELECT e.*, te.nome AS tipo_evento_nome
                                 FROM tb_evento AS e
                                 INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
@@ -159,7 +156,6 @@ class UsuariosController extends Controller
                 $evento->horas,
                 $evento->local,
                 $evento->url,
-                $evento->id_proponente,
                 $evento->id_tipo_evento,
                 false,
                 $evento->tipo_evento_nome,
@@ -193,7 +189,6 @@ class UsuariosController extends Controller
     public $horas;
     public $local;
     public $url;
-    public $id_proponente;
     public $id_tipo_evento;
     public $usuario_cadastrado;
     public $tipo_evento_nome;
@@ -210,7 +205,6 @@ class UsuariosController extends Controller
         $horas,
         $local,
         $url,
-        $id_proponente,
         $id_tipo_evento,
         $usuario_cadastrado,
         $tipo_evento_nome,
@@ -226,7 +220,6 @@ class UsuariosController extends Controller
         $this->horas = $horas;
         $this->local = $local;
         $this->url = $url;
-        $this->id_proponente = $id_proponente;
         $this->id_tipo_evento = $id_tipo_evento;
         $this->id_tipo_evento = $id_tipo_evento;
         $this->usuario_cadastrado = $usuario_cadastrado;
