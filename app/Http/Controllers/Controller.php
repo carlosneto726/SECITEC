@@ -33,5 +33,8 @@ class Controller extends BaseController
     public function viewCadastrar(){
         return view("usuarios.cadastrarUser.view");
     }
+    public function viewTermos(){
+        return view("home.termos");
+    }
 
 }

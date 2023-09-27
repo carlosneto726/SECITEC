@@ -85,8 +85,8 @@
                                 
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-danger" onclick="excluirBtn({{$dados->id}}, 'admin/eventos/deletar')">Deletar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-danger" onclick="excluirBtn('/admin/eventos/deletar', {{$dados->id}}, this)" id="deletarBtn">Deletar</button>
                             </div>
                         </div>
                     </div>
@@ -97,7 +97,9 @@
     </table>
 </div>
 
+<script src="{{asset('js/admin.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
 @include('admin.events.cadastrarModal')
 
 
