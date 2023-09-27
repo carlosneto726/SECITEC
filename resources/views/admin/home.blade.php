@@ -4,7 +4,7 @@
 
 <div class="col-lg-8 mx-auto p-4 py-md-5">
     <main>
-        <h1 class="text-body-emphasis">Credenciamento Da Secitec 2023</h1>
+        <h1 class="text-body-emphasis">Credenciamento Da Secitec 2023</h1><br>
         <p class="fs-5 col-md-8">
             A página de administração de eventos da SECITEC 2023 oferece 
             um conjunto de ferramentas essenciais para a organização e 
@@ -89,7 +89,7 @@
 
 <style>
     .link-tutorial{
-        border-bottom: solid 2px blue;
+        border-bottom: solid 2px #17882c;
     }
 </style>
 @endsection
