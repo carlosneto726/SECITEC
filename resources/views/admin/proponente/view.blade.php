@@ -1,9 +1,18 @@
 @extends('admin.template')
 @section('content')
 
+<script src="{{asset('js/admin.js')}}"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<section class="schedule mb-5" id="section_4">
+    <div class="container">
+        <h2 class=""><u class="text-success"><a class="" href="#staticBackdrop" data-bs-toggle="modal">Proponentes</a></u></h2>
+    </div>
+</section>
+
 <div class="container">
     <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h4 class="border-bottom pb-2 mb-0">Proponentes</h4>
+        
         @foreach ($proponentes as $proponente)
             <div class="d-flex text-body-secondary pt-3 border-bottom">
                 <img class="rounded object-fit-cover" src="{{asset($proponente->url)}}" height="64" width="64">

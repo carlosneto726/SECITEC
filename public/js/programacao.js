@@ -17,7 +17,7 @@ window.onload = function () {
             '          '+horai+' às '+horaf+' ' +
             '      </span>' +     
             '         <span class="col mx-10 mx-lg-20" style="color: blue;">' +
-            '             <i class="bi-hash me-2 "></i>' +
+            '             <i class="me-2 "></i>' +
                             programacoes[i]['nome_tipo_evento']+
             '         </span>' + 
             '         <span class="col-12 mx-1 mx-lg-2 " style="color: green;">' +
@@ -56,7 +56,7 @@ window.onload = function () {
             '          '+horai+' às '+horaf+' ' +
             '      </span>' +     
             '         <span class="col mx-10 mx-lg-20" style="color: blue;">' +
-            '             <i class="bi-hash me-2 "></i>' +
+            '             <i class="me-2 "></i>' +
                             programacoes[i]['nome_tipo_evento']+
             '         </span>' + 
             '         <span class="col-12 mx-1 mx-lg-2 " style="color: green;">' +
@@ -96,7 +96,7 @@ window.onload = function () {
             '          '+horai+' às '+horaf+' ' +
             '      </span>' +     
             '         <span class="col mx-10 mx-lg-20" style="color: blue;">' +
-            '             <i class="bi-hash me-2 "></i>' +
+            '             <i class="me-2 "></i>' +
                             programacoes[i]['nome_tipo_evento']+
             '         </span>' + 
             '         <span class="col-12 mx-1 mx-lg-2 " style="color: green;">' +
@@ -136,7 +136,7 @@ window.onload = function () {
             '          '+horai+' às '+horaf+' ' +
             '      </span>' +     
             '         <span class="col mx-10 mx-lg-20" style="color: blue;">' +
-            '             <i class="bi-hash me-2 "></i>' +
+            '             <i class="me-2 "></i>' +
                             programacoes[i]['nome_tipo_evento']+
             '         </span>' + 
             '         <span class="col-12 mx-1 mx-lg-2 " style="color: green;">' +
