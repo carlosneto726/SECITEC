@@ -1,39 +1,60 @@
 @extends('admin.template')
 @section('content')
 
-<div class="container shadow p-3 mb-5 bg-body rounded">
-    <div class="d-flex h5">Eventos <a class="btn btn-primary ms-auto" href="#staticBackdrop" data-bs-toggle="modal">Cadastrar evento</a></div>
 
+<script src="{{asset('js/admin.js')}}"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<section class="schedule mb-5" id="section_4">
+    <div class="container">
+        <h2 class=""><u class="text-success"><a class="" href="#staticBackdrop" data-bs-toggle="modal">Eventos</a></u></h2>
+    </div>
+</section>
+
+<div class="container shadow p-3 mb-5 bg-body rounded">
     <table class="table table-bordered">
         <tr>
-            <th>Id</th>
-            <th>Titulo</th>
-            <th>Tipo de Evento</th>
-            <th>Descrição</th>
-            <th>Dia</th>
-            <th>Horário Inicio</th>
-            <th>Horário Fim</th>
-            <th>Vagas</th>
-            <th>Horas</th>
-            <th>Registrar Presença</th>
-            <th>Alterar</th>
-            <th>Excluir</th>
+            <th class="align-middle text-center">Titulo</th>
+            <div class=""><th class="d-none d-lg-table-cell align-middle text-center">Tipo</th></div>
+            <th class="d-none d-lg-table-cell align-middle text-center">Descrição</th>
+            <th class="align-middle text-center">Dia</th>
+            <th class="align-middle text-center">Horário Inicio</th>
+            <th class="d-none d-lg-table-cell align-middle text-center">Horário Fim</th>
+            <th class="align-middle text-center">Vagas</th>
+            <th class="d-none d-lg-table-cell align-middle text-center">Horas</th>
+            <th class="align-middle text-center">Alterar</th>
+            
         </tr>
         @foreach ($eventos as $dados)
             <tr>
-                <td>{{$dados->id}}</td>
-                <td>{{$dados->titulo}}</td>
-                <td style="text-transform:capitalize;">{{$dados->tipo_evento_nome}}</td>
-                <td>{{$dados->descricao}}</td>
-                <td>{{$dados->dia}}</td>
-                <td>{{$dados->horarioI}}</td>
-                <td>{{$dados->horarioF}}</td>
-                <td>{{$dados->vagas}}</td>
-                <td>{{$dados->horas}}</td>
+                <td class="align-middle text-center">{{$dados->titulo}}</td>
+                <td class="d-none d-lg-table-cell align-middle text-center text-transform:capitalize;">{{$dados->tipo_evento_nome}}</td>
+                <td class="d-none d-lg-table-cell align-middle text-center"> {{$dados->descricao}}</td>
+                <td class="align-middle text-center">{{ date('d', strtotime($dados->dia)) }}</td>
+                <td class="align-middle text-center">{{ date('H:i', strtotime($dados->horarioI)) }}</td>
+                <td class="d-none d-lg-table-cell align-middle text-center">{{ date('H:i', strtotime($dados->horarioF)) }}</td>
+                <td class="align-middle text-center">{{$dados->vagas}}</td>
+                <td class="d-none d-lg-table-cell align-middle text-center">{{$dados->horas}}</td>
                 @include('admin.events.alterarModal')
-                <td><a href="{{url('/admin/presenca/'.$dados->id)}}" class="btn btn-primary">Registrar presença</a></td>
-                <td><a href="#staticBackdrop{{$dados->id}}" class="btn btn-success" data-bs-toggle="modal">Alterar</a></td>
-                <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{$dados->id}}">Excluir</button></td>
+                <td class="align-middle text-center"><a href="{{url('/admin/presenca/'.$dados->id)}}" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                    </svg>
+                </a>
+                    <a href="#staticBackdrop{{$dados->id}}" class="btn btn-success" data-bs-toggle="modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-toggles" viewBox="0 0 16 16">
+                            <path d="M4.5 9a3.5 3.5 0 1 0 0 7h7a3.5 3.5 0 1 0 0-7h-7zm7 6a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm-7-14a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm2.45 0A3.49 3.49 0 0 1 8 3.5 3.49 3.49 0 0 1 6.95 6h4.55a2.5 2.5 0 0 0 0-5H6.95zM4.5 0h7a3.5 3.5 0 1 1 0 7h-7a3.5 3.5 0 1 1 0-7z"/>
+                        </svg>
+                    </a>
+                
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{$dados->id}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                        </svg>
+                    </button>
+                </td>
                 
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal{{$dados->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
