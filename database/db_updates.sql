@@ -69,5 +69,17 @@ CREATE TABLE tb_proponente_evento(
   FOREIGN KEY(id_evento) REFERENCES tb_evento(id) ON DELETE CASCADE
 );
 
-ALTER TABLE tb_evento
-DROP COLUMN id_proponente;
+
+ALTER VIEW vw_evento_proponente AS
+SELECT tb_evento.id AS id, 
+tb_evento.titulo AS titulo, 
+tb_evento.descricao AS descricao, 
+tb_evento.dia AS dia, 
+tb_evento.horarioI AS horarioI, 
+tb_evento.horarioF AS horarioF, 
+tb_evento.vagas AS vagas, 
+tb_evento.horas AS horas, 
+tb_evento.local AS local, 
+tb_evento.url AS url, 
+tb_tipo_evento.nome AS nome_tipo_evento
+FROM tb_evento INNER JOIN tb_tipo_evento ON tb_evento.id_tipo_evento = tb_tipo_evento.id;
