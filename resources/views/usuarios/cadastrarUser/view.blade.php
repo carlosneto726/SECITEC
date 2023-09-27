@@ -38,7 +38,7 @@
                         <label class="btn btn-outline-secondary h-50" for="btn-check"><img src="{{asset("icons/eye.svg")}}" width="16" height="16"></label>
                     </div>
 
-                    <button class="btn btn-success w-100" onclick="postHandler('/usuarios/cadastrar', 'cadastrar')">
+                    <button class="btn btn-success w-100" onclick="cadastrarUsuario('/usuarios/cadastrar', this)">
                         Cadastrar
                     </button>
                     <small>

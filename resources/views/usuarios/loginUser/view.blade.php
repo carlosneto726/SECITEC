@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="d-grid">
-                        <button class="btn btn-success" onclick="postHandler('/usuarios/login', 'login')"> 
+                        <button class="btn btn-success" onclick="loginUsuario('/usuarios/login', 'login')"> 
                             Entrar
                         </button>
                     <hr class="my-4">

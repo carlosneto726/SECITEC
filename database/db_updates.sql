@@ -54,3 +54,16 @@ FROM (tb_evento JOIN tb_proponente
   ON(tb_evento.id_proponente = tb_proponente.id))
   INNER JOIN tb_tipo_evento ON tb_evento.id_tipo_evento = tb_tipo_evento.id;
 
+-- Query 6:
+-- 
+CREATE TABLE tb_proponente_evento(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  id_evento int(11) NOT NULL,
+  id_proponente int(11) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_proponente) REFERENCES tb_proponente(id) ON DELETE CASCADE,
+  FOREIGN KEY(id_evento) REFERENCES tb_evento(id) ON DELETE CASCADE
+);
+
+ALTER TABLE tb_evento
+DROP COLUMN id_proponente;

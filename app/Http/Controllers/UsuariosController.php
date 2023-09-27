@@ -29,12 +29,12 @@ class UsuariosController extends Controller
     // no $_COOKIE['usuario'] (onde é armazenado o id no client-side) 
     // existe e está ativado no Banco de dados
     public function __construct() {
-        $this->id_usuario = $_COOKIE['usuario'];
-        $this->nome_usuario = $_COOKIE['nome_usuario'];
+        $this->id_usuario = @$_COOKIE['usuario'];
+        $this->nome_usuario = @$_COOKIE['nome_usuario'];
 
         $query = DB::select("SELECT id, nome FROM tb_usuario WHERE id = ? AND status = 1;", [$this->id_usuario]);
         if(count($query) == 0){
-            abort(404, "Tem que se validar meu chapinha");
+            redirect("/login");
         }
     }
 
@@ -82,6 +82,9 @@ class UsuariosController extends Controller
     }
 
     public function viewEventos(){
+        if(!isset($id_usuario) && !isset($nome_usuario)){
+            return redirect("/login");
+        }
         $eventos = DB::select(" SELECT e.*, te.nome AS tipo_evento_nome
                                 FROM tb_evento AS e
                                 INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id

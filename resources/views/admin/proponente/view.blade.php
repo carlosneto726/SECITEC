@@ -1,9 +1,6 @@
 @extends('admin.template')
 @section('content')
 
-<script src="{{asset('js/admin.js')}}"></script>
-<meta name="csrf-token" content="{{ csrf_token() }}">
-
 <div class="container">
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         <h6 class="border-bottom pb-2 mb-0">Proponentes</h6>

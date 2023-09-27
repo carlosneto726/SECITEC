@@ -30,7 +30,7 @@ class ValidarUsuariosController extends Controller
         $token = Str::random(60); // Token gerado aleatoriamente
 
         // condição para verificar caso o cpf seja válido ou não
-        if($this->validaCPF($cpf)){
+        if(!$this->validaCPF($cpf)){
             return response()->json(
                 [
                     'message' => 'CPF inválido',
@@ -40,8 +40,7 @@ class ValidarUsuariosController extends Controller
             );
         }
 
-        $usuarios = DB::select("SELECT email, cpf FROM tb_usuario WHERE email = ? AND cpf = ?;", [$email, $cpf]);
-
+        $usuarios = DB::select("SELECT email, cpf FROM tb_usuario WHERE email = ? OR cpf = ?;", [$email, $cpf]);
         if(count($usuarios) > 0){
             return response()->json(
                 [
@@ -51,30 +50,38 @@ class ValidarUsuariosController extends Controller
                 ]
             );
         }else{
-            DB::insert('INSERT INTO tb_usuario (nome, email, cpf, senha, token, status) 
-                        VALUES (?, ?, ?, ?, ?, 0);', 
-            [$nome, $email, $cpf, $senha, $token]);
-            $this->enviarEmail($email, $token);
-            return response()->json(
-                [
-                    'message' => 'Enviamos um Email para '.$email.' para a ativação da conta.',
-                    'type' => 'warning',
-                    'endpoint' => '/login'
-                ]
-            );
+            try {
+                $this->enviarEmail($email, $token);
+                DB::insert('INSERT INTO tb_usuario (nome, email, cpf, senha, token, status) 
+                            VALUES (?, ?, ?, ?, ?, 0);', 
+                            [$nome, $email, $cpf, $senha, $token]);
+                return response()->json(
+                    [
+                        'message' => 'Enviamos um Email para '.$email.'. Verifique a sua caixa de entrada e a caixa de span.',
+                        'type' => 'warning',
+                        'endpoint' => '/login'
+                    ]
+                );
+            } catch (\Throwable $th) {
+                return response()->json(
+                    [
+                        'message' => 'Email inválido, por favor insira outro endereço de Email.',
+                        'type' => 'danger',
+                        'endpoint' => '/cadastrar'
+                    ]
+                );
+            }
         }
     }
 
     public function validarEmail(){
         $token = request("token");
-        DB::update("UPDATE tb_usuario SET status = 1, token = '' WHERE token = ?", [$token]);
-        return response()->json(
-            [
-                'message' => 'Conta ativada com sucesso. Por favor faça login.',
-                'type' => 'success',
-                'endpoint' => '/login'
-            ]
-        );
+        $query = DB::update("UPDATE tb_usuario SET status = 1, token = '' WHERE token = ?", [$token]);
+        if($query){
+            return redirect("/login");
+        }else{
+            return redirect("/cadastrar");
+        }
     }
 
     public function validarLogin(){
@@ -134,35 +141,32 @@ class ValidarUsuariosController extends Controller
 
     // Skynet kkkkk
     function validaCPF($cpf) {
-        // Remove caracteres não numéricos
-        $cpf = preg_replace('/[^0-9]/', '', $cpf);
-    
-        // Verifica se o CPF tem 11 dígitos
+ 
+        // Extrai somente os números
+        $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
+         
+        // Verifica se foi informado todos os digitos corretamente
         if (strlen($cpf) != 11) {
             return false;
         }
     
-        // Verifica se todos os dígitos são iguais (caso contrário, são inválidos)
+        // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
         if (preg_match('/(\d)\1{10}/', $cpf)) {
             return false;
         }
     
-        // Calcula e verifica o primeiro dígito verificador
-        for ($i = 9, $j = 0, $soma = 0; $i > 0; $i--, $j++) {
-            $soma += $cpf[$j] * $i;
+        // Faz o calculo para validar o CPF
+        for ($t = 9; $t < 11; $t++) {
+            for ($d = 0, $c = 0; $c < $t; $c++) {
+                $d += $cpf[$c] * (($t + 1) - $c);
+            }
+            $d = ((10 * $d) % 11) % 10;
+            if ($cpf[$c] != $d) {
+                return false;
+            }
         }
-        $resto = $soma % 11;
-        $dv1 = ($resto < 2) ? 0 : 11 - $resto;
+        return true;
     
-        // Calcula e verifica o segundo dígito verificador
-        for ($i = 9, $j = 1, $soma = 0; $i >= 0; $i--, $j++) {
-            $soma += $cpf[$j] * $i;
-        }
-        $resto = $soma % 11;
-        $dv2 = ($resto < 2) ? 0 : 11 - $resto;
-    
-        // Verifica se os dígitos verificadores estão corretos
-        return ($cpf[9] == $dv1 && $cpf[10] == $dv2);
     }
     
 }

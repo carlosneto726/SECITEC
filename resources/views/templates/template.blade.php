@@ -44,6 +44,9 @@
             '    </div>'+
             '</div>';
             localStorage.clear();
+            localStorage.removeItem('message');
+            localStorage.removeItem('type');
+            localStorage.removeItem('endpoint');
         }
     </script>
 </body>

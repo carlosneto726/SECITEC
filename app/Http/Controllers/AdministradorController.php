@@ -59,30 +59,42 @@ class AdministradorController extends Controller
         return redirect("/admin/eventos");
     }
 
-    public function insertEvento(Request $request): string{
+    public function insertEvento(Request $request){
 
-        $titulo = request("txtTitulo");
-        $descricao = request("txtDescricao");
-        $dia = request("diaEvento");
+        $titulo = request("titulo");
+        $descricao = request("descricao");
+        $dia = request("data");
         $hrInicio = request("hrInicio");
         $hrFim = request("hrFim");
-        $numVagas = request("numVagas");
-        $numHoras = request("numHoras");
-        $local = request("txtLocal");
-        $nomepalestrante = request("cbxPalestrante");
-        $id_proponente = DB::select("SELECT * FROM tb_proponente WHERE nome = ?;", [$nomepalestrante])[0]->id;
-        $id_tipo_evento = request("cbxTipoEvento");
+        $numVagas = request("vagas");
+        $numHoras = request("horas");
+        $local = request("local");
+        $id_tipo_evento = request("tipoEvento");
+        $proponentes = explode(",", request("proponentes"));
         $path = $request->file('arquivo')->storeAs('images/schedule', "evento".$titulo.".".$request->file('arquivo')->extension(), 'public');
         $url = "storage/".$path;
-        $types = array("png", "jpg", "jpeg", "webp", "avif", "jfif");
+        // $types = array("png", "jpg", "jpeg", "webp", "avif", "jfif");
 
         DB::insert("INSERT INTO 
-                    tb_evento(titulo,descricao,dia,horarioI,horarioF,vagas,horas,local,url,id_proponente,id_tipo_evento)
-                    VALUES (?,?,?,?,?,?,?,?,?,?,?);", 
-                    [$titulo,$descricao,$dia,$hrInicio,$hrFim,$numVagas,$numHoras,$local,$url,$id_proponente, $id_tipo_evento]);
+                    tb_evento(titulo,descricao,dia,horarioI,horarioF,vagas,horas,local,url,id_tipo_evento)
+                    VALUES (?,?,?,?,?,?,?,?,?,?);",
+                    [$titulo,$descricao,$dia,$hrInicio,$hrFim,$numVagas,$numHoras,$local,$url,$id_tipo_evento]);
 
-        AlertController::alert('Evento adicionado com sucesso.', 'success');
-        return redirect("/admin/eventos");
+        $id_evento = DB::getPdo()->lastInsertId();
+        foreach($proponentes as $proponente){
+            DB::insert("INSERT INTO
+                        tb_proponente_evento(id_evento, id_proponente)
+                        VALUES(?, ?);",
+                        [$id_evento, $proponente]);
+        }
+        
+        return response()->json(
+            [
+                'message' => 'Evento cadastrado com sucesso.',
+                'type' => 'success',
+                'endpoint' => '/admin/eventos' 
+            ]
+        );
     }
 
     public function deleteEvento(){
@@ -92,7 +104,8 @@ class AdministradorController extends Controller
         return response()->json(
             [
                 'message' => 'Evento deletado com sucesso.',
-                'type' => 'warning'
+                'type' => 'warning',
+                'endpoint' => '/admin/eventos' 
             ]
         );
     }
