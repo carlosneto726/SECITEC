@@ -58,3 +58,16 @@ FROM (tb_evento JOIN tb_proponente
 ALTER TABLE tb_evento_usuario
 ADD COLUMN data_insercao DATE;
 
+-- Query 6:
+-- 
+CREATE TABLE tb_proponente_evento(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  id_evento int(11) NOT NULL,
+  id_proponente int(11) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_proponente) REFERENCES tb_proponente(id) ON DELETE CASCADE,
+  FOREIGN KEY(id_evento) REFERENCES tb_evento(id) ON DELETE CASCADE
+);
+
+ALTER TABLE tb_evento
+DROP COLUMN id_proponente;

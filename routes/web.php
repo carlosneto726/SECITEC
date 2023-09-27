@@ -23,6 +23,7 @@ Route::get('/sobre', [Controller::class, 'viewSobre']);
 Route::get('/local', [Controller::class, 'viewLocal']);
 Route::get('/login', [Controller::class, 'viewLogin']);
 Route::get('/cadastrar', [Controller::class, 'viewCadastrar']);
+Route::get('/termos', [Controller::class, 'viewTermos']);
 
 Route::get('/programacao', [ProgramacaoController::class, 'viewProgramacao']);
 

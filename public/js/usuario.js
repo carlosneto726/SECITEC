@@ -1,22 +1,7 @@
-
-function postHandler(endpoint, tipo){
-    const url = window.location.origin + endpoint;
-    var dados;
-
-    if(tipo === 'cadastrar'){
-        dados = {
-            nome: document.getElementById("nome").value,
-            cpf: document.getElementById("cpf").value,
-            email: document.getElementById("email").value,
-            senha: document.getElementById("senha").value
-        };
-    }else if(tipo === 'login'){
-        dados = {
-            email: document.getElementById("email").value,
-            senha: document.getElementById("senha").value
-        };
-    }
-
+// Função que faz post com o corpo com JSON, não suporta enviar arquivos
+function postHandler(endpoint, data){
+    var url = window.location.origin + endpoint; // Dominio + endpoint da API
+    var dados = data; // Dados no formato JSON
     const configuracao = {
         method: 'POST',
         headers: {
@@ -32,9 +17,37 @@ function postHandler(endpoint, tipo){
         localStorage.setItem("message", data['message']);
         localStorage.setItem("type", data['type']);
         window.location.href = data['endpoint'];
+        
     })
     .catch(erro => console.error('Erro:', erro));
 }
+
+
+
+
+function cadastrarUsuario(endpoint, btn){
+    btn.innerHTML = "<div class='spinner-border' role='status'><span class='visually-hidden'>Loading</span></div>";
+    var dados = {
+        nome: document.getElementById("nome").value,
+        cpf: document.getElementById("cpf").value,
+        email: document.getElementById("email").value,
+        senha: document.getElementById("senha").value
+    };
+    postHandler(endpoint, dados);
+}
+
+
+
+function loginUsuario(endpoint){
+    var dados = {
+        email: document.getElementById("email").value,
+        senha: document.getElementById("senha").value
+    };
+    postHandler(endpoint, dados);
+}
+
+
+
 
 function verSenha() {
     var inputSenha = document.getElementById("senha");
