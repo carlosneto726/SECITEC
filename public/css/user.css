@@ -87,3 +87,11 @@
 .accordion-body-eventos {
     background-color: rgba(216, 243, 216, 0.979) !important;
 }
+
+.card-titulo {
+    color: green;
+    text-transform: capitalize;
+}
+
+/* .card-conteudo {
+} */
