@@ -11,6 +11,9 @@
             <div class="accordion" id="accordionExample">
             </div>
         </section>
+        <div id="alerta-custom" class="alerta-custom">
+            <p id="alerta-texto">Cadastrado com Sucesso!</p>
+        </div>
     </div>
 
     <!-- Modal generico -->
@@ -113,7 +116,6 @@
                     }
                     grupos[dia].push(evento);
                 });
-
                 return grupos;
             }
 
@@ -193,6 +195,25 @@
                 myModal.show()
             }
 
+            function mostrarAlerta(corBackground, texto) {
+                const alerta = document.getElementById("alerta-custom");
+                const textoAlerta = document.getElementById("alerta-texto");
+
+                alerta.style.backgroundColor = corBackground;
+                textoAlerta.innerText = texto;
+
+                alerta.style.top = "90px";
+                alerta.style.display = "block"; 
+
+                setTimeout(function () {
+                alerta.style.top = "60px"; 
+                }, 100);
+
+                setTimeout(function () {
+                    alerta.style.display = "none";
+                }, 3000);
+            }
+
             // FUNCAO QUE ENVIA REQUISICAO DE CADASTRO E DESCADASTRO.
             function enviarRequisicao(eventoId) {
                 var usuarioId = `{{ $usuario->id }}`;
@@ -218,11 +239,13 @@
                                 if (vagas.style.color == 'red') {
                                     vagas.style.color = 'gray';
                                 }
+                                mostrarAlerta("#f05d5d", "Descadastrado com Sucesso!");
                                 break;
                             case "saiuFila":
                                 eventoBtn.classList.remove('btn-danger');
                                 eventoBtn.classList.add('btn-warning');
                                 eventoBtn.innerHTML = 'Entrar na Fila'
+                                mostrarAlerta("#f05d5d", "Descadastrado com Sucesso!");
                                 break;
                             case "cadastroNormal":
                                 eventoBtn.classList.remove('btn-success');
@@ -234,12 +257,14 @@
                                         vagas.style.color = "red";
                                     }
                                 }
+                                mostrarAlerta("#42f59e", "Cadastrado com Sucesso!");
                                 break;
                             case "removidoFila":
                                 eventoBtn.classList.remove('btn-danger');
                                 eventoBtn.classList.add('btn-warning');
                                 eventoBtn.innerHTML = 'Entrar na Fila'
                                 // TALVEZ COLOCAR UM AVISO E UM BOTAO PARA SABER SE REALMENTE QUER SE DESCADASTRAR
+                                mostrarAlerta("#f05d5d", "Descadastrado com Sucesso!");
                                 break;
 
                             case "conflito":
@@ -252,6 +277,7 @@
                                 eventoBtn.classList.remove('btn-warning');
                                 eventoBtn.classList.add('btn-danger');
                                 eventoBtn.innerHTML = 'Descadastrar'
+                                mostrarAlerta("#42f59e", "Cadastrado na fila com Sucesso!");
 
                                 lancarAviso("Fila de espera", `Você entrou na fila de espera .Se, ao chegar no evento, vagas adicionais estiverem disponíveis
                                             devido a cancelamentos ou mudanças, você terá a oportunidade de participar. Daremos prioridade aos
