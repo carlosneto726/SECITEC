@@ -13,40 +13,16 @@
         </section>
     </div>
 
-    <!-- Modal Aviso -->
-    <div id="avisoModal" class="modal" tabindex="-1">
+    <!-- Modal generico -->
+    <div id="modalGenerico" class="modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Aviso</h5>
+                    <h5 class="modal-title" id="modalTitle"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Você entrou na fila de espera .Se, ao chegar no evento, vagas adicionais estiverem disponíveis
-                        devido
-                        a
-                        cancelamentos ou mudanças, você terá a oportunidade de participar. Daremos prioridade aos
-                        participantes na lista de espera com base na ordem de inscrição. Portanto, mesmo que as
-                        vagas estejam esgotadas inicialmente, ainda há a chance de participar do evento se vagas
-                        adicionais se tornarem disponíveis.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Aviso -->
-    <div id="conflitoModal" class="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Aviso</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>"O horário deste evento coincide com o horário de um evento ao qual você já está cadastrado."</p>
+                    <p id="modalText"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -117,10 +93,39 @@
             </div>
         </div>
         <script>
+            // VARIAVEIS
             var eventosMapeados = @json($eventosMapeados);
             const eventosAgrupados = agruparEventosPorDia(eventosMapeados);
             const accordion = document.getElementById('accordionExample');
 
+            // CHAMADAS DE FUNCAO 
+            renderizarAccordions();
+
+
+            // FUNCOES AUXILIARES 
+            function agruparEventosPorDia(eventos) {
+                const grupos = {};
+
+                eventos.forEach(evento => {
+                    const dia = evento.dia;
+                    if (!grupos[dia]) {
+                        grupos[dia] = [];
+                    }
+                    grupos[dia].push(evento);
+                });
+
+                return grupos;
+            }
+
+            function formatarData(data) {
+                data = new Date(data);
+                return data.toLocaleDateString('pt-BR', {
+                    timeZone: 'UTC'
+                });
+            }
+
+
+            // FUNCOES DE RENDER
             function renderizarAccordions() {
                 Object.keys(eventosAgrupados).forEach(function(key) {
                     accordion.innerHTML += `  
@@ -132,7 +137,7 @@
                     </h2>
                     <div id="accordion${key}" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
     
-                    <div class="accordion-body p-2 m-0" id="accordion-body$key">
+                    <div class="accordion-body accordion-body-eventos p-2 m-0" id="accordion-body$key">
                         ${renderizarEventosDia(key)}
                     </div>
 
@@ -166,37 +171,22 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <p>Vagas: <strong id="vagas_restantes${ evento.id }">${evento.vagas_restantes}</strong></p>
+                                <p>Vagas: <strong style="color: ${evento.vagas_restantes > 0 ? '' : 'red'};" id="vagas_restantes${ evento.id }">${evento.vagas_restantes}</strong></p>
                             </div>
-                     </div> <hr>`;
-                    eventos+=eventoItem;
+                     </div>`;
+                    eventos += eventoItem;
                 })
                 return eventos;
             }
 
-            renderizarAccordions();
-
-            function agruparEventosPorDia(eventos) {
-                const grupos = {};
-
-                eventos.forEach(evento => {
-                    const dia = evento.dia;
-                    if (!grupos[dia]) {
-                        grupos[dia] = [];
-                    }
-                    grupos[dia].push(evento);
-                });
-
-                return grupos;
+            function lancarAviso(titulo, texto) {
+                document.getElementById('modalTitle').innerHTML = titulo;
+                document.getElementById('modalText').innerHTML = texto;
+                var myModal = new bootstrap.Modal(document.getElementById('modalGenerico'))
+                myModal.show()
             }
 
-            function formatarData(data) {
-                data = new Date(data);
-                return data.toLocaleDateString('pt-BR', {
-                    timeZone: 'UTC'
-                });
-            }
-
+            // FUNCAO QUE ENVIA REQUISICAO DE CADASTRO E DESCADASTRO.
             function enviarRequisicao(eventoId) {
                 var usuarioId = `{{ $usuario->id }}`;
 
@@ -244,18 +234,25 @@
                                 eventoBtn.classList.remove('btn-danger');
                                 eventoBtn.classList.add('btn-warning');
                                 eventoBtn.innerHTML = 'Entrar na Fila'
+                                // TALVEZ COLOCAR UM AVISO E UM BOTAO PARA SABER SE REALMENTE QUER SE DESCADASTRAR
                                 break;
-                                // cadastro reserva
+
                             case "conflito":
-                                var myModal = new bootstrap.Modal(document.getElementById('conflitoModal'))
-                                myModal.show()
+                                lancarAviso('Conflito de Horário',
+                                    `O horário deste evento coincide com o horário de um evento ao qual você já está cadastrado.`
+                                )
                                 break;
+                            // cadastro reserva
                             default:
                                 eventoBtn.classList.remove('btn-warning');
                                 eventoBtn.classList.add('btn-danger');
                                 eventoBtn.innerHTML = 'Descadastrar'
-                                var myModal = new bootstrap.Modal(document.getElementById('avisoModal'))
-                                myModal.show()
+
+                                lancarAviso("Fila de espera", `Você entrou na fila de espera .Se, ao chegar no evento, vagas adicionais estiverem disponíveis
+                                            devido a cancelamentos ou mudanças, você terá a oportunidade de participar. Daremos prioridade aos
+                                            participantes na lista de espera com base na ordem de inscrição. Portanto, mesmo que as
+                                            vagas estejam esgotadas inicialmente, ainda há a chance de participar do evento se vagas
+                                            adicionais se tornarem disponíveis.`)
                         }
                     }
                 });

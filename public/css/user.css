@@ -84,15 +84,6 @@
     color: green;
 }
 
-.esgotadas {
-    font-size: 16px;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 50px;
-    background-color: #FF4500;
-    visibility: hidden;
-}
-
-.esgotadas.show {
-    visibility:visible;
+.accordion-body-eventos {
+    background-color: rgba(216, 243, 216, 0.979) !important;
 }
