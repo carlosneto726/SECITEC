@@ -56,7 +56,7 @@
                                     
 <section class="highlight">
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-md-center">
             <div class="col-lg-4 col-md-6 col-12">
                 <div class="highlight-thumb">
                     <img src="{{asset('images/ifg_secitec_2022.png')}}" class="highlight-image img-fluid" alt="">
@@ -77,7 +77,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-12">
+            <div class="col-lg-4 col-md-6 col-12 self-align-center">
                 <div class="highlight-thumb">
                     <img src="{{asset('images/caliandras.png')}}" class="highlight-image img-fluid" alt="">
 

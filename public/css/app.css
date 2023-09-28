@@ -45,7 +45,6 @@ https://templatemo.com/tm-575-leadership-event
     --font-weight-medium:           500;
     --font-weight-bold:             700;
   }
-  
   body {
       background: var(--white-color);
       font-family: var(--body-font-family); 
@@ -412,6 +411,11 @@ https://templatemo.com/tm-575-leadership-event
     background: var(--ifg-color-primary);
     background: url(../images/circuito.png), linear-gradient(90deg, var(--ifg-color-secundary) 0%, var(--ifg-color-primary) 100%);
   }
+
+.offcanvas.show {
+    background: var(--ifg-color-primary);
+    background: url(../images/circuito.png), linear-gradient(90deg, var(--ifg-color-secundary) 0%, var(--ifg-color-primary) 100%);
+}
   
   /*---------------------------------------
     HIGHLIGHT              
