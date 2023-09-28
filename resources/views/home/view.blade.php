@@ -1,6 +1,8 @@
 @extends('templates.template')
 @section('content')
 
+<!--Home-->
+<!--Banner-->
 <section class="hero" id="section_1">
     <div class="container">
         <div class="row">
@@ -12,6 +14,7 @@
 
                     <p class="fs-1 fw-bolder text-reset cronometro" id="countdown"></p>
 
+                    <!--script para o cronômetro até o dia do evento-->
                     <script>
                         // Define a data alvo
                         const targetDate = new Date('2023-10-23T00:00:00').getTime();
@@ -23,13 +26,14 @@
 
                             if (timeLeft <= 0) {
                                 clearInterval(countdown);
+                                //Mensagem a ser mostrada quando o cronômetro acabar
                                 document.getElementById('countdown').innerHTML = 'Nosso evento já começou!';
                             } else {
                                 const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
                                 const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                                 const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
                                 const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
+                                //Mensagem que está sendo mostrada no cronômetro
                                 document.getElementById('countdown').innerHTML = `
                                     ${days} dias e ${hours}:${minutes}:${seconds}
                                 `;
@@ -45,42 +49,44 @@
             </div>
         </div>
     </div>
-
-        <div class="video-wrap">
-            <!--<video autoplay="" loop="" muted="" class="custom-video" poster="">
-            </video>
-                    -->
-            <img src="{{asset('images/banner_ideia.gif')}}" alt="" class="custom-video">
-        </div>
+    <!--Imagem do banner aqui-->
+    <div class="video-wrap">
+        <!--<video autoplay="" loop="" muted="" class="custom-video" poster=""></video>-->
+        <img src="{{asset('images/banner_ideia.gif')}}" alt="" class="custom-video">
+    </div>
 </section>
-                                    
+
+<!--Highlight-->
 <section class="highlight">
     <div class="container">
         <div class="row justify-content-md-center">
+            <!--Primeira coluna-->
             <div class="col-lg-4 col-md-6 col-12">
                 <div class="highlight-thumb">
                     <img src="{{asset('images/ifg_secitec_2022.png')}}" class="highlight-image img-fluid" alt="">
-
+                    <!--Ícone quando o mouse está em cima da imagem-->
                     <div class="highlight-info">
                         <h6 class="highlight-title">SECITEC, 2022</h6>
                         <a href="https://www.ifg.edu.br/component/content/article/158-ifg/campus/formosa/noticias-campus-formosa/32193-xiii-secitec-discute-educacao-profissional-e-tecnologica-e-inclusao-de-pessoas-com-deficiencia?highlight=WyJzZWNpdGVjIiwyMDIyLCJzZWNpdGVjIDIwMjIiXQ==" class="bi-plus-circle highlight-icon"></a>
                     </div>
                 </div>
             </div>
+            <!--Segunda coluna-->
             <div class="col-lg-4 col-md-6 col-12">
                 <div class="highlight-thumb">
                     <img src="{{asset('images/hackathon.png')}}" class="highlight-image img-fluid" alt="">
-
+                    <!--Ícone quando o mouse está em cima da imagem-->
                     <div class="highlight-info">
                         <h6 class="highlight-title">HACKATHON, 2023</h6>
                         <a href="https://sensational-kangaroo-32bc8f.netlify.app/" class="bi-plus-circle highlight-icon"></a>
                     </div>
                 </div>
             </div>
+            <!--Terceira coluna-->
             <div class="col-lg-4 col-md-6 col-12 self-align-center">
                 <div class="highlight-thumb">
                     <img src="{{asset('images/caliandras.png')}}" class="highlight-image img-fluid" alt="">
-
+                    <!--Ícone quando o mouse está em cima da imagem-->
                     <div class="highlight-info">
                         <h6 class="highlight-title">CALIANDRAS DIGITAIS I SIMPÓSIO, 2024</h6>
                         <a href="https://caliandrasdigitais.com.br/?secao=sobre" class="bi-plus-circle highlight-icon"></a>

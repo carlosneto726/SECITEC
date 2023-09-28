@@ -1,12 +1,16 @@
+<!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-bg text-light" >
     <div class="container ">
+        <!--Logo e Nome -->
         <a href="{{ url('/') }}" class="onavbar-brand mx-auto mx-lg-0 d-flex align-items-center">
             <img src="{{asset('images/logo_ifg.png')}}" class="logo" alt="">
             <span class="text-light">SECITEC 2023</span>
         </a>
+        <!--Ícone toggle, quando a ospções estiverem escondidas -->
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <!--Opções e configuração do offcanvas-->
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title text-light" id="offcanvasNavbarLabel">Menu</h5>
@@ -28,7 +32,7 @@
                 <li class="nav-item">
                     <a class="nav-link click-scroll"  href="{{ url('/local') }}">Local</a>
                 </li>
-
+                <!--Configurando qual opção de botão vai estar sendo mostrada-->
                 @if(isset($_COOKIE['usuario']) && isset($_COOKIE['nome_usuario']))
                     <li class="nav-item">
                         <a class="nav-link click-scroll"  href="{{ url('/eventos') }}">Eventos</a>
