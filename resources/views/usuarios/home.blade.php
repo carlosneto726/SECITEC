@@ -132,7 +132,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingTwo">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion${key}" aria-expanded="false" aria-controls="accordion${key}">
-                    ${formatarData(key)}
+                    <strong> ${formatarData(key)} </strong>
                     </button>
                     </h2>
                     <div id="accordion${key}" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
@@ -151,9 +151,9 @@
                 eventosAgrupados[dia].forEach(evento => {
                     const eventoItem = `
                     <div class="card mt-3 mb-3">
-                            <div class="card-body">
+                            <div class="card-body card-conteudo">
                                 <div class="card-text">
-                                    <h5>${evento.titulo} &nbsp;&nbsp;&nbsp;<small style="font-size: 18px;" class="text-muted"><i class="bi bi-clock text-primary me-2"></i> 21:30 as 22:00</small></h5>
+                                    <h5 class="mb-4"> <strong class="card-titulo"> ${evento.titulo} </strong> &nbsp;&nbsp;&nbsp;<small style="font-size: 18px;" class="text-muted"><i class="bi bi-clock text-primary me-2"></i> 21:30 as 22:00</small></h5>
                                     <p>${evento.descricao}</p>
                                     <div class="row">
                                         <div class="col-6">
@@ -171,7 +171,14 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <p>Vagas: <strong style="color: ${evento.vagas_restantes > 0 ? '' : 'red'};" id="vagas_restantes${ evento.id }">${evento.vagas_restantes}</strong></p>
+                                <div class="row">
+                                     <div class="col-6">
+                                        <p class="m-0">Vagas: <strong style="color: ${evento.vagas_restantes > 0 ? '' : 'red'};" id="vagas_restantes${ evento.id }">${evento.vagas_restantes}</strong></p>
+                                     </div>
+                                    <div class="col-6">
+                                        area para colocar circulos com as fotos dos proponentes
+                                    </div>
+                                </div>
                             </div>
                      </div>`;
                     eventos += eventoItem;
@@ -208,9 +215,8 @@
                                 eventoBtn.classList.add('btn-success');
                                 eventoBtn.innerHTML = 'Cadastrar'
                                 vagas.innerHTML = parseInt(vagas.innerHTML) + 1;
-                                if (vagasEsgotadasAlert.classList.contains(
-                                        'show')) {
-                                    vagasEsgotadasAlert.classList.remove('show');
+                                if (vagas.style.color == 'red') {
+                                    vagas.style.color = 'gray';
                                 }
                                 break;
                             case "saiuFila":
@@ -224,10 +230,9 @@
                                 eventoBtn.innerHTML = 'Descadastrar'
                                 if (parseInt(vagas.innerHTML) > 0) {
                                     vagas.innerHTML = parseInt(vagas.innerHTML) - 1;
-                                }
-                                if (parseInt(vagas.innerHTML) < 1 && !vagasEsgotadasAlert.classList.contains(
-                                        'show')) {
-                                    vagasEsgotadasAlert.classList.add('show');
+                                    if (parseInt(vagas.innerHTML) == 0) {
+                                        vagas.style.color = "red";
+                                    }
                                 }
                                 break;
                             case "removidoFila":
@@ -242,7 +247,7 @@
                                     `O horário deste evento coincide com o horário de um evento ao qual você já está cadastrado.`
                                 )
                                 break;
-                            // cadastro reserva
+                                // cadastro reserva
                             default:
                                 eventoBtn.classList.remove('btn-warning');
                                 eventoBtn.classList.add('btn-danger');
