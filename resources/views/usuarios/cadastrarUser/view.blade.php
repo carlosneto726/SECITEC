@@ -42,7 +42,7 @@
                         Cadastrar
                     </button>
                     <small>
-                        Ao clicar em <strong>Cadastrar</strong>, você concorda com nossos <a href="{{("/termos")}}" target="_blank">Termos, Política de Privacidade e Política de Cookies</a>. Você poderá receber E-mails.
+                        Ao clicar em <strong>Cadastrar</strong>, você concorda com nossos <a href="{{("/termos")}}" class="link-tutorial" target="_blank">Termos, Política de Privacidade e Política de Cookies</a>. Você poderá receber E-mails.
                     </small>
                     <hr class="my-4">
                 </div>
@@ -50,5 +50,10 @@
         </div>
     </div>
 </div>
+<style>
+    .link-tutorial{
+        border-bottom: solid 2px #17882c;
+    }
+</style>
 
 @endsection
