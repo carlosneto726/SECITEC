@@ -22,8 +22,7 @@
                     <li>
                         <span>1.</span>
                         <span>
-                            Acesse a seção <a href="{{url('admin/proponente')}}" class="link-tutorial"> Proponentes </a> 
-                            no canto superior direito.
+                            Acesse a seção <a href="{{url('admin/proponente')}}" class="link-tutorial"> Proponentes </a>, clique em "+" a direita de "Proponentes".
                         </span>
                     </li>
                     <li>
@@ -42,7 +41,7 @@
                 <ul class="list-unstyled ps-0">
                     <li>
                         <span>1.</span>
-                        <span>Acesse a seção <a class="link-tutorial" href="{{url('admin/eventos')}}"> Eventos </a>, clique em "Cadastrar Evento".</span>
+                        <span>Acesse a seção <a class="link-tutorial" href="{{url('admin/eventos')}}"> Eventos </a>, clique em "+" a direita de "Eventos".</span>
                     </li>
                     <li>
                         <span>2.</span>
@@ -60,11 +59,11 @@
                 <ul class="list-unstyled ps-0">
                     <li>
                         <span>1.</span>
-                        <span>Para editar informações de <a href="{{url('admin/proponente')}}" class="link-tutorial"> Proponente </a>, clique no ícone <span class="text-success">verde</span> do respectivo proponente. Faça as alterações necessárias e salve.</span>
+                        <span>Para editar informações de <a href="{{url('admin/proponente')}}" class="link-tutorial"> Proponente </a>, clique no ícone <span class="text-primary">azul</span> do respectivo proponente. Faça as alterações necessárias e salve.</span>
                     </li>
                     <li>
                         <span>2.</span>
-                        <span>Para editar informações de eventos, vá até <a class="link-tutorial" href="{{url('admin/eventos')}}"> Eventos </a>, clique no ícone <span class="text-success">verde</span> do respectivo evento. Faça as modificações necessárias e salve.</span>
+                        <span>Para editar informações de eventos, vá até <a class="link-tutorial" href="{{url('admin/eventos')}}"> Eventos </a>, clique no ícone <span class="text-primary">azul</span> do respectivo evento. Faça as modificações necessárias e salve.</span>
                     </li>      
                 </ul>
             </div>

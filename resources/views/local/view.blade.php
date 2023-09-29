@@ -1,6 +1,6 @@
 @extends('templates.template')
 @section('content')
-
+<!--Local-->
 <section class="schedule section-padding">
     <div class="container">
         <div class="row">
@@ -8,12 +8,13 @@
             <div class="col-lg-12 col-12">
                 <h2 class="mb-5">Veja o <u class="text-success">Local</u></h2>
             </div>
-
+            <!--Localização do google maps-->
             <div class="col-lg-12 col-12">
                 <iframe class="google-map" src="https://maps.google.com/maps?q=ifgformosa&t=&z=10&ie=UTF8&iwloc=&output=embed" width="100%" height="371.59" allowfullscreen="" loading="lazy"></iframe>
             </div>
 
-            <!--
+            <!-- Código comentado, mostra as informações de localização e contato do evento
+            
             <div class="col-lg-6 col-12 mt-5 mt-lg-0">
                 <div class="venue-thumb bg-white shadow-lg">
                     
