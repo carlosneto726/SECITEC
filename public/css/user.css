@@ -85,7 +85,7 @@
 }
 
 .accordion-body-eventos {
-    background-color: rgba(216, 243, 216, 0.979) !important;
+    background-color: rgb(239, 236, 236) !important;
 }
 
 .card-titulo {
@@ -122,6 +122,7 @@
 
 .avatares-wrapper {
     display: flex;
+    justify-content: end;
     gap: 10px;
 }
 
@@ -162,6 +163,58 @@
     gap: 10px;
 }
 
+.remover-horario {
+    display: none;
+}
+
+.hackathon {
+    font-family: 'Share Tech', sans-serif !important;
+}
+
+.hack-title {
+    margin: 0 !important;
+}
+
+.hack-tema-color {
+    color: #F94C10 !important;
+}
+
+.hack-tema-bg {
+    background-color: #F94C10 !important;
+}
+
+.hack-tema-color-secondary {
+    color: #855cd6 !important;
+}
+
+.hack-tema-bg-secondary {
+    background-color: #855cd6 !important;
+}
+
+.accordion-body-hackathon {
+    background-color: whitesmoke;
+    padding: 20px 50px !important;
+}
+
+.hack_saiba_mais {
+    font-weight: bolder !important;
+    color: #0693e3;
+}
+
+.hack-avisos {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.hack-avisos > li > strong {
+    color: #F94C10 !important;
+}
+
+#jerry-rig {
+    margin-top: 30px;
+}
 
 @media (max-width: 768px) {
     .avatar-proponente {

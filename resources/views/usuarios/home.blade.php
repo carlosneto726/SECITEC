@@ -40,13 +40,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTitle"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" onclick="clearModalGenerico()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p id="modalText"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" onclick="clearModalGenerico()" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
@@ -113,11 +113,19 @@
                 </div>
             </div>
         </div>
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Share+Tech&display=swap');
+
+
+        </style>
         <script>
             // VARIAVEIS
             var eventosMapeados = @json($eventosMapeados);
             const eventosAgrupados = agruparEventosPorDia(eventosMapeados);
             const accordion = document.getElementById('accordionExample');
+
+            console.log(eventosMapeados)
 
             // CHAMADAS DE FUNCAO 
             renderizarAccordions();
@@ -125,14 +133,19 @@
 
             // FUNCOES AUXILIARES 
             function agruparEventosPorDia(eventos) {
-                const grupos = {};
+                const grupos = { Hackathon: [] };
 
                 eventos.forEach(evento => {
                     const dia = evento.dia;
                     if (!grupos[dia]) {
-                        grupos[dia] = [];
+                        if(evento.tipo_evento_nome !== 'hackathon')
+                            grupos[dia] = [];
                     }
-                    grupos[dia].push(evento);
+                    if(evento.tipo_evento_nome == 'hackathon') {
+                        grupos['Hackathon'].push(evento);
+                    } else {
+                        grupos[dia].push(evento);
+                    }
                 });
                 return grupos;
             }
@@ -144,26 +157,88 @@
                 });
             }
 
+            function formatarHora(hora){
+                const horaSeparada = hora.split(':');
+                return `${horaSeparada[0]}:${horaSeparada[1]}`
+            }
 
             // FUNCOES DE RENDER
             function renderizarAccordions() {
                 Object.keys(eventosAgrupados).forEach(function(key) {
-                    accordion.innerHTML += `  
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion${key}" aria-expanded="false" aria-controls="accordion${key}">
-                    <strong> ${formatarData(key)} </strong>
-                    </button>
-                    </h2>
-                    <div id="accordion${key}" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    if(key !== 'Hackathon') {
+                        accordion.innerHTML += `  
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion${key}" aria-expanded="false" aria-controls="accordion${key}">
+                                    <strong> ${key == 'Hackathon' ? 'Hackathon' : formatarData(key)} </strong>
+                                </button>
+                                </h2>
+                                <div id="accordion${key}" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
     
-                    <div class="accordion-body accordion-body-eventos p-2 m-0" id="accordion-body$key">
-                        ${renderizarEventosDia(key)}
-                    </div>
-
-                    </div>
-                </div>`
+                                <div class="accordion-body accordion-body-eventos p-2 m-0" id="accordion-body$key">
+                                    ${renderizarEventosDia(key)}
+                                </div>
+                                </div>
+                            </div>`
+                    }
                 });
+
+                if(eventosAgrupados['Hackathon']) {
+                    accordion.innerHTML = renderizarHackathon(eventosAgrupados['Hackathon'][0]) + accordion.innerHTML;
+                }
+            }
+
+            function renderizarHackathon(evento){
+                return `  <div class="accordion-item hackathon">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion${'hack'}" aria-expanded="false" aria-controls="accordion${'hack'}">
+                            <h6 class="hack-title"> Hackathon </h6>
+                        </button>
+                        </h2>
+                            <div id="accordion${'hack'}" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body accordion-body-hackathon p-2 m-0" id="accordion-body$key">
+                                    <div class="row">
+                                        <h2>O Hackathon</h2>
+                                    </div>
+                                    <div class="row">
+                                        <p>
+                                            O Hackathon será realizado durante quatro dias, de
+                                            <strong class="hack-tema-color">23 a 26 de outubro de 2023</strong>, no
+                                            <strong class="hack-tema-color">IFG Campus Formosa</strong>, como parte da
+                                            <strong class="hack-tema-color">SECITEC 2023</strong>. Durante esse período, os
+                                            participantes terão a oportunidade de trabalhar em suas soluções,
+                                            receber orientações de mentores especializados e participar de
+                                            workshops introdutórios.                    
+                                        </p>
+                                        <p>
+                                            Esse projeto visa promover a inovação, a colaboração, o pensamento
+                                            criativo e o desenvolvimento de soluções práticas para questões
+                                            relacionadas ao desenvolvimento sustentável. Esperamos incentivar o
+                                            engajamento dos participantes e fornecer uma oportunidade única para
+                                            aplicarem seus conhecimentos e habilidades em um contexto desafiador
+                                            e relevante para a sociedade. <a target="_blank" class="hack_saiba_mais" href="https://hackathonsecitecifg.netlify.app/">SAIBA MAIS</a>
+                                        </p>
+                                    <div class="row">
+                                    <ul class="hack-avisos">
+                                         <li>
+                                                <strong>Check-in e Check-out:</strong> O check-in e check-out do hackathon será realizado na abertura e encerramento do evento, mediante a apresentação dos projetos.
+                                        </li>
+                                        <li>
+                                                <strong>Inscrição Individual:</strong> É necessário se inscrever individualmente no evento abaixo, mas a formação dos grupos e a inscrição dos mesmos serão feitas na abertura do Hackathon.
+                                        </li>
+                                        <li>
+                                                <strong>Horário:</strong> O Hackathon ocorrerá ao longo de toda a SECITEC, com uma variedade de atividades relacionadas ao longo do evento. No entanto, a presença dos participantes será obrigatória apenas na cerimônia de abertura e na apresentação dos projetos, que acontecerão no dia 23, das 08:00 às 12:00, e no dia 26, das 10:00 às 12:00. Não será possível se cadastrar no evento caso já estejam cadastrados em eventos que coincidam com essas datas.
+                                        </li>
+                                    </ul>
+                                    </div>
+                                    </div> 
+                                        <div id="hackBtn" onclick="enviarRequisicaoHackathon(${evento.id})"
+                                                class="btn ${ evento.usuario_cadastrado ? 'btn-danger' : (evento.vagas_restantes == 0 ? 'btn-warning' : 'btn-success') }">
+                                                ${ evento.usuario_cadastrado ? 'Descadastrar' : (evento.vagas_restantes == 0 ? 'Entrar na Fila' : 'Cadastrar') }
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>`
             }
 
             function renderizarEventosDia(dia) {
@@ -173,7 +248,7 @@
                     <div class="card mt-3 mb-3">
                             <div class="card-body card-conteudo">
                                 <div class="card-text">
-                                    <h5 class="mb-4"> <strong class="card-titulo"> ${evento.titulo} </strong> &nbsp;&nbsp;&nbsp;<small style="font-size: 18px;" class="text-muted"><i class="bi bi-clock text-primary me-2"></i> 21:30 as 22:00</small></h5>
+                                    <h5 class="mb-4"> <strong class="card-titulo"> ${evento.titulo} </strong> &nbsp;&nbsp;&nbsp;<small style="font-size: 18px;" class="text-muted ${ evento.tipo_evento_nome == 'hackathon' ? 'remover-horario' : '' }"><i class="bi bi-clock text-primary me-2"></i> ${formatarHora(evento.horarioI)} às ${formatarHora(evento.horarioF)}</small></h5>
                                     <p>${evento.descricao}</p>
                                     <div class="row">
                                         <div class="col-6">
@@ -211,6 +286,11 @@
                 document.getElementById('modalText').innerHTML = texto;
                 var myModal = new bootstrap.Modal(document.getElementById('modalGenerico'))
                 myModal.show()
+            }
+
+            function clearModalGenerico(){
+                document.getElementById('modalTitle').innerHTML = '';
+                document.getElementById('modalText').innerHTML = '';
             }
 
             function mostrarAlerta(corBackground, texto) {
@@ -266,6 +346,45 @@
 
 
             // FUNCAO QUE ENVIA REQUISICAO DE CADASTRO E DESCADASTRO.
+            function enviarRequisicaoHackathon(eventoId){
+                var usuarioId = `{{ $usuario->id }}`;
+
+                $.ajax({
+                    url: "/usuarios/cadastarHackathon",
+                    type: "POST",
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content'), // Obtém o token CSRF do meta tag
+                        usuarioId: usuarioId,
+                        eventoId: eventoId
+                    },
+                    success: function(data) {
+                        const hackBtn = document.getElementById('hackBtn');
+                        switch (data.mensagem) {
+                            case 'Cadastrado':
+                                mostrarAlerta("#42f59e", "Cadastrado com Sucesso!");
+                                hackBtn.classList.add('btn-danger');
+                                hackBtn.classList.remove('btn-success');
+                                hackBtn.innerHTML = 'Descadastrar';
+                                break;
+                            case 'Descadastrado':
+                                mostrarAlerta("#f05d5d", "Descadastrado com Sucesso!");
+                                hackBtn.classList.remove('btn-danger');
+                                hackBtn.classList.add('btn-success');
+                                hackBtn.innerHTML = 'Cadastrar';
+                                break;
+                            default:
+                                lancarAviso('Conflito de Horário',
+                                    `Você está cadastrado(a) em eventos que coincidem com atividades obrigatórias do Hackathon.
+                                    <br>
+                                    <small>Abertura do Hackathon - 23 de outubro | 08:00 às 12:00</small>
+                                    <br>
+                                    <small>Apresentação e encerramento - 26 de outubro | 10:00 às 12:00</small>`
+                                )
+                                break;
+                        }
+                    }
+                })
+            }
             function enviarRequisicao(eventoId) {
                 var usuarioId = `{{ $usuario->id }}`;
 
@@ -321,6 +440,11 @@
                             case "conflito":
                                 lancarAviso('Conflito de Horário',
                                     `O horário deste evento coincide com o horário de um evento ao qual você já está cadastrado.`
+                                )
+                                break;
+                            case "conflitoHackathon":
+                                lancarAviso('Hackathon',
+                                    `Você está inscrito no Hackathon e esse evento coincide com o horário da abertura ou da apresentação dos projetos(Presença obrigatória).`
                                 )
                                 break;
                                 // cadastro reserva
