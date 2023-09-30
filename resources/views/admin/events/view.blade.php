@@ -35,7 +35,7 @@
         @if(count($eventos) == 0)
             <tr>
                 <td 
-                class="align-middle text-center h5 fw-bold" colspan="9">
+                class="align-middle text-center h5 fw-bold" colspan="11">
                     Esse lugar parece tão vazio 🍃<br>
                     <a href="#staticBackdrop" 
                     data-bs-toggle="modal" 

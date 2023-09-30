@@ -23,6 +23,7 @@
                     <div class="input-group mb-2">
                         <input type="text" class="form-control" placeholder="Nome" name="nome" id="nome" required>
                     </div>
+                    <small class="ms-1 mb-3 opacity-50">Informe o seu nome completo. Saiba mais.</small>
 
                     <div class="input-group">
                         <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" maxlength="11" onkeypress="return /[0-9]/i.test(event.key)" required>
