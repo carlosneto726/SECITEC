@@ -25,7 +25,6 @@ Route::get('/local', [Controller::class, 'viewLocal']);
 Route::get('/login', [Controller::class, 'viewLogin']);
 Route::get('/cadastrar', [Controller::class, 'viewCadastrar']);
 Route::get('/termos', [Controller::class, 'viewTermos']);
-Route::get('/fpdf', [FpdfController::class, 'localiza']);
 
 Route::get('/programacao', [ProgramacaoController::class, 'viewProgramacao']);
 
@@ -42,9 +41,11 @@ Route::get('/admin/proponente', [AdministradorController::class, 'viewProponente
 Route::post('/admin/proponente/cadastrar', [AdministradorController::class, 'insertProponente']);
 Route::put('/admin/proponente/atualizar/{id_proponente}', [AdministradorController::class, 'updateProponente']);
 Route::post('/admin/proponente/deletar', [AdministradorController::class, 'deleteProponente']);
-Route::get('/admin/presenca/{id_evento}', [AdministradorController::class, 'viewPresenca']);
+Route::get('/admin/presenca/{id_evento}/{nome_evento}', [AdministradorController::class, 'viewPresenca']);
 Route::post('/admin/presenca/checkin', [AdministradorController::class, 'checkin']);
 Route::post('/admin/presenca/checkout', [AdministradorController::class, 'checkout']);
+// Rotas do FpdfController para gerar os certificados
+Route::get('/admin/usuario/certificados', [FpdfController::class, 'certificadoUsuario']);
 // Rotas do ValidarUsuariosController para validar o usuário, criar conta, validar email
 Route::post('/usuarios/cadastrar', [ValidarUsuariosController::class, 'addUsuario']);
 Route::post('/usuarios/login', [ValidarUsuariosController::class, 'validarLogin']);

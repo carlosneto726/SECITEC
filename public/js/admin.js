@@ -14,9 +14,17 @@ function postHandler(endpoint, data){
     fetch(url, configuracao)
     .then(resposta => resposta.json())
     .then(data => {
-        localStorage.setItem("message", data['message']);
-        localStorage.setItem("type", data['type']);
-        window.location.href = data['endpoint'];
+        if(data['id_modal'] != undefined){
+            ativarModal(data['id_modal']);
+        }else if(data['endpoint'] != null){
+            localStorage.setItem("message", data['message']);
+            localStorage.setItem("type", data['type']);
+            window.location.href = data['endpoint'];
+        }else{
+            localStorage.setItem("message", data['message']);
+            localStorage.setItem("type", data['type']);
+            location.reload();
+        }
     })
     .catch(erro => console.error('Erro:', erro));
 }
@@ -158,4 +166,24 @@ function alterarEvento(endpoint, id, btn){
     }else{
         formDataPostHandler(endpoint, formData);
     }
+}
+
+function checkinout(endpoint, id_evento, btn, confirmacao, tipo){
+    if(tipo === "in"){
+        var cpf = document.getElementById("cpfCheckin").value;
+    }else if(tipo === "out"){
+        var cpf = document.getElementById("cpfCheckout").value;
+    }
+    btn.innerHTML = "<div class='spinner-border' role='status'><span class='visually-hidden'>Loading</span></div>";
+    var dados = {
+        id_evento: id_evento,
+        cpf: cpf,
+        confirmacao: confirmacao
+    };
+    postHandler(endpoint, dados);
+}
+
+function ativarModal(id) {
+    var meuModal = new bootstrap.Modal(document.getElementById(id));
+    meuModal.show();
 }
