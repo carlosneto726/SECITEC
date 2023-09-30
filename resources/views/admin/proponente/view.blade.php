@@ -16,7 +16,15 @@
 
 <div class="container">
     <div class="my-3 p-3 bg-body rounded shadow-sm">
-        
+        @if(count($proponentes) == 0)
+            <div class="fw-bold h5">
+                Esse lugar parece tão vazio 🍃<br>
+                <a href="#staticBackdrop" 
+                data-bs-toggle="modal" 
+                style="text-decoration: underline;">Cadastre</a>
+                algum proponente.
+            </div>
+        @endif
         @foreach ($proponentes as $proponente)
             <div class="d-flex text-body-secondary pt-3 border-bottom">
                 <img class="rounded object-fit-cover" src="{{asset($proponente->url)}}" height="64" width="64">
@@ -72,7 +80,7 @@
                                         </div>
                                         <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-danger" onclick="excluirBtn({{$proponente->id}}, 'admin/proponente/deletar')">Deletar</button>
+                                        <button type="button" class="btn btn-danger" onclick="excluirBtn('/admin/proponente/deletar', {{$proponente->id}}, this)">Deletar</button>
                                         </div>
                                     </div>
                                 </div>

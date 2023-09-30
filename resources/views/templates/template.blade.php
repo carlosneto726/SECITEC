@@ -27,6 +27,16 @@
         @include('layout.footer')
     </footer>
 
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+          <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
     <script src="{{asset('js/jquery.min.js')}}?v=1.0"></script>
     <script src="{{asset('js/jquery.sticky.js')}}?v=1.0"></script>
     <script src="{{asset('js/app.js')}}?v=1.0"></script>

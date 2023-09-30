@@ -35,6 +35,12 @@
                           data-bs-parent="#accordionExample">
                           <div class="accordion-body">
 
+                            @if(count($programacao[0]) == 0)
+                              <div class="fw-bold h5">
+                                Parece que ainda não temos nenhum evento para esta data, por favor, volte mais tarde.
+                              </div>
+                            @endif
+
                                 @foreach ($programacao[0] as $evento)
                                     <div class="border-bottom mb-3">
                                         <div class="row">

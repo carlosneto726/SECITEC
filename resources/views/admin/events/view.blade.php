@@ -18,6 +18,7 @@
 <div class="container shadow p-3 mb-5 bg-body rounded">
     <table class="table table-bordered">
         <tr>
+            <th class="align-middle text-center">Imagem</th>
             <th class="align-middle text-center">Titulo</th>
             <div class=""><th class="d-none d-lg-table-cell align-middle text-center">Tipo</th></div>
             <th class="d-none d-lg-table-cell align-middle text-center">Descrição</th>
@@ -26,11 +27,25 @@
             <th class="d-none d-lg-table-cell align-middle text-center">Horário Fim</th>
             <th class="align-middle text-center">Vagas</th>
             <th class="d-none d-lg-table-cell align-middle text-center">Horas</th>
+            <th class="d-none d-lg-table-cell align-middle text-center">Proponentes</th>
             <th class="align-middle text-center">Alterar</th>
             
         </tr>
+        @if(count($eventos) == 0)
+            <tr>
+                <td 
+                class="align-middle text-center h5 fw-bold" colspan="9">
+                    Esse lugar parece tão vazio 🍃<br>
+                    <a href="#staticBackdrop" 
+                    data-bs-toggle="modal" 
+                    style="text-decoration: underline;">Cadastre</a>
+                    algum evento.
+                </td>
+            </tr>
+        @endif
         @foreach ($eventos as $dados)
             <tr>
+                <td class="align-middle text-center"><img src="{{asset($dados->url)}}" class="img-flex" width="64"></td>
                 <td class="align-middle text-center">{{$dados->titulo}}</td>
                 <td class="d-none d-lg-table-cell align-middle text-center text-transform:capitalize;">{{$dados->tipo_evento_nome}}</td>
                 <td class="d-none d-lg-table-cell align-middle text-center"> {{$dados->descricao}}</td>
@@ -39,6 +54,18 @@
                 <td class="d-none d-lg-table-cell align-middle text-center">{{ date('H:i', strtotime($dados->horarioF)) }}</td>
                 <td class="align-middle text-center">{{$dados->vagas}}</td>
                 <td class="d-none d-lg-table-cell align-middle text-center">{{$dados->horas}}</td>
+                <td class="d-none d-lg-table-cell align-middle text-center">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Proponente(s)
+                        </button>
+                        <ul class="dropdown-menu">
+                            @foreach ($dados->proponentes as $proponente)
+                                <li class="p-2 border">{{ $proponente }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </td>
                 @include('admin.events.alterarModal')
                 <td class="align-middle text-center"><a href="{{url('/admin/presenca/'.$dados->id)}}" class="btn btn-success">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
