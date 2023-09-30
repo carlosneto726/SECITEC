@@ -145,6 +145,7 @@ class UsuariosController extends Controller
         $eventosMapeados = [];
     
         foreach ($eventos as $evento) {
+            $proponentes = $this->getProponentesEvento($evento->id);
             $eventoMapeado = new EventoDto(
                 $evento->id,
                 $evento->titulo,
@@ -159,7 +160,8 @@ class UsuariosController extends Controller
                 $evento->id_tipo_evento,
                 false,
                 $evento->tipo_evento_nome,
-                $this->calcularVagasRestantes($evento->id, $evento->vagas)
+                $this->calcularVagasRestantes($evento->id, $evento->vagas),
+                $proponentes
             );
             foreach ($eventosCadastrados as $eventoCadastrado) {
                 if ($evento->id == $eventoCadastrado->id_evento) {
@@ -176,6 +178,16 @@ class UsuariosController extends Controller
         $vagasOcupadas = count(DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ? AND status = 0;", [$eventoId]));
         return $eventoVagasTotais - $vagasOcupadas;
     }
+
+    function getProponentesEvento($eventoId){
+        $relacoesEventoProponente = DB::select("SELECT * FROM tb_proponente_evento WHERE id_evento = ?;", [$eventoId]);
+        $proponentes = [];
+        for ($i=0; $i < count($relacoesEventoProponente) ; $i++) { 
+            array_push($proponentes, DB::select("SELECT * FROM tb_proponente WHERE id = ?;", [$relacoesEventoProponente[$i]->id_proponente])[0]);
+        }
+        return  $proponentes;
+    }
+
     }
     
     class EventoDto {
@@ -193,6 +205,7 @@ class UsuariosController extends Controller
     public $usuario_cadastrado;
     public $tipo_evento_nome;
     public $vagas_restantes;
+    public $proponentes;
     
     public function __construct(
         $id,
@@ -208,7 +221,8 @@ class UsuariosController extends Controller
         $id_tipo_evento,
         $usuario_cadastrado,
         $tipo_evento_nome,
-        $vagas_restantes
+        $vagas_restantes,
+        $proponentes
     ) {
         $this->id = $id;
         $this->titulo = $titulo;
@@ -225,5 +239,6 @@ class UsuariosController extends Controller
         $this->usuario_cadastrado = $usuario_cadastrado;
         $this->tipo_evento_nome = $tipo_evento_nome;
         $this->vagas_restantes = $vagas_restantes;
+        $this->proponentes = $proponentes;
     }
     }
