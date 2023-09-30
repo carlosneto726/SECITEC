@@ -17,6 +17,24 @@
     </div>
 
     <!-- Modal generico -->
+    <div id="modalProponentes" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content modal-proponentes-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title">Proponentes</h5>
+                    <button type="button" class="btn-close" onclick="clearModalProponentes()" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalProponentesContainer"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="clearModalProponentes()" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal generico -->
     <div id="modalGenerico" class="modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -28,7 +46,7 @@
                     <p id="modalText"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
@@ -91,7 +109,7 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
@@ -172,13 +190,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer">
+                            <div class="card-footer" id="footer-evento">
                                 <div class="row">
                                      <div class="col-6">
                                         <p class="m-0">Vagas: <strong style="color: ${evento.vagas_restantes > 0 ? '' : 'red'};" id="vagas_restantes${ evento.id }">${evento.vagas_restantes}</strong></p>
                                      </div>
-                                    <div class="col-6">
-                                        area para colocar circulos com as fotos dos proponentes
+                                    <div class="col-6 avatares-wrapper">
+                                        ${ gerarAvatarProponentes(evento.proponentes) } <button onclick="mostrarModalProponentes(${evento.id})" type="button" class="btn btn-outline-info" data-mdb-ripple-color="dark">Proponentes</button>
                                     </div>
                                 </div>
                             </div>
@@ -213,6 +231,39 @@
                     alerta.style.display = "none";
                 }, 3000);
             }
+
+            function gerarAvatarProponentes(proponentes){
+                let avatares = ''
+                proponentes.forEach(proponente => {
+                    avatares += `<div class="avatar-proponente"><img src="${proponente.url}" style="width: 50px;" alt="Avatar" /></div>`
+                });
+                return avatares;
+            }
+
+            function gerarProponenteInfo(proponente){
+                return `<div class="card" style="width: 12rem;">
+                            <img src="${proponente.url}" class="card-img-top" alt="...">
+                            <div class="card-body text-center text-capitalize">
+                            <h5 class="card-title" style="color: green;">${proponente.nome}</h5>
+                            <p class="card-text">${proponente.titulacao}</p>
+                            </div>
+                        </div>`
+            }
+
+            function mostrarModalProponentes(eventoId){
+                const proponentes = eventosMapeados.find(p => p.id == eventoId).proponentes;
+                const modalContainer = document.getElementById('modalProponentesContainer');
+                proponentes.forEach(proponente => {
+                    modalContainer.innerHTML += gerarProponenteInfo(proponente);
+                });
+                var myModal = new bootstrap.Modal(document.getElementById('modalProponentes'))
+                myModal.show()
+            }
+
+            function clearModalProponentes(){
+                document.getElementById('modalProponentesContainer').innerHTML = "";
+            }
+
 
             // FUNCAO QUE ENVIA REQUISICAO DE CADASTRO E DESCADASTRO.
             function enviarRequisicao(eventoId) {
