@@ -85,11 +85,11 @@
             <!--Terceira coluna-->
             <div class="col-lg-4 col-md-6 col-12 self-align-center">
                 <div class="highlight-thumb">
-                    <img src="{{asset('images/caliandras.png')}}" class="highlight-image img-fluid" alt="">
+                    <img src="{{asset('images/ifg_facebook.png')}}" class="highlight-image img-fluid" alt="">
                     <!--Ícone quando o mouse está em cima da imagem-->
                     <div class="highlight-info">
-                        <h6 class="highlight-title">CALIANDRAS DIGITAIS I SIMPÓSIO, 2024</h6>
-                        <a href="https://caliandrasdigitais.com.br/?secao=sobre" class="bi-plus-circle highlight-icon"></a>
+                        <h6 class="highlight-title">FACEBOOK IFG-FORMOSA</h6>
+                        <a href="https://www.facebook.com/ifgformosa" class="bi-plus-circle highlight-icon"></a>
                     </div>
                 </div>
             </div>      
