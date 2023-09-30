@@ -28,16 +28,40 @@ class UsuariosController extends Controller
     // Neste caso, o método contrutor verifica a todo instante se o id armazenado
     // no $_COOKIE['usuario'] (onde é armazenado o id no client-side) 
     // existe e está ativado no Banco de dados
-    public function __construct() {
+    public function __construct()
+    {
         $this->id_usuario = @$_COOKIE['usuario'];
         $this->nome_usuario = @$_COOKIE['nome_usuario'];
 
         $query = DB::select("SELECT id, nome FROM tb_usuario WHERE id = ? AND status = 1;", [$this->id_usuario]);
-        if(count($query) == 0){
+        if (count($query) == 0) {
             redirect("/login");
         }
     }
 
+
+    public function cadastrarHackathon(Request $request)
+    {
+        $usuarioId = $request->input('usuarioId');
+        $eventoID = $request->input('eventoId');
+        $usuarioCadastrado = count(DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ? AND id_usuario = ?", [$eventoID, $usuarioId])) > 0;
+        if ($usuarioCadastrado) {
+            DB::delete("DELETE FROM tb_evento_usuario WHERE id_evento = ? AND id_usuario = ?", [$eventoID, $usuarioId]);
+            return response()->json(['mensagem' => "Descadastrado"]);
+        } else {
+
+            if ($this->verificarConflitoHackathon($eventoID, $usuarioId, true)) {
+                return response()->json(['mensagem' => "Conflito"]);
+            }
+
+            DB::insert("INSERT INTO 
+            tb_evento_usuario(id_evento, id_usuario, status, checkin, checkout, data_insercao) 
+            VALUES(?,?,?,?,?,?);",
+                [$eventoID, $usuarioId, 0, null, null, date('Y-m-d H:i:s')]
+            );
+            return response()->json(['mensagem' => "Cadastrado"]);
+        }
+    }
     // status da tabela tb_evento_usuario: 0 = Cadastrado e 1 = Cadastro reserva
     public function cadastrarEvento(Request $request)
     {
@@ -45,15 +69,15 @@ class UsuariosController extends Controller
         $usuarioId = $request->input('usuarioId');
         $eventoID = $request->input('eventoId');
         $vagasTotais = DB::select("SELECT * FROM tb_evento WHERE id = ?", [$eventoID])[0]->vagas;
-        $vagasOcupadas = count(DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ? AND status = 0", [$eventoID]));    
-        $todasIncricoes = count(DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ?", [$eventoID]));    
+        $vagasOcupadas = count(DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ? AND status = 0", [$eventoID]));
+        $todasIncricoes = count(DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ?", [$eventoID]));
 
-        if($this->verificaCadastro( $request->input('usuarioId'),$request->input('eventoId'))) {
+        if ($this->verificaCadastro($request->input('usuarioId'), $request->input('eventoId'))) {
             // Descadastra o usuario no evento
             try {
                 $mensagemResponse = $todasIncricoes > $vagasTotais ? "saiuFila" : "descadastroSemFila";
                 $usuarioCadastrado = DB::select("SELECT status FROM tb_evento_usuario WHERE id_evento = ? AND id_usuario = ?", [$eventoID, $usuarioId])[0]->status;
-                if($usuarioCadastrado == 0 && $todasIncricoes > $vagasTotais){
+                if ($usuarioCadastrado == 0 && $todasIncricoes > $vagasTotais) {
                     $mensagemResponse = "removidoFila";
                     $this->removerListaEspera($eventoID, $vagasTotais);
                 }
@@ -65,15 +89,21 @@ class UsuariosController extends Controller
         } else {
             // Cadastra o usuario no evento
             try {
-                if($this->verificaConflito($eventoID, $usuarioId)) {
+                if ($this->verificaConflito($eventoID, $usuarioId)) {
                     return response()->json(['mensagem' => "conflito", 'evento' => $eventoID]);
                 }
-                $status = $vagasOcupadas < $vagasTotais ? 0 : 1;    
+
+                if ($this->verificarConflitoHackathon($eventoID, $usuarioId, false)) {
+                    return response()->json(['mensagem' => "conflitoHackathon", 'evento' => $eventoID]);
+                }
+
+                $status = $vagasOcupadas < $vagasTotais ? 0 : 1;
                 $mensagemResponse = $vagasOcupadas < $vagasTotais ? "cadastroNormal" : "cadastroReserva";
                 DB::insert("INSERT INTO 
                 tb_evento_usuario(id_evento, id_usuario, status, checkin, checkout, data_insercao) 
-                VALUES(?,?,?,?,?,?);", 
-                [$eventoID,$usuarioId, $status, null, null, date('Y-m-d H:i:s')]);
+                VALUES(?,?,?,?,?,?);",
+                    [$eventoID, $usuarioId, $status, null, null, date('Y-m-d H:i:s')]
+                );
                 return response()->json(['mensagem' => $mensagemResponse, 'evento' => $eventoID]);
             } catch (\Throwable $th) {
                 return response()->json(['mensagem' => $th]);
@@ -82,36 +112,76 @@ class UsuariosController extends Controller
     }
 
 
-    public function removerListaEspera($eventoId, $vagasTotais) {
+    public function removerListaEspera($eventoId, $vagasTotais)
+    {
         $eventosUsuarios = DB::table('tb_evento_usuario')
             ->orderBy('data_insercao', 'asc')
             ->get();
-    
+
         if ($eventosUsuarios->count() > $vagasTotais) {
             $eventoUsuario = $eventosUsuarios[$vagasTotais];
             $id = $eventoUsuario->id;
-    
+
             DB::table('tb_evento_usuario')
                 ->where('id', $id)
                 ->update(['status' => 0]);
         }
     }
 
-    public function verificaCadastro($usuarioId,  $eventoID) {
+    public function verificaCadastro($usuarioId, $eventoID)
+    {
         $resultados = DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ? AND id_usuario = ?", [$eventoID, $usuarioId]);
 
         if (count($resultados) > 0) {
-            return true; 
+            return true;
         } else {
             return false;
         }
     }
 
-    public function verificaConflito($eventoId, $usuarioId) {
-        $evento = DB::select("SELECT * FROM tb_evento WHERE id = ?;", [$eventoId])[0];
-        if($evento->id_tipo_evento == 4){
+    public function verificarConflitoHackathon($eventoId, $usuarioId, $cadastroHackathon)
+    {
+
+        if ($cadastroHackathon) {
+            $queryConflitoAbertura = "SELECT COUNT(*) AS total_conflitos FROM tb_evento AS evento
+                INNER JOIN tb_evento_usuario AS eventoRelacao ON evento.id = eventoRelacao.id_evento
+                WHERE eventoRelacao.id_usuario = ? 
+                AND evento.dia = '2023-10-23' 
+                AND ('08:00:00' < evento.horarioF) AND ('12:00:00' > evento.horarioI)";
+            $resultadoqueryConflitoAbertura = DB::select($queryConflitoAbertura, [$usuarioId]);
+
+            $queryConflitoEncerramento = "SELECT COUNT(*) AS total_conflitos FROM tb_evento AS evento
+                INNER JOIN tb_evento_usuario AS eventoRelacao ON evento.id = eventoRelacao.id_evento
+                WHERE eventoRelacao.id_usuario = ? 
+                AND evento.dia = '2023-10-26' 
+                AND ('10:00:00' < evento.horarioF) AND ('12:00:00' > evento.horarioI)";
+            $resultadoqueryConflitoEncerramento = DB::select($queryConflitoEncerramento, [$usuarioId]);
+            if ($resultadoqueryConflitoEncerramento[0]->total_conflitos > 0 || $resultadoqueryConflitoAbertura[0]->total_conflitos > 0) {
+                return true;
+            }
+            return false;
+
+        } else {
+            $hackathon = DB::select("SELECT * FROM tb_evento WHERE id_tipo_evento = 4;")[0];
+            if($this->verificaCadastro($usuarioId, $hackathon->id)) {
+                $evento = DB::select("SELECT * FROM tb_evento WHERE id = ?;", [$eventoId])[0];
+                if($evento-> dia == '2023-10-23' || $evento->dia == '2023-10-26') {
+                    if($evento-> dia == '2023-10-23') {
+                        return '08:00:00' < $evento->horarioF AND '12:00:00' > $evento->horarioI;
+                    } else {
+                        return '10:00:00' < $evento->horarioF AND '12:00:00' > $evento->horarioI;
+                    }
+                } else {
+                    return false;
+                }
+            }
             return false;
         }
+    }
+
+    public function verificaConflito($eventoId, $usuarioId)
+    {
+        $evento = DB::select("SELECT * FROM tb_evento WHERE id = ?;", [$eventoId])[0];
         $dia = $evento->dia;
         $horarioI = $evento->horarioI;
         $horarioF = "$evento->horarioF";
@@ -128,9 +198,10 @@ class UsuariosController extends Controller
             return false;
         }
     }
-    
 
-    public function viewEventos(){
+
+    public function viewEventos()
+    {
         $eventos = DB::select(" SELECT e.*, te.nome AS tipo_evento_nome
                                 FROM tb_evento AS e
                                 INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
@@ -141,9 +212,10 @@ class UsuariosController extends Controller
         return view("usuarios.home", compact("eventosMapeados", "usuario"));
     }
 
-    function mapearEventos($eventos, $eventosCadastrados) {
+    function mapearEventos($eventos, $eventosCadastrados)
+    {
         $eventosMapeados = [];
-    
+
         foreach ($eventos as $evento) {
             $proponentes = $this->getProponentesEvento($evento->id);
             $eventoMapeado = new EventoDto(
@@ -173,24 +245,27 @@ class UsuariosController extends Controller
         }
         return $eventosMapeados;
     }
-    
-    function calcularVagasRestantes($eventoId, $eventoVagasTotais){
+
+    function calcularVagasRestantes($eventoId, $eventoVagasTotais)
+    {
         $vagasOcupadas = count(DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ? AND status = 0;", [$eventoId]));
         return $eventoVagasTotais - $vagasOcupadas;
     }
 
-    function getProponentesEvento($eventoId){
+    function getProponentesEvento($eventoId)
+    {
         $relacoesEventoProponente = DB::select("SELECT * FROM tb_proponente_evento WHERE id_evento = ?;", [$eventoId]);
         $proponentes = [];
-        for ($i=0; $i < count($relacoesEventoProponente) ; $i++) { 
+        for ($i = 0; $i < count($relacoesEventoProponente); $i++) {
             array_push($proponentes, DB::select("SELECT * FROM tb_proponente WHERE id = ?;", [$relacoesEventoProponente[$i]->id_proponente])[0]);
         }
-        return  $proponentes;
+        return $proponentes;
     }
 
-    }
-    
-    class EventoDto {
+}
+
+class EventoDto
+{
     public $id;
     public $titulo;
     public $descricao;
@@ -206,7 +281,7 @@ class UsuariosController extends Controller
     public $tipo_evento_nome;
     public $vagas_restantes;
     public $proponentes;
-    
+
     public function __construct(
         $id,
         $titulo,
@@ -241,4 +316,4 @@ class UsuariosController extends Controller
         $this->vagas_restantes = $vagas_restantes;
         $this->proponentes = $proponentes;
     }
-    }
+}
