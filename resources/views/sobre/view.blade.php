@@ -7,15 +7,15 @@
             <li class="nav-item dropdown">
                 <h2><a class=" dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Sobre</a>
                 <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#"><p>O que é a <u class="text-success">SECITEC?</u></p></a></li>
-                <li><a class="dropdown-item" href="#"><p>O que <u class="text-success">promovemos?</u></p></a></li>
-                <li><a class="dropdown-item" href="#"><p>Como <u class="text-success">participar?</u></p></a></li>
+                <li><a onclick="selecionarSecao(0)" class="dropdown-item" href="#"><p>O que é a <u class="text-success">SECITEC?</u></p></a></li>
+                <li><a onclick="selecionarSecao(1)" class="dropdown-item" href="#"><p>O que <u class="text-success">promovemos?</u></p></a></li>
+                <li><a onclick="selecionarSecao(2)" class="dropdown-item" href="#"><p>Como <u class="text-success">participar?</u></p></a></li>
                 </ul>
                 </h2>
             </li>
         </ul>
         <!--SOBRE O EVENTO-->
-        <div class="row" id="">
+        <div class="row show" id="sobre-section">
             <div class="col-lg-12 col-12 p-5 ">
                 <div class="">
                     <h2 class="mb-4">O que é a <u class="text-success">SECITEC?</u></h2>
@@ -39,7 +39,7 @@
         </div>
 
         <!--PROMOVEMOS-->
-        <div class="row" id="">
+        <div class="row" id="sobre-section">
             <div class="col-lg-12 col-12 p-5 ">
                     <div class="">
                         <h2 class="mb-4"> <u class="text-success">Promovemos</u></h2>
@@ -79,7 +79,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-code" viewBox="0 0 16 16">
                             <path d="M5.854 4.854a.5.5 0 1 0-.708-.708l-3.5 3.5a.5.5 0 0 0 0 .708l3.5 3.5a.5.5 0 0 0 .708-.708L2.707 8l3.147-3.146zm4.292 0a.5.5 0 0 1 .708-.708l3.5 3.5a.5.5 0 0 1 0 .708l-3.5 3.5a.5.5 0 0 1-.708-.708L13.293 8l-3.147-3.146z"/>
                         </svg>
-                        <p class="fs-6 pt-3 text-reset">HACKATON</p>
+                        <p class="fs-6 pt-3 text-reset">HACKATHON</p>
                     </div>
                     <!--Sexto ícone-->
                     <div class="col-lg-4 col-md-4 mb-4 mb-md-0">
@@ -93,7 +93,7 @@
         </div>
 
         <!---->
-        <div class="row" id="">
+        <div class="row" id="sobre-section">
             <div class="col-lg-12 col-12 p-5 ">
                 <div class="">
                     <h2 class="mb-4">Como <u class="text-success">participar</u></h2>
@@ -119,5 +119,25 @@
         </div>
     </div>
 </section>
+
+<style>
+    #sobre-section {
+    display: none;
+    }
+
+    #sobre-section.show {
+    display: block;
+    }
+</style>
+<script>
+    function selecionarSecao(secaoIdx){
+        const secoes = Array.from(document.querySelectorAll("#sobre-section"));
+        secoes.forEach(secao => {
+            secao.classList.remove('show');
+        });
+
+        secoes[secaoIdx].classList.add('show');
+    }
+</script>
 
 @endsection
