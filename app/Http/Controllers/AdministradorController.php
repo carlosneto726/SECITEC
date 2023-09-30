@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 use App\Mail\AtivarConta;
 use Illuminate\Support\Facades\Mail;
 
@@ -34,33 +33,72 @@ class AdministradorController extends Controller
         FROM tb_evento AS e
         INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
         ");
+
+        foreach ($eventos as $evento) {
+            $proponentes_nome = [];
+            $proponentes = DB::select(" SELECT nome FROM tb_proponente
+                                        INNER JOIN tb_proponente_evento ON tb_proponente.id = tb_proponente_evento.id_proponente
+                                        WHERE tb_proponente_evento.id_evento = ?;", [$evento->id]);
+            foreach ($proponentes as $proponente) {
+                array_push($proponentes_nome, $proponente->nome);
+            }
+            
+            $evento->proponentes = $proponentes_nome;
+        }
+
         $palestrantes = DB::select("SELECT * FROM tb_proponente");
         $tipoEventos = DB::select("SELECT * FROM tb_tipo_evento");
         return view("admin.events.view", compact("eventos", "palestrantes", "tipoEventos"));
     }
 
-    public function updateEvento(){
+    public function updateEvento(Request $request){
         $id = request("id");
-        $titulo = request("txtTitulo");
-        $descricao = request("txtDescricao");
-        $diaEvento = request("diaEvento");
+        $titulo = request("titulo");
+        $descricao = request("descricao");
+        $dia = request("data");
         $hrInicio = request("hrInicio");
         $hrFim = request("hrFim");
-        $numVagas = request("numVagas");
-        $hrHoras = request("numHoras");
+        $numVagas = request("vagas");
+        $numHoras = request("horas");
+        $local = request("local");
+        $id_tipo_evento = request("tipoEvento");
+        $proponentes = explode(",", request("proponentes")); // O post pelo o javascript volta uma lista dos proponentes no formato JSON, que aqui no php é interpretada por uma string
 
-        DB::update("UPDATE tb_evento 
-                    SET titulo = ?, descricao = ?, dia = ?, horarioI = ?, horarioF = ?, vagas= ?, horas = ?
-                    WHERE id = ?", 
-                    [$titulo, $descricao, $diaEvento, $hrInicio, $hrFim, $numVagas, $hrHoras, $id]
-                );
-
-        AlertController::alert('Evento atualizado com sucesso.', 'success');
-        return redirect("/admin/eventos");
+        if($request->file('arquivo')){ // Caso o POST venha com uma imagem
+            $img_url = DB::select("SELECT url FROM tb_evento WHERE id = ?;", [$id])[0]->url; // Pegando o caminho da imagem antiga
+            @unlink($img_url); // Deletando a imagem antiga do storage
+            $path = $request->file('arquivo')->storeAs('images/schedule', "evento".$titulo.".".$request->file('arquivo')->extension(), 'public'); // Pegando o caminho do arquivo Ex: images/schedule/TituloEvento.png
+            $url = "storage/".$path; // Definindo o arquivo para o caminho relativo da pasta storage Ex: storage/images/schedule/TituloEvento.png
+            DB::update("UPDATE tb_evento
+                SET titulo = ?, descricao = ?, dia = ?, horarioI = ?, horarioF = ?, vagas= ?, horas = ?, url = ?, local = ?, id_tipo_evento = ?
+                WHERE id = ?", 
+                [$titulo, $descricao, $dia, $hrInicio, $hrFim, $numVagas, $numHoras, $url, $local, $id_tipo_evento, $id]
+            ); // Atualizando o evento
+        }else{
+            DB::update("UPDATE tb_evento 
+                SET titulo = ?, descricao = ?, dia = ?, horarioI = ?, horarioF = ?, vagas= ?, horas = ?, local = ?, id_tipo_evento = ?
+                WHERE id = ?", 
+                [$titulo, $descricao, $dia, $hrInicio, $hrFim, $numVagas, $numHoras, $local, $id_tipo_evento, $id]
+            ); // Atualizando o evento
+        }
+        DB::delete("DELETE FROM tb_proponente_evento WHERE id_evento = ?", [$id]); // Deletando os antigos proponentes
+        foreach($proponentes as $proponente){            
+            DB::insert("INSERT INTO
+                        tb_proponente_evento(id_evento, id_proponente)
+                        VALUES(?, ?);",
+                        [$id, $proponente]); // Inserindo os novos proponentes
+        }
+        // Por alguma foda de motivo a porra desse response não funciona javascript/php do cão imaculado dos infernos.
+        return response()->json(
+            [
+                'message' => 'Evento atualizado com sucesso.',
+                'type' => 'success',
+                'endpoint' => '/admin/eventos' 
+            ]
+        );
     }
 
     public function insertEvento(Request $request){
-
         $titulo = request("titulo");
         $descricao = request("descricao");
         $dia = request("data");
@@ -99,8 +137,10 @@ class AdministradorController extends Controller
 
     public function deleteEvento(){
         $id = request("id");
-        DB::delete("DELETE FROM tb_evento WHERE id = ?", [$id]);
-        AlertController::alert('Evento deletado sucesso.', 'warning');
+        $img_url = DB::select("SELECT url FROM tb_evento WHERE id = ?;", [$id])[0]->url; // Pegando o caminho da imagem
+        @unlink($img_url); // Deletando a imagem do storage
+        DB::delete("DELETE FROM tb_proponente_evento WHERE tb_proponente_evento.id_evento = ?;", [$id]); // Deletando a relação entre evento e proponente
+        DB::delete("DELETE FROM tb_evento WHERE tb_evento.id = ?;", [$id]); // Deletando o proponente
         return response()->json(
             [
                 'message' => 'Evento deletado com sucesso.',
@@ -109,7 +149,6 @@ class AdministradorController extends Controller
             ]
         );
     }
-
     public function viewPresenca(){
         return view("admin.events.presenca");
     }
@@ -181,7 +220,6 @@ class AdministradorController extends Controller
                     VALUES(?,?,?,?);",
                     [$id_proponente,$rede1,$rede2,$rede3]);
 
-        AlertController::alert('Proponente adicionado com sucesso.', 'success');
         return redirect("/admin/proponente");
     }
 
@@ -193,6 +231,8 @@ class AdministradorController extends Controller
         $rede2 = request("rede2");
         $rede3 = request("rede3");
         if($request->file('arquivo')){
+            $img_url = DB::select("SELECT url FROM tb_proponente WHERE id = ?;", [$id_proponente])[0]->url; // Pegando o caminho da imagem antiga
+            @unlink($img_url); // Deletando a imagem antiga do storage
             $path = $request->file('arquivo')->storeAs('images/avatar', "palestra".$nome.".".$request->file('arquivo')->extension(), 'public');
             $url = "storage/".$path;
             DB::update("UPDATE tb_proponente
@@ -208,19 +248,21 @@ class AdministradorController extends Controller
                     SET rede1 = ?, rede2 = ?, rede3 = ?
                     WHERE id_proponente = ?",
                     [$rede1,$rede2,$rede3,$id_proponente]);
-
-        AlertController::alert('Proponente atualizado com sucesso.', 'success');
         return redirect("/admin/proponente");
     }
 
     public function deleteProponente(){
         $id = request("id");
+        $img_url = DB::select("SELECT url FROM tb_proponente WHERE id = ?;", [$id])[0]->url; // Pegando o caminho da imagem
+        @unlink($img_url); // Deletando a imagem do storage
+        DB::delete("DELETE FROM tb_proponente_evento WHERE id_proponente = ?;", [$id]);
+        DB::delete("DELETE FROM tb_redes_proponente WHERE id_proponente = ?", [$id]);
         DB::delete("DELETE FROM tb_proponente WHERE id = ?", [$id]);
-        AlertController::alert('Proponente deletado com sucesso.', 'warning');
         return response()->json(
             [
                 'message' => 'Proponente deletado com sucesso.',
-                'type' => 'warning'
+                'type' => 'warning',
+                'endpoint' => '/admin/proponente'
             ]
         );
     }
