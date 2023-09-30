@@ -16,16 +16,16 @@
     </div>
 </section>
 
-<div class="container shadow p-3 mb-5 bg-body rounded">
-    <table class="table table-bordered">
+<div class="container ">
+    <table class="table table-bordered table-striped shadow">
         <tr>
-            <th class="align-middle text-center">Imagem</th>
+            <th class="d-none d-lg-table-cell align-middle text-center">Imagem</th>
             <th class="align-middle text-center">Titulo</th>
             <div class=""><th class="d-none d-lg-table-cell align-middle text-center">Tipo</th></div>
             <th class="d-none d-lg-table-cell align-middle text-center">Descrição</th>
             <th class="align-middle text-center">Dia</th>
-            <th class="align-middle text-center">Horário Inicio</th>
-            <th class="d-none d-lg-table-cell align-middle text-center">Horário Fim</th>
+            <th class="align-middle text-center">Inicio</th>
+            <th class="d-none d-lg-table-cell align-middle text-center">Fim</th>
             <th class="align-middle text-center">Vagas</th>
             <th class="d-none d-lg-table-cell align-middle text-center">Horas</th>
             <th class="d-none d-lg-table-cell align-middle text-center">Proponentes</th>
@@ -46,7 +46,7 @@
         @endif
         @foreach ($eventos as $dados)
             <tr>
-                <td class="align-middle text-center"><img src="{{asset($dados->url)}}" class="img-flex" width="64"></td>
+                <td class="d-none d-lg-table-cell align-middle text-center"><img src="{{asset($dados->url)}}" class="img-flex" width="64"></td>
                 <td class="align-middle text-center">{{$dados->titulo}}</td>
                 <td class="d-none d-lg-table-cell align-middle text-center text-transform:capitalize;">{{$dados->tipo_evento_nome}}</td>
                 <td class="d-none d-lg-table-cell align-middle text-center"> {{$dados->descricao}}</td>

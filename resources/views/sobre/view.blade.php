@@ -42,7 +42,7 @@
         <div class="row" id="sobre-section">
             <div class="col-lg-12 col-12 p-5 ">
                     <div class="">
-                        <h2 class="mb-4"> <u class="text-success">Promovemos</u></h2>
+                        <h2 class="mb-4">O que <u class="text-success">promovemos?</u></h2>
                     </div>
                     <!--Ícones que preenchem "promovemos"-->
                     <div class="row justify-content-md-center text-center border border-light-subtle rounded-4 p-5 ">
@@ -96,7 +96,7 @@
         <div class="row" id="sobre-section">
             <div class="col-lg-12 col-12 p-5 ">
                 <div class="">
-                    <h2 class="mb-4">Como <u class="text-success">participar</u></h2>
+                    <h2 class="mb-4">Como <u class="text-success">participar?</u></h2>
                 </div>
                 <!--Conteúdo/texto sobre a secitec-->
                 <div class="row border border-light-subtle rounded-4 p-5" >
