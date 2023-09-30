@@ -7,12 +7,13 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-lg-5 col-12 m-auto">
+            <div class="col-lg-6 col-12 m-auto">
                 <div class="hero-text text-light">
-                    <p class="fs-1 fw-semibold text-reset" >SECITEC 2023</p>
-                    <p class="fs-2 fw-semibold text-reset" >IFG, Campus Formosa</p>
+                    <h2 class="text-reset" >SECITEC 2023</h2>
 
-                    <p class="fs-1 fw-bolder text-reset cronometro" id="countdown"></p>
+                    <p class="fs-3 fw-semibold text-reset" >IFG, Campus Formosa</p>
+
+                    <h2 class="p-5 text-light cronometro" id="countdown"></h2>
 
                     <!--script para o cronômetro até o dia do evento-->
                     <script>
@@ -42,9 +43,12 @@
                     </script>
 
                     <div class="d-flex justify-content-center align-items-center p-3">
-                        <span class="date-text">23 a 26 de Outubro de 2023</span>
+                        <span class="fs-4 date-text">23 a 26 de Outubro de 2023</span>
                     </div>
-
+                    
+                    <div class="nav-item d-flex align-items-center justify-content-center">
+                        <h6><a class="nav-link btn text-light pt-2 pb-2 ps-4 pe-4 mt-3 rounded-pill" href="{{ url('/cadastrar') }}" id="botao_cadastrar">Cadastre-se</a></h6>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,7 +82,7 @@
                     <!--Ícone quando o mouse está em cima da imagem-->
                     <div class="highlight-info">
                         <h6 class="highlight-title">HACKATHON, 2023</h6>
-                        <a href="https://sensational-kangaroo-32bc8f.netlify.app/" class="bi-plus-circle highlight-icon"></a>
+                        <a href="https://hackathonsecitecifg.netlify.app" class="bi-plus-circle highlight-icon"></a>
                     </div>
                 </div>
             </div>
@@ -96,4 +100,9 @@
         </div>
     </div>
 </section> 
+<style>
+    #botao_cadastrar{
+        background: #0693e3 !important;
+    }
+</style>
 @endsection
