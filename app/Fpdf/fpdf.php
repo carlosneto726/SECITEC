@@ -6,6 +6,7 @@
 * Date:    2021-08-28                                                          *
 * Author:  Olivier PLATHEY                                                     *
 *******************************************************************************/
+namespace App\Fpdf;
 
 define('FPDF_VERSION','1.84');
 
@@ -167,6 +168,10 @@ function __construct($orientation='P', $unit='mm', $size='A4')
 	$this->SetCompression(true);
 	// Set default PDF version number
 	$this->PDFVersion = '1.3';
+}
+
+public static function teste(){
+	return "FPDF!!!!";
 }
 
 function SetMargins($left, $top, $right=null)
@@ -1907,4 +1912,3 @@ protected function _enddoc()
 	$this->state = 3;
 }
 }
-?>
