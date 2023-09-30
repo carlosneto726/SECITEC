@@ -7,6 +7,7 @@ use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\ValidarAdmController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ValidarUsuariosController;
+use App\Http\Controllers\FpdfController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +25,7 @@ Route::get('/local', [Controller::class, 'viewLocal']);
 Route::get('/login', [Controller::class, 'viewLogin']);
 Route::get('/cadastrar', [Controller::class, 'viewCadastrar']);
 Route::get('/termos', [Controller::class, 'viewTermos']);
+Route::get('/fpdf', [FpdfController::class, 'localiza']);
 
 Route::get('/programacao', [ProgramacaoController::class, 'viewProgramacao']);
 
