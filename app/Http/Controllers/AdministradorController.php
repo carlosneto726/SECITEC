@@ -156,28 +156,59 @@ class AdministradorController extends Controller
     public function checkIn(){
         $cpf = request("cpf"); // CPF
         $id_evento = request("id_evento");
+        $confirmacao = request("confirmacao");
         $id_eventousuario = $this->getusUarioId($cpf, $id_evento);
-        DB::update("UPDATE tb_evento_usuario
-                    WHERE id = ?
-                    SET checkin = sysdate();",
-                    [$id_eventousuario]
-        );
+        $checkin = DB::select("SELECT * FROM tb_evento_usuario WHERE id = ?;", [$id_eventousuario])[0]->checkin;
+        if(($checkin == null && $confirmacao == false) || $confirmacao){
+            DB::update("UPDATE tb_evento_usuario
+                        SET checkin = sysdate()
+                        WHERE id = ?;",
+                        [$id_eventousuario]
+            );
+            return response()->json(
+                [
+                    'message' => 'Checkin efetuado com sucesso.',
+                    'type' => 'success'
+                ]
+            );
+        }else{
+            return response()->json(
+                [
+                    'id_modal' => 'modalcheckin'
+                ]
+            );
+        }
     }
 
     public function checkOut(){
         $cpf = request("cpf"); // CPF
         $id_evento = request("id_evento");
+        $confirmacao = request("confirmacao");
         $id_eventousuario = $this->getusUarioId($cpf, $id_evento);
+        $checkout = DB::select("SELECT * FROM tb_evento_usuario WHERE id = ?;", [$id_eventousuario])[0]->checkout;
 
-        DB::update("UPDATE tb_evento_usuario
-                    WHERE id = ?
-                    SET status = 1, 
-                    checkout = sysdate();",
-        [$id_eventousuario]);
+        if(($checkout == null && $confirmacao == false) || $confirmacao){
+            DB::update("UPDATE tb_evento_usuario
+                        SET status = 1, checkout = sysdate()
+                        WHERE id = ?;",
+                        [$id_eventousuario]);
+            return response()->json(
+                [
+                    'message' => 'Checkout efetuado com sucesso.',
+                    'type' => 'success'
+                ]
+            );
+        }else{
+            return response()->json(
+                [
+                    'id_modal' => 'modalcheckout'
+                ]
+            );
+        }
     }
 
     function getusUarioId($cpf, $idevento){
-        $ideventousuario = DB::select("   SELECT tb_evento_usuario.id AS id_usuario
+        $ideventousuario = DB::select(" SELECT tb_evento_usuario.id AS id_usuario
                                         FROM tb_evento_usuario
                                         LEFT JOIN tb_usuario
                                         ON tb_evento_usuario.id_usuario = tb_usuario.id
@@ -186,8 +217,12 @@ class AdministradorController extends Controller
                                         WHERE tb_usuario.cpf = ? and tb_evento.id = ?;", 
                                         [$cpf, $idevento]
         );
-        
-        return $ideventousuario[0]->ida;
+        if(count($ideventousuario) == 0){
+            echo "Usuário não cadastrado nesse evento";
+            // 24247688030
+        }else{
+            return $ideventousuario[0]->id_usuario;
+        }
     }
 
     // Proponente
