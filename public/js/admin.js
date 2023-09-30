@@ -41,14 +41,11 @@ function formDataPostHandler(endpoint, data){
     })
     .catch(erro => console.error('Erro:', erro));
 }
-
-
-
+// Função chamada pelo o botão de exluir que exlui 
 function excluirBtn(endpoint, id, btn){
     var nome = document.getElementById("nome"+id).innerHTML;
     var input = document.getElementById("input"+id).value;
     var alert = document.getElementById("alert"+id);
-
     btn.innerHTML = "<div class='spinner-border' role='status'><span class='visually-hidden'>Loading</span></div>";
     
     if(nome === input){
@@ -116,6 +113,48 @@ function cadastrarEvento(endpoint, btn){
         document.getElementById("local").value == ""
     ){
         document.getElementById("alerta").innerHTML = "Por favor. Preencha todos os campos.";
+    }else{
+        formDataPostHandler(endpoint, formData);
+    }
+}
+
+
+function alterarEvento(endpoint, id, btn){
+    btn.innerHTML = "<div class='spinner-border' role='status'><span class='visually-hidden'>Loading</span></div>";
+    var proponentes = document.getElementsByClassName('alterar-proponentes'+id);
+    var listaProponentes = [];
+    for (let i = 0; i < proponentes.length; i++) {
+        if(proponentes[i].checked){
+            listaProponentes.push(proponentes[i].value);
+        }
+    }
+
+    const formData = new FormData();
+    formData.append('titulo', document.getElementById("alterar-titulo"+id).value);
+    formData.append('descricao', document.getElementById("alterar-descricao"+id).value);
+    formData.append('data', document.getElementById("alterar-data"+id).value);
+    formData.append('hrInicio', document.getElementById("alterar-hrInicio"+id).value);
+    formData.append('hrFim', document.getElementById("alterar-hrFim"+id).value);
+    formData.append('vagas', document.getElementById("alterar-vagas"+id).value);
+    formData.append('horas', document.getElementById("alterar-horas"+id).value);
+    formData.append('local', document.getElementById("alterar-local"+id).value);
+    formData.append('tipoEvento', document.getElementById("alterar-tipoEvento"+id).value);
+    formData.append('arquivo', document.getElementById("alterar-formFile"+id).files[0]);
+    formData.append('proponentes', listaProponentes);
+    formData.append('id', id);
+    // Fazendo o POST
+    if(listaProponentes.length == 0){
+        document.getElementById("alterar-alerta"+id).innerHTML = "É preciso selecionar no mínimo 1 proponente.";
+    }else if(
+        document.getElementById("alterar-titulo"+id).value == "" ||
+        document.getElementById("alterar-descricao"+id).value == "" ||
+        document.getElementById("alterar-hrInicio"+id).value == "" ||
+        document.getElementById("alterar-hrFim"+id).value == "" ||
+        document.getElementById("alterar-vagas"+id).value == "" ||
+        document.getElementById("alterar-horas"+id).value == "" ||
+        document.getElementById("alterar-local"+id).value == ""
+    ){
+        document.getElementById("alterar-alerta"+id).innerHTML = "Por favor. Preencha todos os campos.";
     }else{
         formDataPostHandler(endpoint, formData);
     }
