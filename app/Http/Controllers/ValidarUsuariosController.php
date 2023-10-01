@@ -51,7 +51,7 @@ class ValidarUsuariosController extends Controller
             );
         }else{
             try {
-                $this->enviarEmail($email, $token);
+                $this->enviarEmail($email, 'validar/usuario/'.$token, 'ativarConta');
                 DB::insert('INSERT INTO tb_usuario (nome, email, cpf, senha, token, status) 
                             VALUES (?, ?, ?, ?, ?, 0);', 
                             [$nome, $email, $cpf, $senha, $token]);
@@ -131,12 +131,65 @@ class ValidarUsuariosController extends Controller
         return redirect("/");
     }
 
+
+    public function redefinirSenhaEmail(){
+        $email = request("email");
+        $token = Str::random(60);
+        $update_usuario = DB::update("UPDATE tb_usuario SET token = ? WHERE email = ?", [$token, $email]);
+        if($update_usuario == 0){
+            return response()->json(
+                [
+                    'message' => 'Email inválido.',
+                    'type' => 'danger',
+                    'endpoint' => '/login'
+                ]
+            );
+        }
+        $this->enviarEmail($email, 'atualizar-senha/'.$token, 'redefinirSenha');
+        return response()->json(
+            [
+                'message' => 'Email enviado.',
+                'type' => 'success',
+                'endpoint' => '/login'
+            ]
+        );
+    }
+
+    public function viewAtualizarSenha(){
+        $token = request("token");
+        $usuario = DB::select("SELECT token FROM tb_usuario WHERE token = ?", [$token]);
+        if(count($usuario) == 0){
+            return redirect("/login");
+        }
+        return view("usuarios.atualizarSenha", compact("token"));
+    }
+
+    public function redefinirSenha(){
+        $token = request("token");
+        $senha = Hash::make(request("senha"));
+        $usuario = DB::select("SELECT * FROM tb_usuario WHERE token = ?", [$token]);
+
+        if(count($usuario) == 1){
+            DB::update("UPDATE tb_usuario SET senha = ?, token = 0 WHERE token = ?", [$senha, $token]);
+            AlertController::alert("Senha atualizada com sucesso.","success");
+            return redirect("/login");
+        }else{
+            AlertController::alert("Ocorreu um erro","danger");
+            return redirect("/redefinir-senha");
+        }
+    }
+
+
+
+
+
+
     // Função que envia um email para a ativação da conta, o token no 
     // link é o mesmo armazenado no bando de dados na tb_usuario, quando o 
     // usuário acessar o link, a conta dele é ativada e o token é apagado
-    public function enviarEmail($email, $token){
-        $url = "https://secitecformosa.online/validar/usuario/".$token;
-        Mail::to($email)->send(new AtivarConta($url, 'ativarConta'));
+    public function enviarEmail($email, $endpoint, $tipo){
+        $url = "https://secitecformosa.online/".$endpoint;
+        Mail::to($email)->send(new AtivarConta($url, $tipo));
     }
 
     // Skynet kkkkk

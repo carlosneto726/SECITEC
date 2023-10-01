@@ -28,6 +28,7 @@
                         <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off" onclick="verSenha()">
                         <label class="btn btn-outline-secondary h-50" for="btn-check"><img src="{{asset("icons/eye.svg")}}" width="16" height="16"></label>
                     </div>
+                    <div class="m-1"><a href="#exampleModal" data-bs-toggle="modal">Esqueceu a senha?</a></div>
 
                     <div class="d-grid">
                         <button class="btn btn-success" onclick="loginUsuario('/usuarios/login', 'login')"> 
@@ -35,6 +36,30 @@
                         </button>
                     <hr class="my-4">
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Redefinir senha</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Informe o E-mail</label>
+                    <input type="email" class="form-control" id="RedefinirEmail" placeholder="Ex: exemplo@exemplo.com" required>
+                </div>
+                <div>Nós iremos enviar um E-mail para a redefinição da sua senha.</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="redefinirSenha('/redefinir-senha', this)">Enviar</button>
             </div>
         </div>
     </div>

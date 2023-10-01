@@ -51,6 +51,10 @@ Route::post('/usuarios/cadastrar', [ValidarUsuariosController::class, 'addUsuari
 Route::post('/usuarios/login', [ValidarUsuariosController::class, 'validarLogin']);
 Route::get('/usuarios/sair', [ValidarUsuariosController::class, 'sair']);
 Route::get('/validar/usuario/{token}', [ValidarUsuariosController::class, 'validarEmail']);
+
+Route::post('/redefinir-senha/{token}', [ValidarUsuariosController::class, 'redefinirSenha']);
+Route::get('/atualizar-senha/{token}', [ValidarUsuariosController::class, 'viewAtualizarSenha']);
+Route::post('/redefinir-senha', [ValidarUsuariosController::class, 'redefinirSenhaEmail']);
 // Rotas do UsuariosController para funções do usuário como visualizar, cadastrar eventos
 Route::get('/eventos', [UsuariosController::class, 'viewEventos']);
 Route::post('/usuarios/cadastarEvento', [UsuariosController::class, 'cadastrarEvento']);
