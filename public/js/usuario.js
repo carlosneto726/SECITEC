@@ -22,9 +22,6 @@ function postHandler(endpoint, data){
     .catch(erro => console.error('Erro:', erro));
 }
 
-
-
-
 function cadastrarUsuario(endpoint, btn){
     btn.innerHTML = "<div class='spinner-border' role='status'><span class='visually-hidden'>Loading</span></div>";
     var dados = {
@@ -36,8 +33,6 @@ function cadastrarUsuario(endpoint, btn){
     postHandler(endpoint, dados);
 }
 
-
-
 function loginUsuario(endpoint){
     var dados = {
         email: document.getElementById("email").value,
@@ -46,9 +41,6 @@ function loginUsuario(endpoint){
     postHandler(endpoint, dados);
 }
 
-
-
-
 function verSenha() {
     var inputSenha = document.getElementById("senha");
     if (inputSenha.type === "password") {
@@ -56,4 +48,13 @@ function verSenha() {
     } else {
         inputSenha.type = "password";
     }
+}
+
+function redefinirSenha(endpoint, btn){
+    var email = document.getElementById("RedefinirEmail").value;
+    btn.innerHTML = "<div class='spinner-border' role='status'><span class='visually-hidden'>Loading</span></div>";
+    var data = {
+        email: email
+    }
+    postHandler(endpoint, data);
 }
