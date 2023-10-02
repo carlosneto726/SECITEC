@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{asset("css\bootstrap\bootstrap.css")}}?v=1.0">
     <link rel="stylesheet" href="{{asset("css\bootstrap\bootstrap-icons.css")}}?v=1.0">
     <link rel="stylesheet" href="{{asset('css\templatemo-leadership-event.css')}}?v=1.0">
-    <link rel="stylesheet" href="{{asset('css\user.css')}}?v=1.0">
+    <link rel="stylesheet" href="{{asset("css\user.css")}}?v=1.1">
     <link rel="stylesheet" href="{{asset("css\app.css")}}?v=1.0">
     <title>SECITEC</title>
 </head>

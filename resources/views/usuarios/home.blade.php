@@ -125,8 +125,6 @@
             const eventosAgrupados = agruparEventosPorDia(eventosMapeados);
             const accordion = document.getElementById('accordionExample');
 
-            console.log(eventosMapeados)
-
             // CHAMADAS DE FUNCAO 
             renderizarAccordions();
 
