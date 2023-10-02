@@ -321,12 +321,19 @@
             }
 
             function gerarProponenteInfo(proponente){
-                return `<div class="card" style="width: 12rem;">
-                            <img src="${proponente.url}" class="card-img-top" alt="...">
-                            <div class="card-body text-center text-capitalize">
-                            <h5 class="card-title" style="color: green;">${proponente.nome}</h5>
-                            <p class="card-text">${proponente.titulacao}</p>
-                            </div>
+                return `<div class="card">
+            	            <div class="card-body">
+                                 <div class="row">
+                                    <div class="col-5">
+                                        <img src="${proponente.url}" class="img-fluid" alt="Imagem Quadrada">
+                                    </div>
+                                    <div class="col-7 text-capitalize">
+                                        <h5 class="card-title">${proponente.nome}</h5>
+                                        <p class="card-text">
+                                            ${proponente.titulacao}
+                                        </p>
+                                    </div>
+                                </div>
                         </div>`
             }
 
