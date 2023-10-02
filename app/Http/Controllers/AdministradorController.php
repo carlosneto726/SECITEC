@@ -46,7 +46,7 @@ class AdministradorController extends Controller
             $evento->proponentes = $proponentes_nome;
         }
 
-        $palestrantes = DB::select("SELECT * FROM tb_proponente");
+        $palestrantes = DB::select("SELECT * FROM tb_proponente WHERE id != 7 AND id != 8 AND id != 9 AND id != 10;");
         $tipoEventos = DB::select("SELECT * FROM tb_tipo_evento WHERE id != 4;");
         return view("admin.events.view", compact("eventos", "palestrantes", "tipoEventos"));
     }

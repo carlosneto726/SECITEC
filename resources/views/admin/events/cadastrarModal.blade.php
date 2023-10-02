@@ -39,11 +39,11 @@
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Titulo do evento</span>
-                        <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Atividade..." aria-label="Username" aria-describedby="basic-addon1" required>
+                        <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Atividade..." maxlength="255" required>
                     </div>
                     
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Evento para ensinar crianças..." aria-label="Recipient's username" aria-describedby="basic-addon2" required>
+                        <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Evento para ensinar crianças..."  maxlength="255" required>
                         <span class="input-group-text" id="basic-addon2">Descrição</span>
                     </div>
 
