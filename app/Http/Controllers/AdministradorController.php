@@ -28,10 +28,10 @@ class AdministradorController extends Controller
 
     // Eventos
     public function viewEventos(){
-        $eventos = DB::select("
-        SELECT e.*, te.nome AS tipo_evento_nome
-        FROM tb_evento AS e
-        INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
+        $eventos = DB::select(" SELECT e.*, te.nome AS tipo_evento_nome
+                                FROM tb_evento AS e
+                                INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
+                                WHERE te.id != 4;
         ");
 
         foreach ($eventos as $evento) {
@@ -46,8 +46,8 @@ class AdministradorController extends Controller
             $evento->proponentes = $proponentes_nome;
         }
 
-        $palestrantes = DB::select("SELECT * FROM tb_proponente");
-        $tipoEventos = DB::select("SELECT * FROM tb_tipo_evento");
+        $palestrantes = DB::select("SELECT * FROM tb_proponente WHERE id != 7 AND id != 8 AND id != 9 AND id != 10;");
+        $tipoEventos = DB::select("SELECT * FROM tb_tipo_evento WHERE id != 4;");
         return view("admin.events.view", compact("eventos", "palestrantes", "tipoEventos"));
     }
 
@@ -227,7 +227,7 @@ class AdministradorController extends Controller
 
     // Proponente
     public function viewProponente(){
-        $proponentes = DB::select("SELECT * FROM tb_proponente");
+        $proponentes = DB::select("SELECT * FROM tb_proponente WHERE id != 7 AND id != 8 AND id != 9 AND id != 10;");
         foreach ($proponentes as $proponente) {
             $redes = DB::select("SELECT * FROM tb_redes_proponente WHERE id_proponente = ?;", [$proponente->id]);
             $proponente->redes = $redes;
