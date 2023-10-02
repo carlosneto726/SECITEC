@@ -49,7 +49,9 @@
                         }, 1000); // Atualiza a cada 1 segundo
                     </script>
 
-                    @if(!isset($_COOKIE['usuario']) && !isset($_COOKIE['nome_usuario']))
+                  @if(!isset($_COOKIE['usuario']) && !isset($_COOKIE['nome_usuario']))
+                    
+                    
                     <div class="nav-item d-flex align-items-center justify-content-center">
                         <h6><a class="nav-link btn text-light pt-2 pb-2 ps-4 pe-4 mt-1 rounded-pill" href="{{ url('/cadastrar') }}" id="botao_cadastrar">Cadastre-se</a></h6>
                     </div>
