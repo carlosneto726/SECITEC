@@ -57,7 +57,7 @@ class ValidarUsuariosController extends Controller
                             [$nome, $email, $cpf, $senha, $token]);
                 return response()->json(
                     [
-                        'message' => 'Enviamos um Email para '.$email.'. Verifique a sua caixa de entrada e a caixa de span.',
+                        'message' => 'Enviamos um Email para '.$email.'. Verifique a sua caixa de entrada e a caixa de spam.',
                         'type' => 'warning',
                         'endpoint' => '/login'
                     ]
