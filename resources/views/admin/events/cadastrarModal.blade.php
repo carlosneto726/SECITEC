@@ -21,8 +21,8 @@
                                 @foreach ($palestrantes as $palestrante)
                                     <li>
                                         <div class="form-check ms-2 border-bottom">
-                                            <input class="form-check-input proponentes" type="checkbox" value="{{$palestrante->id}}">
-                                            <label class="form-check-label" for="flexCheckDefault">
+                                            <input class="form-check-input proponentes" type="checkbox" value="{{$palestrante->id}}" id="{{$palestrante->id}}">
+                                            <label class="form-check-label" for="{{$palestrante->id}}" >
                                                 {{$palestrante->nome}}
                                             </label>
                                         </div>
