@@ -39,11 +39,11 @@
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Titulo do evento</span>
-                        <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Atividade..." maxlength="255" required>
+                        <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Ex: Atividade..." maxlength="255" required>
                     </div>
                     
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Evento para ensinar crianças..."  maxlength="255" required>
+                        <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Ex: Evento para ensinar crianças..."  maxlength="255" required>
                         <span class="input-group-text" id="basic-addon2">Descrição</span>
                     </div>
 
@@ -58,7 +58,7 @@
                     </div>
                     
                     <div class="input-group mb-3">
-                        <input type="number" class="form-control" name="vagas" id="vagas" placeholder="75" onkeypress="return event.charCode >= 48" min="1"  required>
+                        <input type="number" class="form-control" name="vagas" id="vagas" placeholder="Ex: 75" onkeypress="return event.charCode >= 48" min="1"  required>
                         <span class="input-group-text">Vagas</span>
                     </div>
                     
@@ -71,13 +71,13 @@
 
                     
                     <div class="input-group mb-3">
-                        <input type="number" class="form-control" name="horas" id="horas" placeholder="10" onkeypress="return event.charCode >= 48" min="1"  required>
+                        <input type="number" class="form-control" name="horas" id="horas" placeholder="Ex: 10" onkeypress="return event.charCode >= 48" min="1"  required>
                         <span class="input-group-text" id="horas">Horas de certificado</span>
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="horas">Local do evento</span>
-                        <input type="text" class="form-control" name="local" id="local" placeholder="Auditório..." required>
+                        <input type="text" class="form-control" name="local" id="local" placeholder="Ex: Auditório..." required>
                     </div>
 
                     <div class="mb-3">
