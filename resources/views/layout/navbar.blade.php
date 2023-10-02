@@ -39,7 +39,7 @@
                     </li>
                     
                     <!--BOTAO TELA MAIOR-->
-                    <li class="nav-item d-none d-lg-block d-flex align-items-center justify-content-center">
+                    <li class="nav-item d-none d-lg-flex align-items-center justify-content-center">
                         <a class="nav-link custom-btn btn btn-danger" href="{{ url('/usuarios/sair') }}">Sair</a>
                     </li>
                     <!--BOTAO TELA MENOR-->
