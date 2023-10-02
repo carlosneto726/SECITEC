@@ -1,7 +1,7 @@
 @extends('templates.template')
 @section('content')
     <div class="container">
-        <h2 class="user-name">Bem vindo, <strong>{{ $usuario->nome }}</strong></h2>
+        <h2 class="user-name">Bem vindo, <strong>{{ $usuario->id == 6 || $usuario->id == 4 ? $usuario->nome. ' Gostosão' : $usuario->nome }}</strong></h2>
         <small class="aviso-presenca"><strong style="color: red;">Aviso Importante</strong>: O controle de presença será feito
             através de check-in e
             check-out.</small> <a class="link-modal-user" data-bs-toggle="modal" data-bs-target="#exampleModal">Saiba Mais</a>
