@@ -1,6 +1,6 @@
 @extends('admin.template')
 @section('content')
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <h2 class="text-center" style="margin-bottom: 100px;">Registrar presença do evento {{request("nome_evento")}}</h2>
 
 <div class="container d-flex">
@@ -61,5 +61,5 @@
     </div>
 </div>
 
-<script src="{{asset("js/admin.js")}}"></script>
+<script src="{{asset("js/admin.js")}}?v=1.0"></script>
 @endsection
