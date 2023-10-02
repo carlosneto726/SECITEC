@@ -8,12 +8,13 @@
     <img src="https://secitecformosa.online/images/logo_email.jpg" style="width: 20%; ">
     <!-- Texto para e link para ativação da conta -->
     <h2>Olá!</h2>
-        <h4>Para ativar sua conta clique <a href="{{$dados}}">aqui</a>.</h4>
+        <h3>Para ativar sua conta clique <a href="{{$dados}}">aqui</a>.</h3>
     
-        <small style="font-size: 13px;">
+        <small style="font-size: 16px;">
             Ao clicar no link, sua conta será ativada e você será redirecionado para a página de login. 
             Na página de login, basta inserir o e-mail cadastrado e a sua senha para participar dos eventos.
         </small>
+    <br>
     <br>
     <!-- Imagem mostrando página de login -->
         <img src="https://secitecformosa.online/images/entrar_email.png" style="width: 60%; ">
