@@ -79,7 +79,7 @@ function calcularHoras(){
 
     // Calcule a diferença em horas e minutos
     const diferencaEmMinutos = Math.floor(diferencaEmMilissegundos / (1000 * 60));
-    var horas = Math.floor(diferencaEmMinutos / 60) * 2;
+    var horas = Math.floor(diferencaEmMinutos / 60);
     if(horas == 0){
         document.getElementById("horas").value = 2;
     }else{

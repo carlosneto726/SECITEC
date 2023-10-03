@@ -109,9 +109,12 @@ class AdministradorController extends Controller
         $local = request("local");
         $id_tipo_evento = request("tipoEvento");
         $proponentes = explode(",", request("proponentes"));
-        $path = $request->file('arquivo')->storeAs('images/schedule', "evento".$titulo.".".$request->file('arquivo')->extension(), 'public');
-        $url = "storage/".$path;
-        // $types = array("png", "jpg", "jpeg", "webp", "avif", "jfif");
+        if($request->file('arquivo')){ // Caso o POST venha com uma imagem
+            @$path = $request->file('arquivo')->storeAs('images/schedule', "evento".$titulo.".".$request->file('arquivo')->extension(), 'public');
+            $url = "storage/".$path;
+        }else{
+            $url = "storage/images/avatar/placeholder.jpeg";
+        }
 
         DB::insert("INSERT INTO 
                     tb_evento(titulo,descricao,dia,horarioI,horarioF,vagas,horas,local,url,id_tipo_evento)
@@ -241,8 +244,12 @@ class AdministradorController extends Controller
         $rede1 = request("rede1");
         $rede2 = request("rede2");
         $rede3 = request("rede3");
-        $path = $request->file('arquivo')->storeAs('images/avatar', "palestra".$nome.".".$request->file('arquivo')->extension(), 'public');
-        $url = "storage/".$path;
+        if($request->file('arquivo')){ // Caso o POST venha com uma imagem
+            $path = $request->file('arquivo')->storeAs('images/avatar', "palestra".$nome.".".$request->file('arquivo')->extension(), 'public');
+            $url = "storage/".$path;
+        }else{
+            $url = "storage/images/avatar/placeholder.jpeg";
+        }
         DB::insert("INSERT INTO 
                     tb_proponente(nome,titulacao,url) 
                     VALUES(?,?,?);", 
@@ -289,7 +296,9 @@ class AdministradorController extends Controller
     public function deleteProponente(){
         $id = request("id");
         $img_url = DB::select("SELECT url FROM tb_proponente WHERE id = ?;", [$id])[0]->url; // Pegando o caminho da imagem
-        @unlink($img_url); // Deletando a imagem do storage
+        if($img_url != "storage/images/avatar/placeholder.jpeg"){
+            @unlink($img_url); // Deletando a imagem do storage
+        }
         DB::delete("DELETE FROM tb_proponente_evento WHERE id_proponente = ?;", [$id]);
         DB::delete("DELETE FROM tb_redes_proponente WHERE id_proponente = ?", [$id]);
         DB::delete("DELETE FROM tb_proponente WHERE id = ?", [$id]);

@@ -83,7 +83,7 @@
                     <div class="mb-3">
                         <label for="basic-url" class="form-label">Escolha a foto que representa o Evento</label>
                         <div class="input-group">
-                            <input class="form-control" type="file" name="arquivo" id="formFile" accept=".png, .jpg, .jpeg, .webp, .avif, .jfif" required>
+                            <input class="form-control" type="file" name="arquivo" id="formFile" accept=".png, .jpg, .jpeg, .webp, .avif, .jfif">
                         </div>
                         <div class="form-text" id="basic-addon4">.png, .jpg, .jpeg, .webp, .avif, .jfif</div>
                     </div>
