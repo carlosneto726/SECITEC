@@ -13,7 +13,7 @@ class ProgramacaoController extends Controller
         foreach ($eventos as $evento) {
             $proponentes = DB::select(" SELECT * FROM tb_proponente
                                         INNER JOIN tb_proponente_evento ON tb_proponente.id = tb_proponente_evento.id_proponente
-                                        WHERE tb_proponente_evento.id_evento = ?;", [$evento->id]);
+                                        WHERE tb_proponente_evento.id_evento = ? ORDER BY dia;", [$evento->id]);
             $evento->proponentes = $proponentes;
         }
         return view("programacao.view", compact("eventos"));
