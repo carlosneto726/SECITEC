@@ -4,17 +4,18 @@
 
 <section class="container section-padding">
 
-<div class="row">
-    <div class="col-2">
-        <img class="img-fluid rounded-circle" src="{{asset($proponente->url)}}">
+    <div class="perfil-proponente">
+        <div class="img-wrapper-proponente">
+            <img src="{{asset($proponente->url)}}">
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="img-wrapper-proponente col-6">
-        <h1>NOME: {{$proponente->nome}}</h1>
-        <h3>TITULAção: {{$proponente->titulacao}}</h3>
+
+    <div class="row mt-4">
+        <div class="col-6">
+            <p class="text-reset fs-2 fw-bold">{{$proponente->nome}}</p>
+            <p class="text-reset fs-3">{{$proponente->titulacao}}</p>
+        </div>
     </div>
-</div>
 
 
 

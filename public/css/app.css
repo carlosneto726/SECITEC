@@ -879,12 +879,24 @@ https://templatemo.com/tm-575-leadership-event
   /*---------------------------------------
     PAGINA PRONENTE               
   -----------------------------------------*/
+  .perfil-proponente{
+    display: flex;
+    width: 100%;
+  }
   .img-wrapper-proponente{
+    padding: 0;
+    width: 270px;
+    height: 270px;
+    border-radius: 300px;
+    overflow: hidden;
   }
   .img-wrapper-proponente img{
+    object-fit: cover;
+    object-position: center;
     width: 100%;
     height: 100%;
   }
+
 
   /*---------------------------------------
     SITE FOOTER              
@@ -1002,7 +1014,7 @@ https://templatemo.com/tm-575-leadership-event
     h6 {
       font-size: 18px;
     }
-  
+    
     .section-padding,
     .site-footer {
       padding-top: 80px;
@@ -1033,6 +1045,11 @@ https://templatemo.com/tm-575-leadership-event
   
     .copyright-text-wrap {
       margin-top: 20px;
+    }
+    
+    .img-wrapper-proponente{
+      width: 200px;
+      height: 200px;
     }
   }
   
@@ -1090,6 +1107,15 @@ https://templatemo.com/tm-575-leadership-event
     .footer-menu,
     .copyright-text-wrap {
       justify-content: center;
+    }
+
+    .perfil-proponente{
+      
+    }
+
+    .img-wrapper-proponente{
+      width: 150px;
+      height: 150px;
     }
   }
   
