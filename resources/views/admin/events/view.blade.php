@@ -68,12 +68,14 @@
                     </div>
                 </td>
                 @include('admin.events.alterarModal')
-                <td class="align-middle text-center"><a href="{{url('/admin/presenca/'.$dados->id.'/'.$dados->titulo)}}" class="btn btn-success">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-                    </svg>
-                </a>
+                <td class="align-middle text-center">
+                    <a href="#checkinoutModal{{$dados->id}}" class="btn btn-success" data-bs-toggle="modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                        </svg>
+                    </a>
+
                     <a href="#staticBackdrop{{$dados->id}}" class="btn btn-primary" data-bs-toggle="modal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-toggles" viewBox="0 0 16 16">
                             <path d="M4.5 9a3.5 3.5 0 1 0 0 7h7a3.5 3.5 0 1 0 0-7h-7zm7 6a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm-7-14a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm2.45 0A3.49 3.49 0 0 1 8 3.5 3.49 3.49 0 0 1 6.95 6h4.55a2.5 2.5 0 0 0 0-5H6.95zM4.5 0h7a3.5 3.5 0 1 1 0 7h-7a3.5 3.5 0 1 1 0-7z"/>
@@ -119,6 +121,22 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                 <button type="button" class="btn btn-danger" onclick="excluirBtn('/admin/eventos/deletar', {{$dados->id}}, this)" id="deletarBtn">Deletar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- Modal -->
+                <div class="modal fade" id="checkinoutModal{{$dados->id}}" tabindex="-1" aria-labelledby="checkinoutModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="checkinoutModalLabel">{{$dados->titulo}}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Você deseja fazer o <a class="text-success" href="{{url('/admin/presenca/checkin/'.$dados->id.'/'.$dados->titulo)}}">Checkin</a> ou <a class="text-danger" href="{{url('/admin/presenca/checkout/'.$dados->id.'/'.$dados->titulo)}}">Checkout</a> desse evento?
                             </div>
                         </div>
                     </div>

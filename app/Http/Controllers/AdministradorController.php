@@ -152,8 +152,12 @@ class AdministradorController extends Controller
             ]
         );
     }
-    public function viewPresenca(){
-        return view("admin.events.presenca");
+    public function viewCheckin(){
+        return view("admin.events.checkin");
+    }
+
+    public function viewCheckout(){
+        return view("admin.events.checkout");
     }
 
     public function checkIn(){
@@ -229,7 +233,7 @@ class AdministradorController extends Controller
     }
 
     // Proponente
-    public function viewProponente(){
+    public function viewProponente(Request $request){
         $proponentes = DB::select("SELECT * FROM tb_proponente WHERE id != 7 AND id != 8 AND id != 9 AND id != 10;");
         foreach ($proponentes as $proponente) {
             $redes = DB::select("SELECT * FROM tb_redes_proponente WHERE id_proponente = ?;", [$proponente->id]);

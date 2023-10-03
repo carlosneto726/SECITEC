@@ -37,7 +37,10 @@
                     <li class="nav-item">
                         <a class="nav-link click-scroll"  href="{{ url('/eventos') }}">Eventos</a>
                     </li>
-                    
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll"  href="{{ url('/meus-eventos') }}">Eventos Cadastrados</a>
+                    </li>
+
                     <!--BOTAO TELA MAIOR-->
                     <li class="nav-item d-none d-lg-flex align-items-center justify-content-center">
                         <a class="nav-link custom-btn btn btn-danger" href="{{ url('/usuarios/sair') }}">Sair</a>
