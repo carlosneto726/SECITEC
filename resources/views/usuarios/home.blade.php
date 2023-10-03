@@ -17,24 +17,6 @@
     </div>
 
     <!-- Modal generico -->
-    <div id="modalProponentes" class="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content modal-proponentes-custom">
-                <div class="modal-header">
-                    <h5 class="modal-title">Proponentes</h5>
-                    <button type="button" class="btn-close" onclick="clearModalProponentes()" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="modalProponentesContainer"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" onclick="clearModalProponentes()" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal generico -->
     <div id="modalGenerico" class="modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -269,7 +251,7 @@
                                         <p class="m-0">Vagas: <strong style="color: ${evento.vagas_restantes > 0 ? '' : 'red'};" id="vagas_restantes${ evento.id }">${evento.vagas_restantes}</strong></p>
                                      </div>
                                     <div class="col-6 avatares-wrapper">
-                                        ${ gerarAvatarProponentes(evento.proponentes) } <button onclick="mostrarModalProponentes(${evento.id})" type="button" class="btn btn-outline-info" data-mdb-ripple-color="dark">Proponentes</button>
+                                        ${ gerarAvatarProponentes(evento.proponentes) }
                                     </div>
                                 </div>
                             </div>
@@ -313,7 +295,7 @@
             function gerarAvatarProponentes(proponentes){
                 let avatares = ''
                 proponentes.forEach(proponente => {
-                    avatares += `<div class="avatar-proponente"><img src="${proponente.url}" style="width: 50px;" alt="Avatar" /></div>`
+                    avatares += `<div class="avatar-proponente"><a href="/proponente/${proponente.id}"><img src="${proponente.url}" style="height: 50px; width: 50px;" alt="Avatar" /></a></div>`
                 });
                 return avatares;
             }
@@ -334,21 +316,6 @@
                                 </div>
                         </div>`
             }
-
-            function mostrarModalProponentes(eventoId){
-                const proponentes = eventosMapeados.find(p => p.id == eventoId).proponentes;
-                const modalContainer = document.getElementById('modalProponentesContainer');
-                proponentes.forEach(proponente => {
-                    modalContainer.innerHTML += gerarProponenteInfo(proponente);
-                });
-                var myModal = new bootstrap.Modal(document.getElementById('modalProponentes'))
-                myModal.show()
-            }
-
-            function clearModalProponentes(){
-                document.getElementById('modalProponentesContainer').innerHTML = "";
-            }
-
 
             // FUNCAO QUE ENVIA REQUISICAO DE CADASTRO E DESCADASTRO.
             function enviarRequisicaoHackathon(eventoId){
