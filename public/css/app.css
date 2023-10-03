@@ -876,7 +876,16 @@ https://templatemo.com/tm-575-leadership-event
     background: var(--navbar-bg-color);
   }
   
-  
+  /*---------------------------------------
+    PAGINA PRONENTE               
+  -----------------------------------------*/
+  .img-wrapper-proponente{
+  }
+  .img-wrapper-proponente img{
+    width: 100%;
+    height: 100%;
+  }
+
   /*---------------------------------------
     SITE FOOTER              
   -----------------------------------------*/
