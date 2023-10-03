@@ -1,40 +1,40 @@
 function downloadPDF(){
-    /*
-    * Let's demonstrate string splitting with the first page of Shakespeare's Romeo and Juliet!
-    * We'll use a 8.5 x 11 inch sheet, measuring everything in inches.
-    */
-    var pageWidth = 8.5,
-    lineHeight = 1.2,
-    margin = 0.5,
-    maxLineWidth = pageWidth - margin * 2,
-    fontSize = 24,
-    ptsPerInch = 72,
-    oneLineHeight = (fontSize * lineHeight) / ptsPerInch,
-    text = "PEDRO BANANA MEU GAROTO BONITO OLHA SO QUE BONITO ELE AIIIIN PEDRINHOSSSSSS!!!!!!!!!!!!!!!!!!!!!";
-    doc = new jsPDF({
-    unit: "in",
-    lineHeight: lineHeight
-    }).setProperties({ title: "String Splitting" });
+    
+    var doc = new jsPDF();
 
-    // splitTextToSize takes your string and turns it in to an array of strings,
-    // each of which can be displayed within the specified maxLineWidth.
-    var textLines = doc
-    .setFont("helvetica")
-    .setFontSize(fontSize)
-    .splitTextToSize(text, maxLineWidth);
 
-    // doc.text can now add those lines easily; otherwise, it would have run text off the screen!
-    doc.text(textLines, margin, margin + 2 * oneLineHeight);
+    
+    for (let i = 0; i < eventos.length; i++) {
+        
+        var titulo = eventos[i]['titulo'];
+        var descricao = eventos[i]['descricao'];
+        var dia = eventos[i]['dia'];
+        var horai = eventos[i]['horarioI'];
+        var horaf = eventos[i]['horarioF'];
+        var horas = eventos[i]['horas'];
+        var local = eventos[i]['local'];
+        
+        doc.setLineWidth(0.5);
+        doc.line(20, 25, 60, 25);
+        doc.setFontSize(40);
+        doc.text(titulo, 35, 35);
+        doc.setLineWidth(0.5);
+        doc.line(20, 45, 60, 45);
+        
+        doc.setFontSize(40);
+        doc.text(descricao, 35, 55);
+        doc.setFontSize(40);
+        doc.text(dia, 35, 65);
+    }
 
-    // You can also calculate the height of the text very simply:
-    var textHeight = (textLines.length * fontSize * lineHeight) / ptsPerInch;
-    doc
-    .setFont("Helvetica", "bold")
-    .text(
-    "COMPROVANTE DO QUANTO O PREDO É DELICIOSO.",
-    margin,
-    margin + oneLineHeight
-    );
+    // Don't forget, that there are CORS-Restrictions. So if you want to run it without a Server in your Browser you need to transform the image to a dataURL
+// Use http://dataurl.net/#dataurlmaker
+   
+
+    
+
+
+
     doc.save('comprovantesecitec2023.pdf')
 }
 
