@@ -213,6 +213,26 @@ class UsuariosController extends Controller
         return view("usuarios.home", compact("eventosMapeados", "usuario"));
     }
 
+    public function viewMeusEventos(){
+        $cpf = DB::select("SELECT cpf FROM tb_usuario WHERE id = ?;", [$this->id_usuario])[0]->cpf;
+        $eventos = DB::select(" SELECT tb_evento.id as id_evento,
+                                tb_evento.titulo as titulo,
+                                tb_evento.descricao as descricao,
+                                tb_evento.dia as dia,
+                                tb_evento.horarioI as horarioI,
+                                tb_evento.horarioF as horarioF,
+                                tb_evento.vagas as vagas,
+                                tb_evento.horas as horas,
+                                tb_evento.local as local,
+                                tb_evento.url as url,
+                                tb_evento.id_tipo_evento as id_tipo_evento
+                                FROM tb_evento
+                                INNER JOIN tb_evento_usuario ON tb_evento_usuario.id_evento = tb_evento.id
+                                INNER JOIN tb_usuario ON tb_evento_usuario.id_usuario = tb_usuario.id
+                                WHERE tb_usuario.id = ?;", [$this->id_usuario]);
+        return view("meus-eventos.view", compact("eventos", "cpf"));
+    }
+
     function mapearEventos($eventos, $eventosCadastrados)
     {
         $eventosMapeados = [];

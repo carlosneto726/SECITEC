@@ -152,8 +152,12 @@ class AdministradorController extends Controller
             ]
         );
     }
-    public function viewPresenca(){
-        return view("admin.events.presenca");
+    public function viewCheckin(){
+        return view("admin.events.checkin");
+    }
+
+    public function viewCheckout(){
+        return view("admin.events.checkout");
     }
 
     public function checkIn(){
