@@ -66,13 +66,13 @@
                                               </p>
                                             <div class="row d-flex align-items-center mt-4 mb-2">
                                                 @foreach ($evento->proponentes as $proponente)
-                                                  <div class="col-9 avatar-group d-flex">
+                                                  <a href="{{url('/proponente/'.$proponente->id_proponente)}}" class="col-9 avatar-group d-flex">
                                                       <img src="{{asset($proponente->url)}}" class="img-fluid avatar-image mx-1 mx-lg-2"/>
                                                       <div class="ms-3">
                                                         {{$proponente->nome}}
                                                         <p class="speakers-text mb-0">{{$proponente->titulacao}}</p>
                                                       </div>
-                                                  </div>
+                                                  </a>
                                                 @endforeach
                                             </div>
                                         </div>

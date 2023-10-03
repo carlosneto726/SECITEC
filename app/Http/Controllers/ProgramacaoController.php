@@ -21,7 +21,7 @@ class ProgramacaoController extends Controller
     public function getEventos($data){
         $eventos = DB::select("SELECT * FROM vw_evento_proponente WHERE dia = ? ORDER BY horarioI ASC", [$data]);
         foreach ($eventos as $evento) {
-            $proponentes = DB::select(" SELECT * FROM tb_proponente
+            $proponentes = DB::select(" SELECT *, tb_proponente.id as id_proponente FROM tb_proponente
                                         INNER JOIN tb_proponente_evento ON tb_proponente.id = tb_proponente_evento.id_proponente
                                         WHERE tb_proponente_evento.id_evento = ?;", [$evento->id]);
             $evento->proponentes = $proponentes;
