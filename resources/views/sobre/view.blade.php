@@ -21,7 +21,7 @@
                     <h2 class="mb-4">O que é a <u class="text-success">SECITEC?</u></h2>
                 </div>
                 <!--Conteúdo/texto sobre a secitec-->
-                <div class="row border border-light-subtle rounded-4 p-5" >
+                <div class="row" >
                     <div class="col align-self-center">
                         <h3 class="mb-3">SECITEC</h3>
                         <p>
@@ -42,7 +42,7 @@
         <div class="row" id="sobre-section">
             <div class="col-lg-12 col-12 p-5 ">
                     <div class="">
-                        <h2 class="mb-4">O que <u class="text-success">promovemos?</u></h2>
+                        <h2 class="mb-4"> <u class="text-success">Promovemos</u></h2>
                     </div>
                     <!--Ícones que preenchem "promovemos"-->
                     <div class="row justify-content-md-center text-center border border-light-subtle rounded-4 p-5 ">
@@ -99,7 +99,7 @@
                     <h2 class="mb-4">Como <u class="text-success">participar?</u></h2>
                 </div>
                 <!--Conteúdo/texto sobre a secitec-->
-                <div class="row border border-light-subtle rounded-4 p-5" >
+                <div class="row" >
                     <div class="col align-self-center">
                         <h3 class="mb-3"><a class="" href="{{ url('/cadastrar') }}">Cadastre-se</a></h3>
                         <p class="mb-5">Para ter acesso ao conteúdo de programação e se inscrever em nossos eventos, basta se cadastrar clicando <a class="" href="{{ url('/cadastrar') }}"><span class="text-success fw-bolder">aqui</span></a>. Somente dessa forma você poderá desfrutar de nosso evento.</p>

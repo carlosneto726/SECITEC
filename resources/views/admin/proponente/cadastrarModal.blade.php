@@ -13,24 +13,24 @@
                 @method('POST')
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input class="form-control " type="text" name="txtNome" placeholder="Juliano" maxlength="255" required/>
+                        <input class="form-control " type="text" name="txtNome" placeholder="Ex: Juliano" maxlength="255" required/>
                         <label>Informe o nome do proponente</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input class="form-control " type="text" name="txtTitulacao" placeholder="Doutorado em ciências sociáis"  maxlength="255" required/>
+                        <input class="form-control " type="text" name="txtTitulacao" placeholder="Ex: Doutorado em ciências sociáis"  maxlength="255" required/>
                         <label>Informe a titulação</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input class="form-control " type="text" name="rede1" placeholder="https://www.instagram.com/carlosneto726/"  maxlength="255"/>
+                        <input class="form-control " type="text" name="rede1" placeholder="Ex: https://www.instagram.com/carlosneto726/"  maxlength="255"/>
                         <label>Rede Social 1</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input class="form-control " type="text" name="rede2" placeholder="https://www.instagram.com/carlosneto726/"  maxlength="255"/>
+                        <input class="form-control " type="text" name="rede2" placeholder="Ex: https://www.instagram.com/carlosneto726/"  maxlength="255"/>
                         <label>Rede Social 2</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input class="form-control " type="text" name="rede3" placeholder="https://www.instagram.com/carlosneto726/"  maxlength="255"/>
+                        <input class="form-control " type="text" name="rede3" placeholder="Ex: https://www.instagram.com/carlosneto726/"  maxlength="255"/>
                         <label>Rede Social 3</label>
                     </div>
                     <div class="mb-2">
