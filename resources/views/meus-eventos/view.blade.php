@@ -7,21 +7,34 @@
 
 <section class="schedule section-padding" id="section_4">
     <div class="container">
-        <div class="row">
-            <div class="col-8">
-                <h2 class="mb-5 ">Seus <u class="text-success">Eventos Cadastrados</u></h2>
+        <!-- texto aparece so em tamanho sm-->
+        <h2 class="mb-5 d-block d-md-none">Seus <u class="text-success">Eventos Cadastrados</u></h2>
+        <div class="clearfix">
+                <!-- Aparece o qr code e botão em ao lado menos no tamanho sm-->
+                <div class="col-md-6 float-sm-end ms-md-3 d-none d-md-block">
+                    <center>
+                        <div id="qrcode" style="width:100px; height:100px;"></div>
+                        <br>
+                        <p><button class="btn btn-success" onclick="downloadPDF()">Cartão de Entrada</button></p>
+                    </center>
+                </div>
+
+                <!-- texto não aparece em tamanho sm-->
+                <h2 class="mb-5 d-none d-md-block">Seus <u class="text-success">Eventos Cadastrados</u></h2>
                 <p>
                     As programações da <span class="text-success fw-bolder">SECITEC</span> que você se cadastratou serão mostra nessa página. 
-                    Seu comprovante de inscrição e seu QR Code para registro de presença das atividades ficaram disponíveis nesta página!
+                    Também nesta página está disponível o cartão de entrada para os eventos que você está inscrito, basta apertar no botão de  <span class="text-success fw-bolder">Cartão de Entrada</span>
+                    para fazer o download em pdf ou ultilizar o qr code mostrado nessa página para entrar nos seus eventos cadastrados.
                 </p>
-            </div>
-            <div class="col-4">
-                <center>
-                    <div id="qrcode" style="width:100px; height:100px;"></div>
-                    <br><br><br>
-                    <p><button class="btn btn-success" style="margin-left: 50px;" onclick="downloadPDF()">Baixar comprovante</button></p>
-                </center>
-            </div>
+                <!-- Aparece o qr code e botão em baixo tamanho sm-->
+                <div class="d-block d-md-none">
+                    <center>
+                        <div id="qrcode2" style="width:100px; height:100px;"></div>
+                        <br>
+                        <p><button class="btn btn-success" onclick="downloadPDF()">Cartão de Entrada</button></p>
+                    </center>
+                </div>
+            
         </div>
         
         
@@ -64,10 +77,16 @@
     var cpf = {{ Js::from($cpf) }};
 
     var qrcode = new QRCode(document.getElementById("qrcode"), {
-        width : 150,
-        height : 150
+        width : 100,
+        height : 100
+    });
+    var qrcode2 = new QRCode(document.getElementById("qrcode2"), {
+        width : 100,
+        height : 100
     });
     qrcode.makeCode( cpf );
+    qrcode2.makeCode( cpf );
+
     var qrImage = document.getElementById("qrcode").getElementsByTagName('img')[0];
     var logo = document.getElementById('logo');
 </script>
