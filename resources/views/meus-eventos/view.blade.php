@@ -72,7 +72,7 @@
     var logo = document.getElementById('logo');
 </script>
 
-<script type="text/javascript" src="{{asset('js/jsPDF.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/jsPDF.js')}}?v=1.0"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.16/jspdf.plugin.autotable.min.js"></script>
 @endsection

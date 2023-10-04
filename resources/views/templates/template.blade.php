@@ -40,8 +40,8 @@
     </script>
     <script src="{{asset('js/jquery.min.js')}}?v=1.0"></script>
     <script src="{{asset('js/jquery.sticky.js')}}?v=1.0"></script>
-    <script src="{{asset('js/app.js')}}?v=1.0"></script>
-    <script src="{{asset('js/usuario.js')}}?v=1.1"></script>
+    <script src="{{asset('js/app.js')}}?v=1.1"></script>
+    <script src="{{asset('js/usuario.js')}}?v=1.2"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     <script>
         var alerta = document.getElementById("alert");
