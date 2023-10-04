@@ -2,22 +2,23 @@
 @section('content')
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<h2 class="text-center" style="margin-bottom: 100px;">{{ request('nome_evento') }}</h2>
+<div class="container pb-5">
+    <h2 class=""><u class="text-success">{{ request('nome_evento') }}</u></h2>
+</div>
 
 <div class="container d-flex">
     <div class="mx-auto" style="width: 640px;">
-        <canvas class="img-fluid rounded" id="canvas"></canvas>
+        <canvas class="img-fluid rounded" id="canvas" hidden></canvas>
         <div class="text-danger" id="outputMessage" hidden>Qr Code lido com sucesso.</div>
         <h4 class="text-danger">Checkout</h4>
         <div class="mb-3">
-            <label class="form-label">CPF</label>
-            <input type="text" name="cpf" id="cpfCheckout" class="form-control">
+            <input type="text" name="cpf" id="cpfCheckout" class="form-control" placeholder="CPF">
         </div>
         <div class="d-flex">
             <button type="submit" class="btn btn-danger" onclick="checkinout('/admin/presenca/checkout', {{ request('id_evento') }}, this, false, 'out')">Efetuar
                 Checkout
             </button>
-            <button class="btn btn-primary ms-auto" onclick="lerQrcode()">Ler QRCode</button>
+            <button class="btn btn-success ms-auto" onclick="lerQrcode()">Ler QRCode</button>
         </div>
     </div>
 </div>
@@ -61,6 +62,7 @@
     }
 
     function lerQrcode(){
+        document.getElementById("canvas").hidden=false;
         // Use facingMode: environment to attemt to get the front camera on phones
         navigator.mediaDevices.getUserMedia({
             video: {

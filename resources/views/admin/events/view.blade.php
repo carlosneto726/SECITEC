@@ -1,7 +1,6 @@
 @extends('admin.template')
 @section('content')
 
-
 <script src="{{asset('js/admin.js')}}"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -130,13 +129,21 @@
                 <!-- Modal -->
                 <div class="modal fade" id="checkinoutModal{{$dados->id}}" tabindex="-1" aria-labelledby="checkinoutModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="checkinoutModalLabel">{{$dados->titulo}}</h1>
+                        <div class="modal-content " style="background: #f3f3f3;">
+                            <div class="modal-header ">
+                                <h1 class="modal-title fs-3" id="checkinoutModalLabel">{{$dados->titulo}}</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                Você deseja fazer o <a class="text-success" href="{{url('/admin/presenca/checkin/'.$dados->id.'/'.$dados->titulo)}}">Checkin</a> ou <a class="text-danger" href="{{url('/admin/presenca/checkout/'.$dados->id.'/'.$dados->titulo)}}">Checkout</a> desse evento?
+                            <div class="modal-body row justify-content-center text-center pt-4">
+                                <div class="col-6">
+                                <a class="btn btn-success fs-5 fw-semibold" href="{{url('/admin/presenca/checkin/'.$dados->id.'/'.$dados->titulo)}}">Checkin</a> 
+                                </div>
+                                <div class="col-6">
+                                <a class="btn btn-danger fs-5 fw-semibold" href="{{url('/admin/presenca/checkout/'.$dados->id.'/'.$dados->titulo)}}">Checkout</a>
+                                </div>
+                                <div class="col-10">
+                                    <hr class="my-4">
+                                </div>
                             </div>
                         </div>
                     </div>
