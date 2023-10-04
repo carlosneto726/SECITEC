@@ -2,7 +2,7 @@
 @section('content')
 
 <script type="text/javascript" src="{{asset('js/qrcode.js')}}"></script>
-
+<img src="{{asset('images/logo_email.jpg')}}" id="logo" hidden>
 
 <div class="container">
     <div class="row">
@@ -45,7 +45,7 @@
                 
             </div>
         </div>
- </div>
+    </div>
 </div>
 @endforeach
 
@@ -61,9 +61,11 @@
         height : 120
     });
     qrcode.makeCode( cpf );
-    makeCode();
+    var qrImage = document.getElementById("qrcode").getElementsByTagName('img')[0];
+    var logo = document.getElementById('logo');
 </script>
 
 <script type="text/javascript" src="{{asset('js/jsPDF.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.16/jspdf.plugin.autotable.min.js"></script>
 @endsection
