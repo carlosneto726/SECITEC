@@ -23,7 +23,7 @@
                 <h2 class="mb-5 d-none d-md-block">Seus <u class="text-success">Eventos Cadastrados</u></h2>
                 <p>
                     As programações da <span class="text-success fw-bolder">SECITEC</span> que você se cadastratou serão mostra nessa página. 
-                    Também nesta página está disponível o cartão de entrada nos eventos, basta apertar no butão de  <span class="text-success fw-bolder">Cartão de Entrada</span>
+                    Também nesta página está disponível o cartão de entrada para os eventos que você está inscrito, basta apertar no botão de  <span class="text-success fw-bolder">Cartão de Entrada</span>
                     para fazer o download em pdf ou ultilizar o qr code mostrado nessa página para entrar nos seus eventos cadastrados.
                 </p>
                 <!-- Aparece o qr code e botão em baixo tamanho sm-->

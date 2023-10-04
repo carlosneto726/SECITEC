@@ -38,7 +38,7 @@
                         <a class="nav-link click-scroll"  href="{{ url('/eventos') }}">Eventos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link click-scroll"  href="{{ url('/meus-eventos') }}">Eventos Cadastrados</a>
+                        <a class="nav-link click-scroll"  href="{{ url('/meus-eventos') }}">Cartão de Presença</a>
                     </li>
 
                     <!--BOTAO TELA MAIOR-->
