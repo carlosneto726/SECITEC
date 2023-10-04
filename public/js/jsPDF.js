@@ -42,7 +42,7 @@ function downloadPDF() {
     });
 
     doc.addImage(logo, "JPEG", 125, 270);
-    doc.save('comprovantesecitec2023.pdf')
+    doc.save('cartão_de_entrada_SECITEC2023.pdf')
 }
 
 
