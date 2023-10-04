@@ -6,7 +6,7 @@
 
 <div class="container d-flex">
     <div class="mx-auto" style="width: 640px;">
-        <canvas id="canvas"></canvas>
+        <canvas class="img-fluid rounded" id="canvas"></canvas>
         <div class="text-success" id="outputMessage" hidden>Qr Code lido com sucesso.</div>
         <h4 class="text-success">Checkin</h4>
         <div class="mb-3">
