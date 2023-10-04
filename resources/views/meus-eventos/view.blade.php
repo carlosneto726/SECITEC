@@ -12,7 +12,7 @@
                 <h2 class="mb-5 ">Seus <u class="text-success">Eventos Cadastrados</u></h2>
                 <p>
                     As programações da <span class="text-success fw-bolder">SECITEC</span> que você se cadastratou serão mostra nessa página. 
-                    Seu comprovante de escrição e seu QR Code para registro de presença das atividades ficaram disponíveis nesta página!
+                    Seu comprovante de inscrição e seu QR Code para registro de presença das atividades ficaram disponíveis nesta página!
                 </p>
             </div>
             <div class="col-4">
