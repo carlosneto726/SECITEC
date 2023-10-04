@@ -25,10 +25,7 @@
                 <li class="nav-item">
                     <a class="nav-link click-scroll"  href="{{ url('/sobre') }}">Sobre</a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="{{ url('/programacao') }}">Programação</a>
-                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link click-scroll"  href="{{ url('/local') }}">Local</a>
                 </li>
@@ -47,16 +44,20 @@
                     </li>
                     <!--BOTAO TELA MENOR-->
                     <li class="nav-item d-lg-none">
-                        <a class="nav-link bg-danger" href="{{ url('/usuarios/sair') }}" id="botao_tela_pequena">Sair</a>
+                        <a class="btn btn-danger" href="{{ url('/usuarios/sair') }}" id="botao_tela_pequena">Sair</a>
                     </li>
+
                 @else
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" href="{{ url('/programacao') }}">Eventos</a>
+                    </li>
                     <!--BOTAO TELA MAIOR-->
                     <li class="nav-item d-none d-lg-flex align-items-center justify-content-center">
                         <a class="nav-link custom-btn btn btn-danger" href="{{ url('/login') }}">Entrar</a>
                     </li>
                     <!--BOTAO TELA MENOR-->
                     <li class="nav-item d-lg-none">
-                        <a class="nav-link bg-primary" href="{{ url('/login') }}" id="botao_tela_pequena">Entrar</a>
+                        <a class="btn btn-primary" href="{{ url('/login') }}" id="botao_tela_pequena">Entrar</a>
                     </li>
                 @endif
                 </ul>
