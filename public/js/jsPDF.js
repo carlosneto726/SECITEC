@@ -2,7 +2,7 @@ function downloadPDF() {
     var doc = new jsPDF();
 
     doc.setFontSize(18);
-    var textoLongo = "Comprovante de inscrição de eventos SECITEC 2023 Formosa-GO";
+    var textoLongo = "Cartão de Entrada SECITEC 2023 Formosa-GO";
     var linhas = doc.splitTextToSize(textoLongo, 180);
     doc.text(20, 30, linhas);
 
