@@ -85,12 +85,12 @@
                         </div>
                         
                     </div>
-
+                <!--aparecer redes e titulação em baixo em tamanho sm-->
                     <span class="d-block ms-1" style="margin-top: -5px;">{{$proponente->titulacao}}</span>
                    
                     <div class="container" style="margin-top: 10px; margin-left: -47px;">
                         <div class="row">
-                            <br>
+                            <br><br>
 
                             <span class="text-break ms-5 me-5 d-block d-lg-none d-xl-none d-xxl-none">Rede social 1: <a href="{{@$proponente->redes[0]->rede1}}" target="_blank">{{@$proponente->redes[0]->rede1}}</a></span>
                             <br>
