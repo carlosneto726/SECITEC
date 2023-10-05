@@ -10,18 +10,50 @@
     <div class="mx-auto" style="width: 640px;">
         <canvas class="img-fluid rounded" id="canvas" hidden></canvas>
         <div class="text-success" id="outputMessage" hidden>Qr Code lido com sucesso.</div>
-        <h4 class="text-success">Checkin</h4>
+        <h4 class="text-success" id="titulo">Checkin</h4>
         <div class="mb-3">
             <input type="text" name="cpf" id="cpfCheckin" class="form-control" placeholder="CPF">
         </div>
         <div class="d-flex">
-            <button type="submit" class="btn btn-success" onclick="checkinout('/admin/presenca/checkin', {{ request('id_evento') }}, this, false, 'in')">Efetuar
-                Checkin
+            <button 
+                type="submit" 
+                class="btn btn-success" 
+                id="btn-checkinout" 
+                onclick="checkinout('/admin/presenca/checkin', {{ request('id_evento') }}, this, false, 'in')">
+                Efetuar Checkin
             </button>
             <button class="btn btn-success ms-auto" onclick="lerQrcode()">Ler QRCode</button>
         </div>
     </div>
+    
 </div>
+
+
+<table class="table table-striped table-hover container mt-5" style="width: 640px;">
+    <thead>
+        <tr>
+            <th scope="col">nome</th>
+            <th scope="col">cpf</th>
+            <th scope="col">checkin</th>
+            <th scope="col">checkout</th>
+            <th scope="col">status</th>
+            <th scope="col">data_insercao</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($usuarios_evento as $usuario)
+            <tr>
+                <td>{{$usuario->nome}}</td>
+                <td>{{$usuario->cpf}}</td>
+                <td>{{$usuario->checkin}}</td>
+                <td>{{$usuario->checkout}}</td>
+                <td>{{$usuario->status}}</td>
+                <td>{{$usuario->data_insercao}}</td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
+
 
 <!-- Modal de confirmação do Checkin -->
 <div class="modal" tabindex="-1" id="modalcheckin">
@@ -43,7 +75,22 @@
     </div>
 </div>
 
-<script src="{{ asset('js/admin.js') }}?v=1.0"></script>
+<!-- Modal de confirmação do Checkin -->
+<div class="modal" tabindex="-1" id="modalerro">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Erro.</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-danger">Não foi possível fazer o check-in.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ asset('js/admin.js') }}?v=1.1"></script>
 <script src="{{asset("js/jsQR.js")}}"></script>
 <script>
     var video = document.createElement("video");
