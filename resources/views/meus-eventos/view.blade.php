@@ -11,7 +11,7 @@
         <h2 class="mb-5 d-block d-md-none">Seus <u class="text-success">Eventos Cadastrados</u></h2>
         <div class="clearfix">
                 <!-- Aparece o qr code e botão em ao lado menos no tamanho sm-->
-                <div class="col-md-6 float-sm-end ms-md-3 d-none d-md-block">
+                <div class="col-md-3 float-sm-end ms-md-3 d-none d-md-block">
                     <center>
                         <div id="qrcode" style="width:100px; height:100px;"></div>
                         <br>
@@ -28,9 +28,11 @@
                 <!-- texto não aparece em tamanho sm-->
                 <h2 class="mb-5 d-none d-md-block">Seus <u class="text-success">Eventos Cadastrados</u></h2>
                 <p>
-                    As programações da <span class="text-success fw-bolder">SECITEC</span> que você se cadastratou serão mostra nessa página. 
-                    Também nesta página está disponível o cartão de entrada para os eventos que você está inscrito, basta apertar no botão de  <span class="text-success fw-bolder">Cartão de Entrada</span>
-                    para fazer o download em pdf ou ultilizar o qr code mostrado nessa página para entrar nos seus eventos cadastrados.
+                    Nesta página você encontrará as informações sobre os eventos da <span class="text-success fw-bolder">SECITEC</span> para os quais se cadastrou. 
+                    A página exibirá detalhes sobre essas programações, facilitando seu acesso às informações necessárias. 
+                    Além disso, esta mesma página oferece uma maneira fácil de obter seu cartão de entrada para os eventos nos quais você se inscreveu. 
+                    Você pode fazer isso de duas maneiras: pressionando o botão <span class="text-success fw-bolder">Cartão de Entrada</span> para baixar o cartão em formato PDF, ou utilizando o código <span class="text-success fw-bolder">QR Code</span> disponível na página. 
+                    Este código <span class="text-success fw-bolder">QR Code</span> séra escaneado para a validação de presença nos eventos para os quais você se inscreveu.
                 </p>
                 <!-- Aparece o qr code e botão em baixo tamanho sm-->
                 <div class="d-block d-md-none">
