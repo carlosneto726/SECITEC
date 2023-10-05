@@ -215,21 +215,20 @@ class UsuariosController extends Controller
 
     public function viewMeusEventos(){
         $cpf = DB::select("SELECT cpf FROM tb_usuario WHERE id = ?;", [$this->id_usuario])[0]->cpf;
-        $eventos = DB::select(" SELECT tb_evento.id as id_evento,
-                                tb_evento.titulo as titulo,
-                                tb_evento.descricao as descricao,
-                                tb_evento.dia as dia,
-                                tb_evento.horarioI as horarioI,
-                                tb_evento.horarioF as horarioF,
-                                tb_evento.vagas as vagas,
-                                tb_evento.horas as horas,
-                                tb_evento.local as local,
-                                tb_evento.url as url,
-                                tb_evento.id_tipo_evento as id_tipo_evento
-                                FROM tb_evento
-                                INNER JOIN tb_evento_usuario ON tb_evento_usuario.id_evento = tb_evento.id
-                                INNER JOIN tb_usuario ON tb_evento_usuario.id_usuario = tb_usuario.id
-                                WHERE tb_usuario.id = ?;", [$this->id_usuario]);
+        $eventos = DB::select("SELECT e.*, te.nome as nome_tipo_evento FROM tb_evento e
+                                JOIN tb_evento_usuario ue ON e.id = ue.id_evento 
+                                JOIN tb_usuario u ON ue.id_usuario = u.id 
+                                JOIN tb_proponente_evento ep ON e.id = ep.id_evento 
+                                JOIN tb_proponente p ON ep.id_proponente= p.id 
+                                JOIN tb_tipo_evento te ON te.id = e.id_tipo_evento 
+                                WHERE u.id = ?;", [$this->id_usuario]);
+        foreach ($eventos as $evento) {
+            $proponentes = DB::select(" SELECT *, tb_proponente.id as id_proponente FROM tb_proponente
+                                        INNER JOIN tb_proponente_evento ON tb_proponente.id = tb_proponente_evento.id_proponente
+                                        WHERE tb_proponente_evento.id_evento = ?;", [$evento->id]);
+            $evento->proponentes = $proponentes;
+        }
+                                
         return view("meus-eventos.view", compact("eventos", "cpf"));
     }
 
