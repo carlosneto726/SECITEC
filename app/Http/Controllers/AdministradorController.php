@@ -38,7 +38,7 @@ class AdministradorController extends Controller
             $proponentes_nome = [];
             $proponentes = DB::select(" SELECT nome FROM tb_proponente
                                         INNER JOIN tb_proponente_evento ON tb_proponente.id = tb_proponente_evento.id_proponente
-                                        WHERE tb_proponente_evento.id_evento = ?;", [$evento->id]);
+                                        WHERE tb_proponente_evento.id_evento = ? ORDER BY nome;", [$evento->id]);
             foreach ($proponentes as $proponente) {
                 array_push($proponentes_nome, $proponente->nome);
             }
