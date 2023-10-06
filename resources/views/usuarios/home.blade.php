@@ -295,7 +295,7 @@
             function gerarAvatarProponentes(proponentes){
                 let avatares = ''
                 proponentes.forEach(proponente => {
-                    avatares += `<div class="avatar-proponente"><a href="/proponente/${proponente.id}"><img src="${proponente.url}" style="height: 50px; width: 50px;" alt="Avatar" /></a></div>`
+                    avatares += `<div class="avatar-proponente"><a href="/proponente/${proponente.id}"><img src="${proponente.url}" alt="Avatar" /></a></div>`
                 });
                 return avatares;
             }
