@@ -14,6 +14,7 @@ function postHandler(endpoint, data){
     fetch(url, configuracao)
     .then(resposta => resposta.json())
     .then(data => {
+        document.getElementById('btn-checkinout').innerHTML = "Efetuar " + document.getElementById("titulo").innerHTML;
         if(data['id_modal'] != undefined){
             ativarModal(data['id_modal']);
         }else if(data['endpoint'] != null){

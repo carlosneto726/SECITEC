@@ -38,7 +38,7 @@ class AdministradorController extends Controller
             $proponentes_nome = [];
             $proponentes = DB::select(" SELECT nome FROM tb_proponente
                                         INNER JOIN tb_proponente_evento ON tb_proponente.id = tb_proponente_evento.id_proponente
-                                        WHERE tb_proponente_evento.id_evento = ?;", [$evento->id]);
+                                        WHERE tb_proponente_evento.id_evento = ? ORDER BY nome;", [$evento->id]);
             foreach ($proponentes as $proponente) {
                 array_push($proponentes_nome, $proponente->nome);
             }
@@ -46,7 +46,7 @@ class AdministradorController extends Controller
             $evento->proponentes = $proponentes_nome;
         }
 
-        $palestrantes = DB::select("SELECT * FROM tb_proponente WHERE id != 7 AND id != 8 AND id != 9 AND id != 10;");
+        $palestrantes = DB::select("SELECT * FROM tb_proponente WHERE id != 7 AND id != 8 AND id != 9 AND id != 10 ORDER BY nome;");
         $tipoEventos = DB::select("SELECT * FROM tb_tipo_evento WHERE id != 4;");
         return view("admin.events.view", compact("eventos", "palestrantes", "tipoEventos"));
     }
@@ -152,8 +152,29 @@ class AdministradorController extends Controller
             ]
         );
     }
-    public function viewPresenca(){
-        return view("admin.events.presenca");
+    public function viewCheckin(){
+        $orderBy = "ORDER BY tb_usuario.cpf, tb_evento_usuario.checkin;";
+        $usuarios_evento = $this->getUsuariosEvento(request('id_evento'), $orderBy);
+        return view("admin.events.checkin", compact("usuarios_evento"));
+    }
+
+    public function viewCheckout(){
+        $orderBy = "ORDER BY tb_usuario.cpf, tb_evento_usuario.checkout;";
+        $usuarios_evento = $this->getUsuariosEvento(request('id_evento'), $orderBy);
+        return view("admin.events.checkout", compact("usuarios_evento"));
+    }
+
+    private function getUsuariosEvento($id_evento, $orderBy){
+        $usuario_evento = DB::select("  SELECT tb_usuario.nome,
+                                        tb_usuario.cpf,
+                                        tb_evento_usuario.checkin,
+                                        tb_evento_usuario.checkout,
+                                        tb_evento_usuario.status,
+                                        tb_evento_usuario.data_insercao
+                                        FROM tb_evento_usuario
+                                        INNER JOIN tb_usuario ON tb_usuario.id = tb_evento_usuario.id_usuario
+                                        WHERE tb_evento_usuario.id_evento = ? ".$orderBy, [$id_evento]);
+        return $usuario_evento;
     }
 
     public function checkIn(){
@@ -161,6 +182,7 @@ class AdministradorController extends Controller
         $id_evento = request("id_evento");
         $confirmacao = request("confirmacao");
         $id_eventousuario = $this->getusUarioId($cpf, $id_evento);
+        if($id_eventousuario == false){ return response()->json(['id_modal' => 'modalerro']); }
         $checkin = DB::select("SELECT * FROM tb_evento_usuario WHERE id = ?;", [$id_eventousuario])[0]->checkin;
         if(($checkin == null && $confirmacao == false) || $confirmacao){
             DB::update("UPDATE tb_evento_usuario
@@ -188,6 +210,7 @@ class AdministradorController extends Controller
         $id_evento = request("id_evento");
         $confirmacao = request("confirmacao");
         $id_eventousuario = $this->getusUarioId($cpf, $id_evento);
+        if($id_eventousuario == false){ return response()->json(['id_modal' => 'modalerro']); }
         $checkout = DB::select("SELECT * FROM tb_evento_usuario WHERE id = ?;", [$id_eventousuario])[0]->checkout;
 
         if(($checkout == null && $confirmacao == false) || $confirmacao){
@@ -210,7 +233,7 @@ class AdministradorController extends Controller
         }
     }
 
-    function getusUarioId($cpf, $idevento){
+    private function getusUarioId($cpf, $idevento){
         $ideventousuario = DB::select(" SELECT tb_evento_usuario.id AS id_usuario
                                         FROM tb_evento_usuario
                                         LEFT JOIN tb_usuario
@@ -221,16 +244,15 @@ class AdministradorController extends Controller
                                         [$cpf, $idevento]
         );
         if(count($ideventousuario) == 0){
-            echo "Usuário não cadastrado nesse evento";
-            // 24247688030
+            return false;
         }else{
             return $ideventousuario[0]->id_usuario;
         }
     }
 
     // Proponente
-    public function viewProponente(){
-        $proponentes = DB::select("SELECT * FROM tb_proponente WHERE id != 7 AND id != 8 AND id != 9 AND id != 10;");
+    public function viewProponente(Request $request){
+        $proponentes = DB::select("SELECT * FROM tb_proponente WHERE id != 7 AND id != 8 AND id != 9 AND id != 10 ORDER BY nome;");
         foreach ($proponentes as $proponente) {
             $redes = DB::select("SELECT * FROM tb_redes_proponente WHERE id_proponente = ?;", [$proponente->id]);
             $proponente->redes = $redes;

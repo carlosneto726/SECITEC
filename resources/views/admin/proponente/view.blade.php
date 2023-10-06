@@ -28,15 +28,11 @@
         @endif
         @foreach ($proponentes as $proponente)
             <div class="d-flex text-body-secondary pt-3 border-bottom">
-                <img class="rounded object-fit-cover" src="{{asset($proponente->url)}}" height="64" width="64">
+                <img class="rounded object-fit-cover" src="{{asset($proponente->url)}}" height="74" width="74">
                 <div class="pb-3 mb-0 small lh-sm w-100">
                     <div class="d-flex justify-content-between">
                         <strong class="fs-5 text-gray-dark ms-1">{{$proponente->nome}}</strong>
                         
-                        <span class="text-break ms-5 me-5 d-none d-lg-block">Rede social 1: <a href="{{@$proponente->redes[0]->rede1}}" target="_blank">{{@$proponente->redes[0]->rede1}}</a></span>
-                        <span class="text-break ms-5 me-5 d-none d-lg-block">Rede social 2: <a href="{{@$proponente->redes[0]->rede2}}" target="_blank">{{@$proponente->redes[0]->rede2}}</a></span>
-                        <span class="text-break ms-5 me-5 d-none d-lg-block">Rede social 3: <a href="{{@$proponente->redes[0]->rede3}}" target="_blank">{{@$proponente->redes[0]->rede3}}</a></span>
-
                         <div class="d-flex mt-3">
                             <button type="submit" class="btn btn-primary btn-sm me-1" title="alterar" href="#staticBackdrop{{$proponente->id}}" data-bs-toggle="modal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-toggles" viewBox="0 0 16 16">
@@ -80,22 +76,32 @@
                                             
                                         </div>
                                         <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-danger" onclick="excluirBtn('/admin/proponente/deletar', {{$proponente->id}}, this)">Deletar</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="button" class="btn btn-danger" onclick="excluirBtn('/admin/proponente/deletar', {{$proponente->id}}, this)">Deletar</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+                        
                     </div>
-                    
-                    <span class="d-block ms-1">{{$proponente->titulacao}}</span>
-                    <div style="margin-left: -18%;">
-                        <br>
-                        <span class="text-break ms-5 me-5 d-block d-lg-none d-xl-none d-xxl-none">Rede social 1: <a href="{{@$proponente->redes[0]->rede1}}" target="_blank">{{@$proponente->redes[0]->rede1}}</a></span>
-                        <span class="text-break ms-5 me-5 d-block d-lg-none d-xl-none d-xxl-none">Rede social 2: <a href="{{@$proponente->redes[0]->rede2}}" target="_blank">{{@$proponente->redes[0]->rede2}}</a></span>
-                        <span class="text-break ms-5 me-5 d-block d-lg-none d-xl-none d-xxl-none">Rede social 3: <a href="{{@$proponente->redes[0]->rede3}}" target="_blank">{{@$proponente->redes[0]->rede3}}</a></span>
+                <!--aparecer redes e titulação em baixo em tamanho sm-->
+                    <span class="d-block ms-1" style="margin-top: -5px;">{{$proponente->titulacao}}</span>
+                   
+                    <div class="container" style="margin-top: 10px; margin-left: -47px;">
+                        <div class="row">
+                            <br><br>
+
+                            <span class="text-break ms-5 me-5 d-block d-lg-none d-xl-none d-xxl-none">Rede social 1: <a href="{{@$proponente->redes[0]->rede1}}" target="_blank">{{@$proponente->redes[0]->rede1}}</a></span>
+                            <br>
+                            <span class="text-break ms-5 me-5 d-block d-lg-none d-xl-none d-xxl-none">Rede social 2: <a href="{{@$proponente->redes[0]->rede2}}" target="_blank">{{@$proponente->redes[0]->rede2}}</a></span>
+                            <br>
+                            <span class="text-break ms-5 me-5 d-block d-lg-none d-xl-none d-xxl-none">Rede social 3: <a href="{{@$proponente->redes[0]->rede3}}" target="_blank">{{@$proponente->redes[0]->rede3}}</a></span>
+
+                            <span class="text-break ms-5 me-5 d-none d-lg-block d-xl-block d-xxl-block col">Rede social 1: <a href="{{@$proponente->redes[0]->rede1}}" target="_blank">{{@$proponente->redes[0]->rede1}}</a></span>
+                            <span class="text-break ms-5 me-5 d-none d-lg-block d-xl-block d-xxl-block col">Rede social 2: <a href="{{@$proponente->redes[0]->rede2}}" target="_blank">{{@$proponente->redes[0]->rede2}}</a></span>
+                            <span class="text-break ms-5 me-5 d-none d-lg-block d-xl-block d-xxl-block col">Rede social 3: <a href="{{@$proponente->redes[0]->rede3}}" target="_blank">{{@$proponente->redes[0]->rede3}}</a></span>
+                        </div>
                     </div>
                 </div>
             </div>
