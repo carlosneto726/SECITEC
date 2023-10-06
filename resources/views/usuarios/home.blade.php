@@ -1,10 +1,5 @@
 @extends('templates.template')
 @section('content')
-<style>
-    @media (max-width: 768px) {
-    } 
-</style>
-
     <div class="container section-padding mb-5">
         <h2 class="">Bem vindo, <strong><u class="text-success">{{ $usuario->id == 6 || $usuario->id == 4 ? $usuario->nome. ' Gostosão' : $usuario->nome }}</u></strong></h2>
         <small class="aviso-presenca"><strong style="color: red;">Aviso Importante</strong>: O controle de presença será feito
