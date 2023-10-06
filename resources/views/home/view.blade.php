@@ -43,7 +43,6 @@
                                 //Mensagem que está sendo mostrada no cronômetro
                                 document.getElementById('countdown').innerHTML = `
                                     ${days}d ${hours}h ${minutes}m ${seconds}s
-                                    </br>Até o inicío
                                 `;
                             }
                         }, 1000); // Atualiza a cada 1 segundo
