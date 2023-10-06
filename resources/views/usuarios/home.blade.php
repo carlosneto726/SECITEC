@@ -313,7 +313,11 @@
             function gerarAvatarProponentes(proponentes){
                 let avatares = ''
                 proponentes.forEach(proponente => {
+<<<<<<< Updated upstream
                     avatares += `<div class="avatar-proponente"><img src="${proponente.url}" style="width: 50px;" alt="Avatar" /></div>`
+=======
+                    avatares += `<div class="avatar-proponente"><a href="/proponente/${proponente.id}"><img src="${proponente.url}" alt="Avatar" /></a></div>`
+>>>>>>> Stashed changes
                 });
                 return avatares;
             }
