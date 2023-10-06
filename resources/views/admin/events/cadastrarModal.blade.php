@@ -43,7 +43,7 @@
                     </div>
                     
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Ex: Evento para ensinar crianças..."  maxlength="255" required>
+                        <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Ex: Evento para ensinar crianças..."  maxlength="1000" required>
                         <span class="input-group-text" id="basic-addon2">Descrição</span>
                     </div>
 
