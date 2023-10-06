@@ -90,7 +90,6 @@
 
 .card-titulo {
     color: green;
-    text-transform: capitalize;
 }
 
 .alerta-custom {
@@ -115,6 +114,8 @@
     height: 50px;
     overflow: hidden;
     border-radius: 50px;
+    border: 1.5px solid black;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 .avatar-proponente img {
@@ -218,12 +219,6 @@
 
 #jerry-rig {
     margin-top: 30px;
-}
-
-@media (max-width: 768px) {
-    .avatar-proponente {
-        display: none;
-    }
 }
 
 

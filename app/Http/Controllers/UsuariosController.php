@@ -256,7 +256,7 @@ class UsuariosController extends Controller
             );
             foreach ($eventosCadastrados as $eventoCadastrado) {
                 if ($evento->id == $eventoCadastrado->id_evento) {
-                    $eventoMapeado->usuario_cadastrado = true;
+                    $eventoMapeado->usuario_cadastrado = $eventoCadastrado->status == 0 ? 'cadastrado':'fila';
                     break;
                 }
             }

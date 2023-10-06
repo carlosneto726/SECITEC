@@ -2,14 +2,7 @@
 @section('content')
 <style>
     @media (max-width: 768px) {
-        .avatar-proponente {
-            display: flex;
-            overflow: hidden;
-        }
-    }
-    .avatar-proponente img{
-        border: 1px solid black;
-    }    
+    } 
 </style>
 
     <div class="container section-padding mb-5">
@@ -214,6 +207,32 @@
                         </div>`
             }
 
+            function situacaoCadastroRender(situacao, temVagas, isClass){
+                if(temVagas) {
+                    switch(situacao) {
+                        case 'cadastrado':
+                            return isClass ? 'btn-danger' : 'Descadastrar';
+                            break;
+                        default:
+                            return isClass ? 'btn-success' : 'Cadastrar';
+                            break;    
+                    }
+                } else {
+                    switch(situacao) {
+                        case 'cadastrado':
+                            return isClass ? 'btn-danger' : 'Descadastrar';
+                            break;
+                        case 'fila':
+                            return isClass ? 'btn-warning' : 'Sair da fila';
+                            break;
+                        default:
+                            return isClass ? 'btn-warning' : 'Entrar na fila'
+                            break;   
+                    }
+                }
+            }
+
+            
             function renderizarEventosDia(dia) {
                 let eventos = "";
                 eventosAgrupados[dia].forEach(evento => {
@@ -240,9 +259,9 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div id="${evento.id}" onclick="enviarRequisicao(${evento.id})"
-                                                class="btn ${ evento.usuario_cadastrado ? 'btn-danger' : (evento.vagas_restantes == 0 ? 'btn-warning' : 'btn-success') }">
+                                                class="btn ${ situacaoCadastroRender(evento.usuario_cadastrado, evento.vagas_restantes > 0, true) }">
 
-                                                ${ evento.usuario_cadastrado ? 'Descadastrar' : (evento.vagas_restantes == 0 ? 'Entrar na Fila' : 'Cadastrar') }
+                                                ${ situacaoCadastroRender(evento.usuario_cadastrado, evento.vagas_restantes > 0, false) }
                                                 
                                             </div>
                                         </div>
@@ -425,9 +444,9 @@
                                 break;
                                 // cadastro reserva
                             default:
-                                eventoBtn.classList.remove('btn-warning');
-                                eventoBtn.classList.add('btn-danger');
-                                eventoBtn.innerHTML = 'Descadastrar'
+                                eventoBtn.classList.remove('btn-success');
+                                eventoBtn.classList.add('btn-warning');
+                                eventoBtn.innerHTML = 'Sair da fila'
                                 mostrarAlerta("#42f59e", "Cadastrado na fila com Sucesso!");
 
                                 lancarAviso("Fila de espera", `Você entrou na fila de espera .Se, ao chegar no evento, vagas adicionais estiverem disponíveis
