@@ -1,5 +1,17 @@
 @extends('templates.template')
 @section('content')
+<!--CSS PARA ICONES DOS PROPONENTES-->
+<style>
+    @media (max-width: 768px) {
+        .avatar-proponente {
+            display: flex;
+            overflow: hidden;
+        }
+    }
+    .avatar-proponente img{
+        border: 1px solid black;
+    }    
+</style>
 
 <script type="text/javascript" src="{{asset('js/qrcode.js')}}"></script>
 <img src="{{asset('images/logo_email.jpg')}}" id="logo" hidden>

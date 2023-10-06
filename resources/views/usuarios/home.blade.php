@@ -1,5 +1,17 @@
 @extends('templates.template')
 @section('content')
+<style>
+    @media (max-width: 768px) {
+        .avatar-proponente {
+            display: flex;
+            overflow: hidden;
+        }
+    }
+    .avatar-proponente img{
+        border: 1px solid black;
+    }    
+</style>
+
     <div class="container section-padding mb-5">
         <h2 class="">Bem vindo, <strong><u class="text-success">{{ $usuario->id == 6 || $usuario->id == 4 ? $usuario->nome. ' Gostosão' : $usuario->nome }}</u></strong></h2>
         <small class="aviso-presenca"><strong style="color: red;">Aviso Importante</strong>: O controle de presença será feito
@@ -47,23 +59,12 @@
                     <ul id="regras-list">
                         <li>
                             <p>
-                                <strong>Check-in e Check-out</strong>: Ao chegar ao evento, você será solicitado a fazer
-                                o
-                                check-in escaneando o código de barras em seu crachá. Da mesma forma, quando você sair
-                                do
-                                evento, será necessário fazer o check-out, escaneando novamente o código de barras. Isso
-                                nos
-                                ajudará a manter um registro preciso de quem está presente e quando deixam o local.
+                                <strong>Check-in e Check-out</strong>: Ao chegar ao evento, você será solicitado a fazer o <span class="text-success fw-bolder">check-in</span> escaneando seu <span class="text-success fw-bolder">QR Code</span>. Da mesma forma, quando você sair do evento, será necessário fazer o <span class="text-success fw-bolder">check-out</span>, escaneando novamente o seu <span class="text-success fw-bolder">QR Code</span>. Isso nos ajudará a manter um registro preciso de quem está presente e quando deixam o local.
                             </p>
                         </li>
                         <li>
                             <p>
-                                <strong>Tolerância de Tempo</strong>: Para sua comodidade, estamos implementando uma
-                                tolerância de 30 minutos tanto para o check-in quanto para o check-out. Isso significa
-                                que,
-                                se você chegar até 30 minutos após o início do evento, ainda poderá fazer o check-in. Da
-                                mesma forma, se você deixar o evento até 30 minutos após o término, poderá fazer o
-                                check-out.
+                                <strong>Tolerância de Tempo</strong>: Para sua comodidade, estamos implementando uma tolerância de <span class="text-success fw-bolder">30 minutos</span> tanto para o <span class="text-success fw-bolder">check-in</span> quanto para o <span class="text-success fw-bolder">check-out</span>. Isso significa que, se você chegar até <span class="text-success fw-bolder">30 minutos</span> após o início do evento, ainda poderá fazer o <span class="text-success fw-bolder">check-in</span>. Da mesma forma, se você deixar o evento até <span class="text-success fw-bolder">30 minutos</span> após o término, poderá fazer o <span class="text-success fw-bolder">check-out</span>.
                             </p>
                         </li>
                         <li>
@@ -77,15 +78,7 @@
                         </li>
                         <li>
                             <p>
-                                <strong>Lista de Espera</strong>: Se todas as vagas estiverem preenchidas, você pode
-                                entrar
-                                na lista de espera. Se, ao chegar no evento, vagas adicionais estiverem disponíveis
-                                devido a
-                                cancelamentos ou mudanças, você terá a oportunidade de participar. Daremos prioridade
-                                aos
-                                participantes na lista de espera com base na ordem de inscrição. Portanto, mesmo que as
-                                vagas estejam esgotadas inicialmente, ainda há a chance de participar do evento se vagas
-                                adicionais se tornarem disponíveis.
+                                <strong>Lista de Espera</strong>: Se todas as vagas estiverem preenchidas, você pode entrar na <span class="text-success fw-bolder">lista de espera</span>. Se, ao chegar no evento, vagas adicionais estiverem disponíveis devido a cancelamentos ou mudanças, você terá a oportunidade de participar. Daremos prioridade aos participantes na lista de espera com base na ordem de inscrição. Portanto, mesmo que as vagas estejam esgotadas inicialmente, ainda há a chance de participar do evento se vagas adicionais se tornarem disponíveis.
                             </p>
                         </li>
                     </ul>
@@ -228,8 +221,22 @@
                     <div class="card mt-3 mb-3">
                             <div class="card-body card-conteudo">
                                 <div class="card-text">
-                                    <h5 class="mb-4"> <strong class="card-titulo"> ${evento.titulo} </strong> &nbsp;&nbsp;&nbsp;<small style="font-size: 18px;" class="text-muted ${ evento.tipo_evento_nome == 'hackathon' ? 'remover-horario' : '' }"><i class="bi bi-clock text-primary me-2"></i> ${formatarHora(evento.horarioI)} às ${formatarHora(evento.horarioF)}</small></h5>
+                                    <h5 class=""><strong class="card-titulo">${evento.titulo} </strong> &nbsp;&nbsp;&nbsp;</h5>
+
                                     <p>${evento.descricao}</p>
+
+                                    <h5 class=""><small style="font-size: 16px;" class="text-muted ${ evento.nome_tipo_evento == 'hackathon' ? 'remover-horario' : '' }"><i class="bi bi-clock text-primary me-2"></i> ${formatarHora(evento.horarioI)} às ${formatarHora(evento.horarioF)}</small></h5>
+                                    
+                                    <span class="" style="color: green;">
+                                        <i class="bi-layout-sidebar me-2"></i>
+                                        ${ evento.local}
+                                    </span>
+                                    
+                                    <p class=" fw-bolder">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill me-2" viewBox="0 0 16 16">
+                                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                                        </svg>
+                                        Vagas: <strong style="color: ${evento.vagas_restantes > 0 ? '' : 'red'};" id="vagas_restantes${ evento.id }">${evento.vagas_restantes}</strong></p>  
                                     <div class="row">
                                         <div class="col-6">
                                             <div id="${evento.id}" onclick="enviarRequisicao(${evento.id})"
@@ -246,12 +253,9 @@
                                 </div>
                             </div>
                             <div class="card-footer" id="footer-evento">
-                                <div class="row">
-                                     <div class="col-6">
-                                        <p class="m-0">Vagas: <strong style="color: ${evento.vagas_restantes > 0 ? '' : 'red'};" id="vagas_restantes${ evento.id }">${evento.vagas_restantes}</strong></p>
-                                     </div>
-                                    <div class="col-6 avatares-wrapper">
-                                        ${ gerarAvatarProponentes(evento.proponentes) }
+                                <div class="d-flex overflow-x-auto h-scroll">
+                                    <div class="position-relative text-dark-emphasis ms-2 me-1 avatares-wrapper">
+                                        ${ gerarAvatarProponentes(evento.proponentes) } 
                                     </div>
                                 </div>
                             </div>
