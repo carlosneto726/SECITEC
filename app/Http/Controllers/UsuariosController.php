@@ -205,7 +205,7 @@ class UsuariosController extends Controller
         $eventos = DB::select(" SELECT e.*, te.nome AS tipo_evento_nome
                                 FROM tb_evento AS e
                                 INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
-                                ORDER BY dia
+                                ORDER BY dia, horarioI
         ");
         $usuario = DB::select("SELECT * FROM tb_usuario WHERE id = ?;", [$this->id_usuario])[0];
         $eventosCadastrados = DB::select("SELECT * FROM tb_evento_usuario WHERE id_usuario = ?;", [$usuario->id]);
@@ -221,7 +221,7 @@ class UsuariosController extends Controller
                                 JOIN tb_usuario u ON ue.id_usuario = u.id 
                                 JOIN tb_tipo_evento te ON te.id = e.id_tipo_evento 
                                 WHERE u.id = ?
-                                ORDER BY e.horarioI;", [$this->id_usuario]);
+                                ORDER BY e.dia, e.horarioI;", [$this->id_usuario]);
         foreach ($eventos as $evento) {
             $proponentes = DB::select(" SELECT *, tb_proponente.id as id_proponente FROM tb_proponente
                                         INNER JOIN tb_proponente_evento ON tb_proponente.id = tb_proponente_evento.id_proponente
