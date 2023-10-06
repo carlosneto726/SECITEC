@@ -252,12 +252,13 @@ class AdministradorController extends Controller
 
     // Proponente
     public function viewProponente(Request $request){
+        $eventos = DB::select ("SELECT * FROM tb_evento");
         $proponentes = DB::select("SELECT * FROM tb_proponente WHERE id != 7 AND id != 8 AND id != 9 AND id != 10 ORDER BY nome;");
         foreach ($proponentes as $proponente) {
             $redes = DB::select("SELECT * FROM tb_redes_proponente WHERE id_proponente = ?;", [$proponente->id]);
             $proponente->redes = $redes;
         }
-        return view("admin.proponente.view", compact("proponentes"));
+        return view("admin.proponente.view", compact("proponentes", "eventos"));
     }
 
     public function insertProponente(Request $request): string{
@@ -266,6 +267,7 @@ class AdministradorController extends Controller
         $rede1 = request("rede1");
         $rede2 = request("rede2");
         $rede3 = request("rede3");
+        
         if($request->file('arquivo')){ // Caso o POST venha com uma imagem
             $path = $request->file('arquivo')->storeAs('images/avatar', "palestra".$nome.".".$request->file('arquivo')->extension(), 'public');
             $url = "storage/".$path;
@@ -283,6 +285,14 @@ class AdministradorController extends Controller
                     tb_redes_proponente(id_proponente,rede1,rede2,rede3)
                     VALUES(?,?,?,?);",
                     [$id_proponente,$rede1,$rede2,$rede3]);
+
+        if(request("eventos")){
+            foreach (request("eventos") as $evento) {
+                DB::insert("INSERT INTO 
+                            tb_proponente_evento(id_evento, id_proponente)
+                            VALUES(?,?);", [$evento, $id_proponente]);
+            }
+        }
 
         return redirect("/admin/proponente");
     }
