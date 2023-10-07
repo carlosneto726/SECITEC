@@ -342,4 +342,9 @@ class AdministradorController extends Controller
             ]
         );
     }
+
+    public function viewLogs(){
+        $logs = DB::select("SELECT * FROM log_tb_evento_usuario;");
+        return view("admin.logs", compact("logs"));
+    }
 }
