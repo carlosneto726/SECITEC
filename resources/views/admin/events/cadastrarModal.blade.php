@@ -9,9 +9,7 @@
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Cadastrar um evento</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
                 <div class="modal-body">
-
                     <div class="d-flex mx-auto mb-3">
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -100,9 +98,7 @@
                 <div class="modal-footer">
                     <span class="fw-bold text-danger" id="alerta"></span>
                     <input class="btn btn-success ms-auto" type="submit" value="Enviar" onclick="cadastrarEvento('/admin/eventos/cadastrar', this)"/>
-                </div>
-            
-                
+                </div> 
         </div>
     </div>
 </div>
