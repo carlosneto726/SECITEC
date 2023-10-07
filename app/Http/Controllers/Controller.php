@@ -38,6 +38,10 @@ class Controller extends BaseController
         return view("home.termos");
     }
 
+    public function viewCreditos(){
+        return view("home.creditos");
+    }
+
     public function viewProponente(Request $request){
         $id = request("id");
         $proponente = DB::select("SELECT * FROM tb_proponente WHERE id = ?;", [$id])[0];

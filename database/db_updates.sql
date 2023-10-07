@@ -83,3 +83,45 @@ tb_evento.local AS local,
 tb_evento.url AS url, 
 tb_tipo_evento.nome AS nome_tipo_evento
 FROM tb_evento INNER JOIN tb_tipo_evento ON tb_evento.id_tipo_evento = tb_tipo_evento.id;
+
+-- Query 7:
+-- 
+
+CREATE TABLE `log_tb_evento_usuario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_evento` varchar(255) NOT NULL,
+  `nome_usuario` varchar(255) NOT NULL,
+  `tipo_operacao` varchar(15) NOT NULL,
+  `data_hora` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+
+DELIMITER //
+CREATE TRIGGER trigger_inserir_log_tb_evento_usuario AFTER INSERT ON tb_evento_usuario
+FOR EACH ROW
+BEGIN
+    -- Inserir os dados na tabela log_tb_evento_usuario após a inserção
+    INSERT INTO log_tb_evento_usuario (nome_evento, nome_usuario, tipo_operacao, data_hora)
+    SELECT
+        (SELECT titulo FROM tb_evento WHERE id = NEW.id_evento),
+        (SELECT nome FROM tb_usuario WHERE id = NEW.id_usuario),
+        'CADASTRAR',
+        NOW();
+END;
+//
+DELIMITER ;
+DELIMITER //
+CREATE TRIGGER trigger_excluir_log_tb_evento_usuario AFTER DELETE ON tb_evento_usuario
+FOR EACH ROW
+BEGIN
+    -- Inserir os dados na tabela log_tb_evento_usuario após a exclusão
+    INSERT INTO log_tb_evento_usuario (nome_evento, nome_usuario, tipo_operacao, data_hora)
+    SELECT
+        (SELECT titulo FROM tb_evento WHERE id = OLD.id_evento),
+        (SELECT nome FROM tb_usuario WHERE id = OLD.id_usuario),
+        'DESCADASTRAR',
+        NOW();
+END;
+//
+DELIMITER ;

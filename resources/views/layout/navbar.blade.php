@@ -29,6 +29,10 @@
                 <li class="nav-item">
                     <a class="nav-link click-scroll"  href="{{ url('/local') }}">Local</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link click-scroll"  href="{{ url('/creditos') }}">Créditos</a>
+                </li>
                 <!--Configurando qual opção de botão vai estar sendo mostrada-->
                 @if(isset($_COOKIE['usuario']) && isset($_COOKIE['nome_usuario']))
                     <li class="nav-item">

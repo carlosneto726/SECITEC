@@ -26,6 +26,7 @@ Route::get('/login', [Controller::class, 'viewLogin']);
 Route::get('/cadastrar', [Controller::class, 'viewCadastrar']);
 Route::get('/termos', [Controller::class, 'viewTermos']);
 Route::get('/proponente/{id}', [Controller::class, 'viewProponente']);
+Route::get('/creditos', [Controller::class, 'viewCreditos']);
 
 Route::get('/programacao', [ProgramacaoController::class, 'viewProgramacao']);
 
