@@ -1,4 +1,6 @@
-function downloadPDF() {
+
+var btn = document.getElementById("downloadPDF");
+btn.addEventListener('click', function () {
     var doc = new jsPDF();
 
     doc.setFontSize(18);
@@ -62,7 +64,7 @@ function downloadPDF() {
     doc.addImage(logo, "JPEG", 125, 270);
     var data = new Date();
     doc.save('cartao-de-entrada-SECITECFORMOSA'+data.getFullYear()+'-'+(data.getMonth()+1)+'-'+data.getDate()+'.pdf')
-}
+});
 
 
 
