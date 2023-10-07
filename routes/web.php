@@ -65,6 +65,3 @@ Route::get('/eventos', [UsuariosController::class, 'viewEventos']);
 Route::get('/meus-eventos', [UsuariosController::class, 'viewMeusEventos']);
 Route::post('/usuarios/cadastarEvento', [UsuariosController::class, 'cadastrarEvento']);
 Route::post('/usuarios/cadastarHackathon', [UsuariosController::class, 'cadastrarHackathon']);
-
-// Rota Para Pesquisa
-Route::get('/admin/logs/search', [AdministradorController::class, 'searchLogs'])->name('searchLogs');
