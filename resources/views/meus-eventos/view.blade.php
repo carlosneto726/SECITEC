@@ -63,8 +63,8 @@
   
         const accordion = document.getElementById('accordionExample');
         var eventos = @json($eventos);
+        var cadastradoHackathon = @json($cadastradoHackathon);
         const eventosAgrupados = agruparEventosPorDia(eventos);
-        //console.log(eventosAgrupados);
         
         function gerarAvatarProponentes(proponentes){
                       let avatares = ''
@@ -74,7 +74,7 @@
                       return avatares;
                   }
         function agruparEventosPorDia(eventos) {
-                      const grupos = { Hackathon: [] };
+                      const grupos = cadastradoHackathon ? { Hackathon: [] } : {};
       
                       eventos.forEach(evento => {
                           const dia = evento.dia;
