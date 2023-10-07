@@ -30,16 +30,13 @@
                     <a class="nav-link click-scroll"  href="{{ url('/local') }}">Local</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link click-scroll"  href="{{ url('/creditos') }}">Créditos</a>
-                </li>
                 <!--Configurando qual opção de botão vai estar sendo mostrada-->
                 @if(isset($_COOKIE['usuario']) && isset($_COOKIE['nome_usuario']))
                     <li class="nav-item">
                         <a class="nav-link click-scroll"  href="{{ url('/eventos') }}">Eventos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link click-scroll"  href="{{ url('/meus-eventos') }}">Cartão de Presença</a>
+                        <a class="nav-link click-scroll"  href="{{ url('/meus-eventos') }}">Meus Eventos</a>
                     </li>
 
                     <!--BOTAO TELA MAIOR-->

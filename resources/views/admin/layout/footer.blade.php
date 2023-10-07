@@ -48,9 +48,14 @@
   <div class="text-center p-4" >
     <p class="fs-6">
       © 2023 Copyright:
-      <a class="text-dark" href="https://www.ifg.edu.br/"
-        >ifg.edu.br</a
-        >
+      <a class="text-dark link-underline-success link-tutorial" href="{{ url('/creditos') }}" target="_blank">Créditos</a>
     </p>
   </div>
+
+<style>
+    .link-tutorial{
+        border-bottom: solid 1px #17882c;
+    }
+</style>  
+
 </footer>
