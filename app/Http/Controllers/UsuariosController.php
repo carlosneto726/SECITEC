@@ -215,6 +215,8 @@ class UsuariosController extends Controller
 
     public function viewMeusEventos(){
         $cpf = DB::select("SELECT cpf FROM tb_usuario WHERE id = ?;", [$this->id_usuario])[0]->cpf;
+        $hackathonId = DB::select("SELECT * FROM tb_evento WHERE id_tipo_evento = 4;")[0]->id;
+        $cadastradoHackathon = $this->verificaCadastro($this->id_usuario, $hackathonId);
         $eventos = DB::select("SELECT e.*, te.nome as nome_tipo_evento
                                 FROM tb_evento e
                                 JOIN tb_evento_usuario ue ON e.id = ue.id_evento 
@@ -228,7 +230,7 @@ class UsuariosController extends Controller
                                         WHERE tb_proponente_evento.id_evento = ?;", [$evento->id]);
             $evento->proponentes = $proponentes;
         }                                
-        return view("meus-eventos.view", compact("eventos", "cpf"));
+        return view("meus-eventos.view", compact("eventos", "cpf", "cadastradoHackathon"));
     }
 
     function mapearEventos($eventos, $eventosCadastrados)
