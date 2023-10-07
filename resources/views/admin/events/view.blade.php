@@ -12,10 +12,13 @@
                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
             </svg>
         </a></u></h2>
-    </div>
+        
+   </div>
 </section>
 
+
 <div class="container ">
+    <input type="text" id="searchInput" class="form-control mb-3" placeholder="Pesquisar por título do evento">
     <table class="table table-bordered table-striped shadow">
         <tr>
             <th class="d-none d-lg-table-cell align-middle text-center">Imagem</th>
@@ -45,7 +48,7 @@
         @foreach ($eventos as $dados)
             <tr>
                 <td class="d-none d-lg-table-cell align-middle text-center"><img src="{{asset($dados->url)}}" class="img-flex" width="64"></td>
-                <td class="align-middle text-center">{{$dados->titulo}}</td>
+                <td class="align-middle text-center" id="evento-titulo">{{$dados->titulo}}</td>
                 <td class="d-none d-lg-table-cell align-middle text-center text-transform:capitalize;">{{$dados->tipo_evento_nome}}</td>
                 <td class="d-none d-lg-table-cell align-middle text-center"> {{$dados->descricao}}</td>
                 <td class="align-middle text-center">{{ date('d', strtotime($dados->dia)) }}</td>
@@ -150,6 +153,34 @@
         @endforeach
     </table>
 </div>
+<script>
+    // Obtém a referência do campo de entrada de pesquisa e a tabela de eventos
+    var searchInput = document.getElementById('searchInput');
+    var table = document.querySelector('.table');
+
+    // Adicione um ouvinte de evento ao campo de pesquisa
+    searchInput.addEventListener('input', function() {
+        var searchText = searchInput.value.toLowerCase(); // Obtém o texto de pesquisa em letras minúsculas
+
+        // Obtém todas as linhas da tabela, exceto a primeira (cabeçalho)
+        var rows = table.querySelectorAll('tr:not(:first-child)');
+
+        // Itera sobre as linhas e verifica se o texto de pesquisa está presente no título do evento
+        rows.forEach(function(row) {
+            var titleCell = row.querySelector('#evento-titulo');
+            if (titleCell) {
+                var title = titleCell.textContent.toLowerCase(); // Obtém o texto do título em letras minúsculas
+
+                // Se o título contiver o texto de pesquisa, mostra a linha; caso contrário, oculta-a
+                if (title.includes(searchText)) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    });
+</script>
 
 <script src="{{asset('js/admin.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>

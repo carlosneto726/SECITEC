@@ -6,17 +6,10 @@
     <h2 class=""><u class="text-success">Logs</u></h2>
 </div>
 
-<form action="{{ route('searchLogs') }}" method="GET" class="container">
-        <div class="form-group p-1">
-            <label for="search"></label>
-            <input type="text" name="search" id="search" class="form-control" placeholder="Digite o nome do usuário/evento">
-        </div>
-        <div class="d-flex justify-content-end p-1">
-            <button type="submit" class="btn btn-success ">Pesquisar</button>
-        </div> 
-</form>
+<div class="container mt-5">
+    <input type="text" id="search-input" class="form-control mb-3" placeholder="Pesquisar por nome do proponente/usuário">
+    <table class="table table-striped table-hover">
 
-<table class="table table-striped table-hover container mt-5">
     <thead>
         <tr>
             <th scope="col" class="align-middle text-center">Evento</th>
@@ -32,8 +25,8 @@
     <tbody>
         @foreach ($logs as $log)
             <tr>
-                <td class="align-middle text-center">{{$log->nome_evento}}</td>
-                <td class="align-middle text-center">{{$log->nome_usuario}}</td>
+                <td class="align-middle text-center" id="nome-evento">{{$log->nome_evento}}</td>
+                <td class="align-middle text-center" id="nome-usuario">{{$log->nome_usuario}}</td>
                 <td class="align-middle text-center">{{$log->data_hora}}</td>
                 <td class="align-middle text-center">
                     @if ($log->tipo_operacao == "CADASTRAR")
@@ -50,5 +43,32 @@
         @endforeach
     </tbody>
 </table>
+</div>
+
+<script>
+// Captura o campo de pesquisa e adiciona um evento de digitação
+document.getElementById('search-input').addEventListener('input', function() {
+    var searchValue = this.value.toLowerCase(); // Valor de pesquisa em letras minúsculas
+
+    // Seleciona todas as linhas da tabela
+    var rows = document.querySelectorAll('table tbody tr');
+
+    // Itera pelas linhas da tabela
+    rows.forEach(function(row) {
+        var nomeEvento = row.querySelector('#nome-evento').textContent.toLowerCase();
+        var nomeUsuario = row.querySelector('#nome-usuario').textContent.toLowerCase();
+
+        // Verifica se o valor de pesquisa corresponde a algum valor na coluna "nome-evento" ou "nome-usuario"
+        if (nomeEvento.includes(searchValue) || nomeUsuario.includes(searchValue)) {
+            // Mostra a linha se houver correspondência
+            row.style.display = 'table-row';
+        } else {
+            // Oculta a linha se não houver correspondência
+            row.style.display = 'none';
+        }
+    });
+});
+
+</script>
 
 @endsection

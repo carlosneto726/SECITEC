@@ -347,15 +347,4 @@ class AdministradorController extends Controller
         $logs = DB::select("SELECT * FROM log_tb_evento_usuario ORDER BY data_hora;");
         return view("admin.logs", compact("logs"));
     }
-
-    public function searchLogs(Request $request){
-        $searchTerm = $request->input('search');
-        
-        // Realize a consulta SQL com base no termo de pesquisa
-        $logs = DB::select("SELECT * FROM log_tb_evento_usuario WHERE nome_usuario LIKE '%$searchTerm%' OR nome_evento LIKE '%$searchTerm%' ORDER BY data_hora;");
-    
-        return view("admin.logs", compact("logs"));
-    }
-    
-    
 }

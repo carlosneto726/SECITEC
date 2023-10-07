@@ -15,7 +15,9 @@
     </div>
 </section>
 
+
 <div class="container">
+<input type="text" id="searchInput" class="form-control mb-3" placeholder="Pesquisar por nome do proponente">
     <div class="my-3 p-3 bg-body rounded shadow-sm">
         @if(count($proponentes) == 0)
             <div class="fw-bold h5">
@@ -27,11 +29,12 @@
             </div>
         @endif
         @foreach ($proponentes as $proponente)
+        <div id="proponente-conteudo"> 
             <div class="d-flex text-body-secondary pt-3 border-bottom">
                 <img class="rounded object-fit-cover" src="{{asset($proponente->url)}}" height="74" width="74">
                 <div class="pb-3 mb-0 small lh-sm w-100">
                     <div class="d-flex justify-content-between">
-                        <strong class="fs-5 text-gray-dark ms-1">{{$proponente->nome}}</strong>
+                        <p class="fs-5 text-gray-dark ms-1" id="proponente-nome">{{$proponente->nome}}</p>
                         
                         <div class="d-flex mt-3">
                             <button type="submit" class="btn btn-primary btn-sm me-1" title="alterar" href="#staticBackdrop{{$proponente->id}}" data-bs-toggle="modal">
@@ -105,10 +108,35 @@
                     </div>
                 </div>
             </div>
+</div>
             @include('admin.proponente.editarModal')
         @endforeach
     </div>      
 </div>
+
+<script>
+    var searchInput = document.getElementById('searchInput');
+    var proponentes = document.querySelectorAll('#proponente-conteudo');
+
+    searchInput.addEventListener('input', function() {
+        var searchText = searchInput.value.toLowerCase();
+
+        proponentes.forEach(function(proponente) {
+            var nomeProponente = proponente.querySelector('#proponente-nome');
+            
+            if (nomeProponente) {
+                var nome = nomeProponente.textContent.toLowerCase();
+
+                if (nome.includes(searchText)) {
+                    proponente.style.display = 'block';
+                } else {
+                    console.log(nomeProponente);
+                    proponente.style.display = 'none';
+                }
+            }
+        });
+    });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 @include('admin.proponente.cadastrarModal')
