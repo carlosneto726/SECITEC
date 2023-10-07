@@ -28,8 +28,7 @@
             <th class="align-middle text-center">Vagas</th>
             <th class="d-none d-lg-table-cell align-middle text-center">Horas</th>
             <th class="d-none d-lg-table-cell align-middle text-center">Proponentes</th>
-            <th class="align-middle text-center">Alterar</th>
-            
+            <th class="align-middle text-center">Alterar</th>            
         </tr>
         @if(count($eventos) == 0)
             <tr>
@@ -124,7 +123,6 @@
                         </div>
                     </div>
                 </div>
-
                 
                 <!-- Modal -->
                 <div class="modal fade" id="checkinoutModal{{$dados->id}}" tabindex="-1" aria-labelledby="checkinoutModalLabel" aria-hidden="true">
@@ -148,7 +146,6 @@
                         </div>
                     </div>
                 </div>
-
             </tr>            
         @endforeach
     </table>
