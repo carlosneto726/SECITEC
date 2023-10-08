@@ -10,7 +10,11 @@
     }
     .avatar-proponente img{
         border: 1px solid black;
-    }    
+    }
+    .custom-tooltip {
+      --bs-tooltip-bg: #17882c;
+      --bs-tooltip-color: var(--bs-white);
+    }     
 </style>
 
 <script type="text/javascript" src="{{asset('js/qrcode.js')}}"></script>
@@ -69,7 +73,7 @@
         function gerarAvatarProponentes(proponentes){
                       let avatares = ''
                       proponentes.forEach(proponente => {
-                          avatares += `<div class="avatar-proponente"><a href="/proponente/${proponente.id_proponente}"><img src="${proponente.url}" style="height: 50px; width: 50px; border-radius: 50px;" alt="Avatar" /></a></div>`
+                          avatares += `<div class="avatar-proponente"><a href="/proponente/${proponente.id_proponente}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="${proponente.nome}"><img src="${proponente.url}" style="height: 50px; width: 50px; border-radius: 50px;" alt="Avatar" /></a></div>`
                       });
                       return avatares;
                   }
