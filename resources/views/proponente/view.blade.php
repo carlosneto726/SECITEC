@@ -96,9 +96,9 @@ function exibirRedeSocial($url) {
         @foreach ($eventos as $evento)
             <div class="col-12 col-md-12 col-lg-10 mb-3">
                 <div class="card">
-                    <h5 class="card-header bg-success text-light">Featured</h5>
+                    <h5 class="card-header bg-success text-light">{{$evento->tipo_evento[0]->nome}}</h5>
                     <div class="card-body">
-                        <h5 class="card-title">{{$evento->titulo}}</h5>
+                        <h5 class="card-title"><a href="{{url('/evento/'.$evento->id_evento)}}">{{$evento->titulo}}</a></h5>
                         <p class="card-text text-reset">{{$evento->descricao}}</p>
                         <p class="card-text text-reset">
                             <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">

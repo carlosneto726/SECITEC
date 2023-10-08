@@ -1,5 +1,12 @@
 @extends('templates.template')
 @section('content')
+
+<style>
+    .custom-tooltip {
+        --bs-tooltip-bg: #17882c;
+        --bs-tooltip-color: var(--bs-white);
+    } 
+</style>
 <div class="container section-padding mb-5">
     <h2 class="">Bem vindo, <strong><u class="text-success">{{ $usuario->id == 6 || $usuario->id == 4 ? $usuario->nome.
     ' Gostosão' : $usuario->nome }}</u></strong></h2>
@@ -352,7 +359,7 @@
                     <div class="card mt-3 mb-3">
                             <div class="card-body card-conteudo">
                                 <div class="card-text">
-                                    <h5 class=""><strong class="card-titulo">${evento.titulo} </strong> &nbsp;&nbsp;&nbsp;</h5>
+                                    <h5 class=""><a href="/evento/${evento.id}"><strong class="card-titulo">${evento.titulo} </strong></a> &nbsp;&nbsp;&nbsp;</h5>
 
                                     <p>${evento.descricao}</p>
 
@@ -437,7 +444,7 @@
             function gerarAvatarProponentes(proponentes){
                 let avatares = ''
                 proponentes.forEach(proponente => {
-                    avatares += `<div class="avatar-proponente"><a href="/proponente/${proponente.id}"><img src="${proponente.url}" alt="Avatar" /></a></div>`
+                    avatares += `<div class="avatar-proponente" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="${proponente.nome}"><a href="/proponente/${proponente.id}" data-bs-toggle="tooltip"><img src="${proponente.url}" alt="Avatar" /></a></div>`
                 });
                 return avatares;
             }
