@@ -31,14 +31,14 @@ class AdministradorController extends Controller
         $eventos = DB::select(" SELECT e.*, te.nome AS tipo_evento_nome
                                 FROM tb_evento AS e
                                 INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
-                                WHERE te.id != 4;
+                                WHERE te.id != 4 ORDER BY titulo;
         ");
 
         foreach ($eventos as $evento) {
             $proponentes_nome = [];
             $proponentes = DB::select(" SELECT nome FROM tb_proponente
                                         INNER JOIN tb_proponente_evento ON tb_proponente.id = tb_proponente_evento.id_proponente
-                                        WHERE tb_proponente_evento.id_evento = ? ORDER BY nome;", [$evento->id]);
+                                        WHERE tb_proponente_evento.id_evento = ?;", [$evento->id]);
             foreach ($proponentes as $proponente) {
                 array_push($proponentes_nome, $proponente->nome);
             }
