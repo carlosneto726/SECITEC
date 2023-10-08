@@ -1,3 +1,4 @@
+
 // Função que faz post com o corpo com JSON, não suporta enviar arquivos
 function postHandler(endpoint, data){
     var url = window.location.origin + endpoint; // Dominio + endpoint da API
@@ -21,6 +22,10 @@ function postHandler(endpoint, data){
             localStorage.setItem("message", data['message']);
             localStorage.setItem("type", data['type']);
             window.location.href = data['endpoint'];
+        }else if(data['reload'] != null){
+            showAlert(data['message'], data['type']);
+            document.getElementById(data['id_usuario']).innerHTML = data['hora_atual'];
+            document.getElementById("cpfCheckin").value = "";
         }else{
             localStorage.setItem("message", data['message']);
             localStorage.setItem("type", data['type']);
@@ -187,4 +192,8 @@ function checkinout(endpoint, id_evento, btn, confirmacao, tipo){
 function ativarModal(id) {
     var meuModal = new bootstrap.Modal(document.getElementById(id));
     meuModal.show();
+}
+
+function fecharModal(params) {
+    
 }

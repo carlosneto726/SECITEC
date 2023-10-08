@@ -44,6 +44,17 @@
             '</div>';
             localStorage.clear();
         }
+
+        function showAlert(message, type) {
+            alerta.innerHTML =
+            '<div class="z-3 position-fixed top-0 end-0" style="margin-top: 100px;">' +
+            '    <div class="alert alert-'+type+' alert-dismissible" role="alert">'+
+            '        <div>'+message+'</div>'+
+            '        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>'+
+            '    </div>'+
+            '</div>';
+        }
+
     </script>
 </body>
 
