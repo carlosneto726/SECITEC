@@ -357,4 +357,11 @@ code,
     }
 }
 
+@media (max-width: 450px) {
+    .accordion-body-hackathon {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
 
