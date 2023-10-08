@@ -53,4 +53,12 @@ class Controller extends BaseController
         return view("proponente.view", compact("proponente", "eventos"));
     }
 
+    public function viewEvento(Request $request){
+        $id = request("id");
+        $evento = DB::select("SELECT * FROM tb_evento WHERE id = ?;", [$id]);
+        $proponentes = DB::select(" SELECT * FROM tb_proponente 
+                                    INNER JOIN tb_proponente_evento ON tb_proponente.id = tb_proponente_evento.id_proponente
+                                    WHERE tb_proponente_evento.id_evento = ?;", [$id]);
+        return view("evento.view", compact("evento", "proponentes"));
+    }
 }

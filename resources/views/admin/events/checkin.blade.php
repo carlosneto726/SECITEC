@@ -45,7 +45,7 @@
             <tr>
                 <td>{{$usuario->nome}}</td>
                 <td>{{$usuario->cpf}}</td>
-                <td>{{$usuario->checkin}}</td>
+                <td id="{{$usuario->id}}">{{$usuario->checkin}}</td>
                 <td>{{$usuario->checkout}}</td>
                 <td>{{$usuario->status}}</td>
                 <td>{{$usuario->data_insercao}}</td>
@@ -68,7 +68,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-                <button type="button" class="btn btn-primary"
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
                     onclick="checkinout('/admin/presenca/checkin', {{ request('id_evento') }}, this, true, 'in')">Sim</button>
             </div>
         </div>
@@ -90,7 +90,26 @@
     </div>
 </div>
 
-<script src="{{ asset('js/admin.js') }}?v=1.1"></script>
+<!-- Modal de confirmação do Checkin -->
+<div class="modal" tabindex="-1" id="fila">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Fila</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-warning">Este CPF está cadastrado na fila deste evento. Espere o tempo mínimo do evento para fazer o checkin dele.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    onclick="checkinout('/admin/presenca/checkin', {{ request('id_evento') }}, this, true, 'in')">Fazer Check-in</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="{{asset("js/jsQR.js")}}"></script>
 <script>
     var video = document.createElement("video");
@@ -98,6 +117,7 @@
     var canvas = canvasElement.getContext("2d");
     var outputMessage = document.getElementById("outputMessage");
     var outputData = document.getElementById("cpfCheckin");
+    var cpf = "";
 
     function drawLine(begin, end, color) {
         canvas.beginPath();
@@ -139,6 +159,11 @@
                 drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
                 outputMessage.hidden = false;
                 outputData.value = code.data;
+                if(cpf != code.data){
+                    checkinout('/admin/presenca/checkin', {{ request('id_evento') }}, this, false, 'in')
+                    document.getElementById("cpfCheckin").value = "";
+                }
+                cpf = code.data;
             } else {
 
             }
@@ -146,4 +171,5 @@
         requestAnimationFrame(tick);
     }
 </script>
+<script src="{{ asset('js/admin.js') }}?v=1.1"></script>
 @endsection

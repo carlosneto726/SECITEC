@@ -103,7 +103,7 @@
             <div class="card mt-3 mb-3">
                     <div class="card-body card-conteudo">
                         <div class="card-text">
-                            <h5 class=""><strong class="card-titulo">${evento.titulo} </strong> &nbsp;&nbsp;&nbsp;</h5>
+                            <h5 class=""><a href="/evento/${evento.id}"><strong class="card-titulo">${evento.titulo} </strong></a> &nbsp;&nbsp;&nbsp;</h5>
                             
                             <p>${evento.descricao}</p>
                             
