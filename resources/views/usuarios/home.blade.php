@@ -444,7 +444,7 @@
             function gerarAvatarProponentes(proponentes){
                 let avatares = ''
                 proponentes.forEach(proponente => {
-                    avatares += `<div class="avatar-proponente"><a href="/proponente/${proponente.id}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="${proponente.nome}"><img src="${proponente.url}" alt="Avatar" /></a></div>`
+                    avatares += `<div class="avatar-proponente" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="${proponente.nome}"><a href="/proponente/${proponente.id}" data-bs-toggle="tooltip"><img src="${proponente.url}" alt="Avatar" /></a></div>`
                 });
                 return avatares;
             }
