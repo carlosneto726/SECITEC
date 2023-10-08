@@ -386,6 +386,7 @@
                             <div class="card-footer" id="footer-evento">
                                 <div class="d-flex overflow-x-auto h-scroll">
                                     <div class="position-relative text-dark-emphasis ms-2 me-1 avatares-wrapper">
+                                        ${ gerarAvatarEvento(evento) }
                                         ${gerarAvatarProponentes(evento.proponentes)} 
                                     </div>
                                 </div>
