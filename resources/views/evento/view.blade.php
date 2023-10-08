@@ -1,6 +1,13 @@
 @extends('templates.template')
 @section('content')
 
+<style>
+    .custom-tooltip {
+      --bs-tooltip-bg: #17882c;
+      --bs-tooltip-color: var(--bs-white);
+    }  
+</style>
+
 <section class="container section-padding">
 
     <div class="perfil-proponente">
@@ -40,7 +47,7 @@
     @foreach ($proponentes as $proponente)
             <a href="{{url('/proponente/'.$proponente->id_proponente)}}">
                 <div class="position-relative ms-2 me-1 img-wrapper-proponente m-2" style="height:100px; width: 100px;">
-                    <img src="{{asset($proponente->url)}}">
+                    <img src="{{asset($proponente->url)}}"  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="{{($proponente->nome)}}">
                 </div>
             </a>
     @endforeach
