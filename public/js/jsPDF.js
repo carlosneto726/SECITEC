@@ -30,8 +30,8 @@ btn.addEventListener('click', function () {
     for (let i = 0; i < eventos.length; i++) {
         var titulo = eventos[i]['titulo'];
         var dia = eventos[i]['dia'];
-        var horai = eventos[i]['horarioI'];
-        var horaf = eventos[i]['horarioF'];
+        var horai = eventos[i]['titulo'] !== 'Hackathon' ? eventos[i]['horarioI'] : '-- : -- : -- ';
+        var horaf = eventos[i]['titulo'] !== 'Hackathon' ? eventos[i]['horarioF'] : '-- : -- : -- ';
         var local = eventos[i]['local'];
         data.push([titulo, dia, horai, horaf, local]);
     }
