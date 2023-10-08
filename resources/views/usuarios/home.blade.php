@@ -426,7 +426,13 @@
                     alerta.style.display = "none";
                 }, 3000);
             }
-
+            function gerarAvatarEvento(evento){
+                let avatares = ''
+                if(evento.url){
+                    avatares += `<div class="avatar-proponente"><a "><img src="${evento.url}" style="height: 50px; width: 50px; border-radius: 50px;" alt="Avatar" /></a></div>`
+                }
+                return avatares;
+            }
             function gerarAvatarProponentes(proponentes){
                 let avatares = ''
                 proponentes.forEach(proponente => {
