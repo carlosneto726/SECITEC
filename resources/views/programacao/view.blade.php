@@ -40,7 +40,13 @@
   var eventos = @json($eventos);
   const eventosAgrupados = agruparEventosPorDia(eventos);
   //console.log(eventosAgrupados);
-  
+    function gerarAvatarEvento(evento){
+        let avatares = ''
+        if(evento.url){
+            avatares += `<div class="avatar-proponente"><a "><img src="${evento.url}" style="height: 50px; width: 50px; border-radius: 50px;" alt="Avatar" /></a></div>`
+        }
+        return avatares;
+    }
     function gerarAvatarProponentes(proponentes){
         let avatares = ''
         proponentes.forEach(proponente => {
@@ -126,6 +132,7 @@
                     <div class="card-footer" id="footer-evento" style="">
                         <div class="d-flex overflow-x-auto h-scroll">
                             <div class=" position-relative text-dark-emphasis ms-2 me-1 avatares-wrapper">
+                                ${ gerarAvatarEvento(evento) }
                                 ${ gerarAvatarProponentes(evento.proponentes) } 
                             </div>
                         </div>
