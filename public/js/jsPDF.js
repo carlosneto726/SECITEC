@@ -63,8 +63,20 @@ btn.addEventListener('click', function () {
 
     doc.addImage(logo, "JPEG", 125, 270);
     var data = new Date();
-    doc.save('cartao-de-entrada-SECITECFORMOSA'+data.getFullYear()+'-'+(data.getMonth()+1)+'-'+data.getDate()+'.pdf')
+    
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+        {
+            var blob = doc.output();
+            window.open(URL.createObjectURL(blob));
+        }
+    else
+        {
+            doc.save('cartao-de-entrada-SECITECFORMOSA'+data.getFullYear()+'-'+(data.getMonth()+1)+'-'+data.getDate()+'.pdf')
+        }
 });
+
+
 
 
 
