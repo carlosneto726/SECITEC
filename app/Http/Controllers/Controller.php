@@ -50,6 +50,10 @@ class Controller extends BaseController
         $eventos = DB::select(" SELECT * FROM tb_evento
                                 INNER JOIN tb_proponente_evento ON tb_evento.id = tb_proponente_evento.id_evento
                                 WHERE tb_proponente_evento.id_proponente = ?;", [$id]);
+        foreach($eventos as $evento){
+            $tipo_evento = DB::select(" SELECT * FROM tb_tipo_evento WHERE id = ?;", [$evento->id_tipo_evento]); 
+            $evento->tipo_evento = $tipo_evento;
+        }
         return view("proponente.view", compact("proponente", "eventos"));
     }
 
