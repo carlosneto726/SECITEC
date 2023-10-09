@@ -67,8 +67,11 @@ btn.addEventListener('click', function () {
 
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
         {
-            var blob = doc.output();
-            window.open(URL.createObjectURL(blob));
+            var pdfData = doc.output('datauristring');
+            var link = document.createElement('a');
+            link.href = pdfData;
+            link.download = 'cartao-de-entrada-SECITECFORMOSA.pdf'; // Nome do arquivo
+            link.click();
         }
     else
         {
