@@ -7,7 +7,7 @@
 </div>
 
 <div class="container mt-5">
-    <input type="text" id="search-input" class="form-control mb-3" placeholder="Pesquisar por nome do proponente/usuário">
+    <input type="text" id="search-input" class="form-control mb-3" placeholder="Pesquisar por nome do proponente e usuário">
     <table class="table table-striped table-hover">
 
     <thead>
