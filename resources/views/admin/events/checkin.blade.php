@@ -6,10 +6,9 @@
     <h2 class=""><u class="text-success">{{ request('nome_evento') }}</u></h2>
 </div>
 
-<div class="container d-flex">
-    <div class="mx-auto" style="width: 640px;">
+<div class="container">
+    <div class="mx-auto">
         <canvas class="img-fluid rounded" id="canvas" hidden></canvas>
-        <div class="text-success" id="outputMessage" hidden>Qr Code lido com sucesso.</div>
         <h4 class="text-success" id="titulo">Checkin</h4>
         <div class="mb-3">
             <input type="text" name="cpf" id="cpfCheckin" class="form-control" placeholder="CPF">
@@ -28,32 +27,37 @@
     
 </div>
 
-
-<table class="table table-striped table-hover container mt-5" style="width: 640px;">
-    <thead>
-        <tr>
-            <th scope="col">nome</th>
-            <th scope="col">cpf</th>
-            <th scope="col">checkin</th>
-            <th scope="col">checkout</th>
-            <th scope="col">status</th>
-            <th scope="col">data_insercao</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($usuarios_evento as $usuario)
+<div class="container">
+    <table class="table table-striped table-hover container mt-5">
+        <thead>
             <tr>
-                <td>{{$usuario->nome}}</td>
-                <td>{{$usuario->cpf}}</td>
-                <td id="{{$usuario->id}}">{{$usuario->checkin}}</td>
-                <td>{{$usuario->checkout}}</td>
-                <td>{{$usuario->status}}</td>
-                <td>{{$usuario->data_insercao}}</td>
+                <th scope="col">nome</th>
+                <th scope="col">cpf</th>
+                <th scope="col">checkin</th>
+                <th scope="col">checkout</th>
+                <th class="d-none d-md-block" scope="col">status</th>
+                <th scope="col">data</th>
             </tr>
-        @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach ($usuarios_evento as $usuario)
+                @php
+                    $datetime = new DateTime($usuario->data_insercao);
 
+                @endphp
+                <tr>
+                    <td>{{$usuario->nome}}</td>
+                    <td class="text-break">{{$usuario->cpf}}</td>
+                    <td id="{{$usuario->id}}">{{$usuario->checkin}}</td>
+                    <td>{{$usuario->checkout}}</td>
+                    <td class="d-none d-md-block">{{$usuario->status}}</td>
+                    <td>{{ date_format($datetime, 'd/m') }}</td>
+
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
 <!-- Modal de confirmação do Checkin -->
 <div class="modal" tabindex="-1" id="modalcheckin">
