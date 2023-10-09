@@ -17,6 +17,9 @@
     <hr>
     <h3 class="user-page-title">Eventos da <strong>SECITEC 2023</strong></h3>
     <section>
+    <div class="accordion">
+        <input type="text" id="filtroTitulo" placeholder="Pesquisar evento" class="form-control mb-3" onkeyup="filtrarEventosPorTitulo()">
+    </div>
     <div class="accordion" id="accordionExample">
 </div>
 </section>
@@ -148,32 +151,38 @@
             const horaSeparada = hora.split(':');
             return `${horaSeparada[0]}:${horaSeparada[1]}`
         }
+        function renderizarAccordions(filtroTitulo = "") {
+            Object.keys(eventosAgrupados).forEach(function(key) {
+                // Verifique se há eventos para este dia
+                if (eventosAgrupados[key].length > 0) {
+                    const eventosDia = renderizarEventosDia(key, filtroTitulo);
 
-        // FUNCOES DE RENDER
-        function renderizarAccordions() {
-            Object.keys(eventosAgrupados).forEach(function (key) {
-                if (key !== 'Hackathon') {
-                    accordion.innerHTML += `  
+                    // Verifique se há eventos após o filtro
+                    if (eventosDia.trim() !== "") {
+                        if (key !== 'Hackathon') {
+                        accordion.innerHTML += `  
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="flush-headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion${key}" aria-expanded="false" aria-controls="accordion${key}">
-                                    <strong> ${key == 'Hackathon' ? 'Hackathon' : formatarData(key)} </strong>
-                                </button>
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion${key}" aria-expanded="false" aria-controls="accordion${key}">
+                                        <strong> ${key == 'Hackathon' ? 'Hackathon' : formatarData(key)} </strong>
+                                    </button>
                                 </h2>
                                 <div id="accordion${key}" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-    
-                                <div class="accordion-body accordion-body-eventos p-2 m-0" id="accordion-body$key">
-                                    ${renderizarEventosDia(key)}
+                                    <div class="accordion-body accordion-body-eventos p-2 m-0" id="accordion-body$key">
+                                        ${eventosDia}
+                                    </div>
                                 </div>
-                                </div>
-                            </div>`
+                            </div>`;
+                        }
+                        
+                    }
                 }
             });
-
             if (eventosAgrupados['Hackathon']) {
                 accordion.innerHTML = renderizarHackathon(eventosAgrupados['Hackathon'][0]) + accordion.innerHTML;
             }
         }
+       
 
         function renderizarHackathon(evento) {
             return `    <div class="accordion-item hackathon">
@@ -351,15 +360,16 @@
             }
         }
 
-
-        function renderizarEventosDia(dia) {
-            let eventos = "";
-            eventosAgrupados[dia].forEach(evento => {
-                const eventoItem = `
+        function renderizarEventosDia(dia, filtroTitulo) {
+    let eventos = "";
+    eventosAgrupados[dia].forEach(evento => {
+        if (filtroTitulo === "" || evento.titulo.toLowerCase().includes(filtroTitulo.toLowerCase())) {
+            const eventoItem = `
+            
                     <div class="card mt-3 mb-3">
                             <div class="card-body card-conteudo">
                                 <div class="card-text">
-                                    <h5 class=""><a href="/evento/${evento.id}"><strong class="card-titulo">${evento.titulo} </strong></a> &nbsp;&nbsp;&nbsp;</h5>
+                                    <h5 class=""><a href="/evento/${evento.id}"><strong class="card-titulo"><u>${evento.titulo}</u></strong></a>&nbsp;&nbsp;&nbsp;</h5>
 
                                     <p>${evento.descricao}</p>
 
@@ -393,14 +403,14 @@
                             <div class="card-footer" id="footer-evento">
                                 <div class="d-flex overflow-x-auto h-scroll">
                                     <div class="position-relative text-dark-emphasis ms-2 me-1 avatares-wrapper">
-                                        ${ gerarAvatarEvento(evento) }
                                         ${gerarAvatarProponentes(evento.proponentes)} 
                                     </div>
                                 </div>
                             </div>
                      </div>`;
                 eventos += eventoItem;
-            })
+        }
+            });
             return eventos;
         }
 
@@ -583,6 +593,12 @@
                     }
                 }
             });
+        }
+        function filtrarEventosPorTitulo() {
+            const filtroTitulo = document.getElementById('filtroTitulo').value.toLowerCase();
+            const accordion = document.getElementById('accordionExample');
+            accordion.innerHTML = "";
+            renderizarAccordions(filtroTitulo);
         }
     </script>
     @endsection
