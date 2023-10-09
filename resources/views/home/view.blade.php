@@ -74,17 +74,6 @@
             <!--Primeira coluna-->
             <div class="col-lg-4 col-md-6 col-12">
                 <div class="highlight-thumb">
-                    <img src="{{asset('images/ifg_secitec_2022.png')}}" class="highlight-image img-fluid" alt="">
-                    <!--Ícone quando o mouse está em cima da imagem-->
-                    <div class="highlight-info">
-                        <h6 class="highlight-title">SECITEC, 2022</h6>
-                        <a href="https://www.ifg.edu.br/component/content/article/158-ifg/campus/formosa/noticias-campus-formosa/32193-xiii-secitec-discute-educacao-profissional-e-tecnologica-e-inclusao-de-pessoas-com-deficiencia?highlight=WyJzZWNpdGVjIiwyMDIyLCJzZWNpdGVjIDIwMjIiXQ==" class="bi-plus-circle highlight-icon" target="_blank"></a>
-                    </div>
-                </div>
-            </div>
-            <!--Segunda coluna-->
-            <div class="col-lg-4 col-md-6 col-12">
-                <div class="highlight-thumb">
                     <img src="{{asset('images/hackathon.png')}}" class="highlight-image img-fluid" alt="">
                     <!--Ícone quando o mouse está em cima da imagem-->
                     <div class="highlight-info">
@@ -93,14 +82,25 @@
                     </div>
                 </div>
             </div>
+            <!--Segunda coluna-->
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="highlight-thumb">
+                    <img src="{{asset('images/ifg_secitec_2023.png')}}" class="highlight-image img-fluid" alt="">
+                    <!--Ícone quando o mouse está em cima da imagem-->
+                    <div class="highlight-info">
+                        <h6 class="highlight-title">SECITEC, 2023</h6>
+                        <a href="https://www.ifg.edu.br/component/content/article/290-ifg/campus/formosa/eventos-campus-formosa/proximos-eventos-campus-formosa/36095-xiv-secitec-23-a-26-10" class="bi-plus-circle highlight-icon" target="_blank"></a>
+                    </div>
+                </div>
+            </div>
             <!--Terceira coluna-->
             <div class="col-lg-4 col-md-6 col-12 self-align-center">
                 <div class="highlight-thumb">
-                    <img src="{{asset('images/ifg_facebook.png')}}" class="highlight-image img-fluid" alt="">
+                    <img src="{{asset('images/ifg_instagram.png')}}" class="highlight-image img-fluid" alt="">
                     <!--Ícone quando o mouse está em cima da imagem-->
                     <div class="highlight-info">
-                        <h6 class="highlight-title">FACEBOOK IFG-FORMOSA</h6>
-                        <a href="https://www.facebook.com/ifgformosa" class="bi-plus-circle highlight-icon" target="_blank"></a>
+                        <h6 class="highlight-title">INSTAGRAM IFG-FORMOSA</h6>
+                        <a href="https://www.instagram.com/ifgformosa/" class="bi-plus-circle highlight-icon" target="_blank"></a>
                     </div>
                 </div>
             </div>      
