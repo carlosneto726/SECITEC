@@ -84,9 +84,10 @@
         return `${horaSeparada[0]}:${horaSeparada[1]}`
     }
     function renderizarAccordions(filtroTitulo = "") {
+        accordion.innerHTML = renderizarHackathon();
         Object.keys(eventosAgrupados).forEach(function(key) {
             // Verifique se há eventos para este dia
-            if (eventosAgrupados[key].length > 0) {
+            if (key !== 'Hackathon' && eventosAgrupados[key].length > 0) {
                 const eventosDia = renderizarEventosDia(key, filtroTitulo);
 
                 // Verifique se há eventos após o filtro
