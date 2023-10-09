@@ -45,6 +45,8 @@ Route::post('/admin/proponente/cadastrar', [AdministradorController::class, 'ins
 Route::put('/admin/proponente/atualizar/{id_proponente}', [AdministradorController::class, 'updateProponente']);
 Route::post('/admin/proponente/deletar', [AdministradorController::class, 'deleteProponente']);
 Route::get('/admin/logs', [AdministradorController::class, 'viewLogs']);
+Route::get('/admin/adicionar-usuario', [AdministradorController::class, 'viewAdicionarUsuario']);
+Route::post('/admin/adicionar-usuario/cadastrar', [AdministradorController::class, 'addUsuario']);
 
 Route::post('/admin/presenca/checkin', [AdministradorController::class, 'checkin']);
 Route::get('/admin/presenca/checkin/{id_evento}/{nome_evento}', [AdministradorController::class, 'viewCheckin']);
