@@ -130,7 +130,6 @@
                 if (nome.includes(searchText)) {
                     proponente.style.display = 'block';
                 } else {
-                    console.log(nomeProponente);
                     proponente.style.display = 'none';
                 }
             }
