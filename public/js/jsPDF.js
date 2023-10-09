@@ -63,8 +63,26 @@ btn.addEventListener('click', function () {
 
     doc.addImage(logo, "JPEG", 125, 270);
     var data = new Date();
-    doc.save('cartao-de-entrada-SECITECFORMOSA'+data.getFullYear()+'-'+(data.getMonth()+1)+'-'+data.getDate()+'.pdf')
+   
+    var blob = new Blob([doc.output('blob')], { type: 'application/pdf' });
+
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(blob, 'arquivo.pdf');
+    } else {
+        var objectUrl = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = objectUrl;
+        link.download = 'arquivo.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    //doc.save('cartao-de-entrada-SECITECFORMOSA'+data.getFullYear()+'-'+(data.getMonth()+1)+'-'+data.getDate()+'.pdf')
+
 });
+
+
 
 
 
