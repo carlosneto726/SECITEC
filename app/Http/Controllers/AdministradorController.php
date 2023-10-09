@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Mail\AtivarConta;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\ValidarUsuariosController;
+use Illuminate\Support\Facades\Hash;
+
 
 class AdministradorController extends Controller
 {
@@ -182,8 +185,14 @@ class AdministradorController extends Controller
         $cpf = request("cpf"); // CPF
         $id_evento = request("id_evento");
         $confirmacao = request("confirmacao");
-        $id_eventousuario = $this->getusUarioId($cpf, $id_evento)->id_evento;
-        $id_usuario = $this->getusUarioId($cpf, $id_evento)->id_usuario;
+
+        try {
+            $id_eventousuario = $this->getusUarioId($cpf, $id_evento)->id_evento;
+            $id_usuario = $this->getusUarioId($cpf, $id_evento)->id_usuario;
+        } catch (\Throwable $th) {
+            return response()->json(['id_modal' => 'modalerro']);
+        }
+
 
         if($id_eventousuario == false){ return response()->json(['id_modal' => 'modalerro']); }
         $checkin = DB::select("SELECT * FROM tb_evento_usuario WHERE id = ?;", [$id_eventousuario]);
@@ -218,19 +227,33 @@ class AdministradorController extends Controller
         $cpf = request("cpf"); // CPF
         $id_evento = request("id_evento");
         $confirmacao = request("confirmacao");
-        $id_eventousuario = $this->getusUarioId($cpf, $id_evento);
+
+        try {
+            $id_eventousuario = $this->getusUarioId($cpf, $id_evento)->id_evento;
+            $id_usuario = $this->getusUarioId($cpf, $id_evento)->id_usuario;
+        } catch (\Throwable $th) {
+            return response()->json(['id_modal' => 'modalerro']);
+        }
+
         if($id_eventousuario == false){ return response()->json(['id_modal' => 'modalerro']); }
         $checkout = DB::select("SELECT * FROM tb_evento_usuario WHERE id = ?;", [$id_eventousuario])[0]->checkout;
+        date_default_timezone_set('America/Sao_Paulo');
+        $horarioAtual = date("H:i:s");
 
         if(($checkout == null && $confirmacao == false) || $confirmacao){
             DB::update("UPDATE tb_evento_usuario
-                        SET status = 1, checkout = sysdate()
+                        SET status = 1, checkout = ?
                         WHERE id = ?;",
-                        [$id_eventousuario]);
+                        [$horarioAtual, $id_eventousuario]);
             return response()->json(
                 [
                     'message' => 'Checkout efetuado com sucesso.',
-                    'type' => 'success'
+                    'type' => 'success',
+                    'reload' => 'false',
+                    'cpf' => $cpf,
+                    'hora_atual' => $horarioAtual,
+                    'id_usuario' => $id_usuario
+
                 ]
             );
         }else{
@@ -353,8 +376,41 @@ class AdministradorController extends Controller
         );
     }
 
+
+    public function viewAdicionarUsuario(){
+        $usuarios = DB::select("SELECT * FROM tb_usuario ORDER BY id DESC;");
+        foreach ($usuarios as $usuario) {
+            $usuario_eventos = DB::select(" SELECT tb_evento.titulo
+                                            FROM tb_evento
+                                            INNER JOIN tb_evento_usuario ON tb_evento_usuario.id_evento = tb_evento.id
+                                            WHERE tb_evento_usuario.id_usuario = ?;", [$usuario->id]);
+            $usuario->eventos = $usuario_eventos;
+        }
+
+        return view("admin.usuario.view", compact("usuarios"));
+    }
+
+    public function addUsuario(Request $request){
+        $email = request("email");
+        $cpf = request("cpf");
+        $nome = request("nome");
+        $senha = Hash::make("secitec2023"); // Senha criptografada
+
+        $validarCPF = new ValidarUsuariosController;
+        if(!$validarCPF->validaCPF($cpf)){
+            return "cpf inválido";
+        }
+
+        $usuarios = DB::select("SELECT email, cpf FROM tb_usuario WHERE email = ? OR cpf = ?;", [$email, $cpf]);
+        if(count($usuarios) > 0){
+            return "cpf ou email já cadastrado";
+        }
+        DB::insert("INSERT INTO tb_usuario(nome, senha, cpf, email, status) 
+                    VALUES(?,?,?,?,?);", [$nome, $senha, $cpf, $email, "1"]);
+    }
+
     public function viewLogs(){
-        $logs = DB::select("SELECT * FROM log_tb_evento_usuario ORDER BY data_hora;");
+        $logs = DB::select("SELECT * FROM log_tb_evento_usuario ORDER BY data_hora ASC;");
         return view("admin.logs", compact("logs"));
     }
 }

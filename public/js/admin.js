@@ -25,7 +25,20 @@ function postHandler(endpoint, data){
         }else if(data['reload'] != null){
             showAlert(data['message'], data['type']);
             document.getElementById(data['id_usuario']).innerHTML = data['hora_atual'];
-            document.getElementById("cpfCheckin").value = "";
+            try {
+                document.getElementById("cpfCheckin").value = "";
+                throw "myException"; // gera uma exceção
+            } catch (e) {
+                logMyErrors(e); // passa o objeto de exceção para o manipulador de erro
+            }
+
+            try {
+                document.getElementById("cpfCheckout").value = "";
+                throw "myException"; // gera uma exceção
+            } catch (e) {
+                logMyErrors(e); // passa o objeto de exceção para o manipulador de erro
+            }
+            
         }else{
             localStorage.setItem("message", data['message']);
             localStorage.setItem("type", data['type']);

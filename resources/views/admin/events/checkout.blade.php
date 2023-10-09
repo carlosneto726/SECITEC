@@ -28,7 +28,7 @@
 </div>
 
 
-<table class="table table-striped table-hover container mt-5">
+<table class="table table-striped table-hover container mt-5" style="width: 640px;">
     <thead>
         <tr>
             <th scope="col">nome</th>
@@ -45,7 +45,7 @@
                 <td>{{$usuario->nome}}</td>
                 <td>{{$usuario->cpf}}</td>
                 <td>{{$usuario->checkin}}</td>
-                <td>{{$usuario->checkout}}</td>
+                <td id="{{$usuario->id}}">{{$usuario->checkout}}</td>
                 <td>{{$usuario->status}}</td>
                 <td>{{$usuario->data_insercao}}</td>
             </tr>
@@ -96,6 +96,7 @@
     var canvas = canvasElement.getContext("2d");
     var outputMessage = document.getElementById("outputMessage");
     var outputData = document.getElementById("cpfCheckout");
+    var cpf = "";
 
     function drawLine(begin, end, color) {
         canvas.beginPath();
@@ -137,6 +138,11 @@
                 drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
                 outputMessage.hidden = false;
                 outputData.value = code.data;
+                if(cpf != code.data){
+                    checkinout('/admin/presenca/checkout', {{ request('id_evento') }}, this, false, 'out')
+                    document.getElementById("cpfCheckout").value = "";
+                }
+                cpf = code.data;
             } else {
 
             }
