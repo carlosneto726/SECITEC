@@ -1,2 +1,2 @@
 User-agent: *
-Disallow:
+Disallow: /resources/views/admin/
