@@ -70,7 +70,7 @@ btn.addEventListener('click', function () {
             var pdfData = doc.output('dataurlstring');
             var link = document.createElement('a');
             link.href = pdfData;
-            link.download = 'arquivo.pdf';
+            link.download = 'cartao-de-entrada-SECITECFORMOSA.pdf';
             link.target = '_blank'; // Adicionando o atributo target
             link.click();
         }
