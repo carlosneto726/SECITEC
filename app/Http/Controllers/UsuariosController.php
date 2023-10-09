@@ -205,6 +205,7 @@ class UsuariosController extends Controller
         $eventos = DB::select(" SELECT e.*, te.nome AS tipo_evento_nome
                                 FROM tb_evento AS e
                                 INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
+                                WHERE e.id != 80
                                 ORDER BY dia, horarioI
         ");
         $usuario = DB::select("SELECT * FROM tb_usuario WHERE id = ?;", [$this->id_usuario])[0];
