@@ -167,21 +167,17 @@ class ValidarUsuariosController extends Controller
     public function redefinirSenha(){
         $token = request("token");
         $senha = Hash::make(request("senha"));
-        $usuario = DB::select("SELECT * FROM tb_usuario WHERE token = ?", [$token]);
+        $usuario = DB::select("SELECT * FROM tb_usuario WHERE token = ? AND status = 1;", [$token]);
 
         if(count($usuario) == 1){
             DB::update("UPDATE tb_usuario SET senha = ?, token = 0 WHERE token = ?", [$senha, $token]);
             AlertController::alert("Senha atualizada com sucesso.","success");
             return redirect("/login");
         }else{
-            AlertController::alert("Ocorreu um erro","danger");
+            AlertController::alert("Sua conta não foi ativada.","danger");
             return redirect("/redefinir-senha");
         }
     }
-
-
-
-
 
 
     // Função que envia um email para a ativação da conta, o token no 
@@ -192,7 +188,6 @@ class ValidarUsuariosController extends Controller
         Mail::to($email)->send(new AtivarConta($url, $tipo));
     }
 
-    // Skynet kkkkk
     function validaCPF($cpf) {
  
         // Extrai somente os números
