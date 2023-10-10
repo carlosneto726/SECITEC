@@ -17,7 +17,7 @@
     <br>
     <br>
     <!-- Imagem mostrando página de login -->
-        <img src="https://secitecformosa.online/images/redefinir_senha.png" id="redefinir" style="width: 60%; ">
+        <center><img src="https://secitecformosa.online/images/redefinir_senha.png" id="redefinir" style="width: 60%; "></center>
     <br>
     <br>
         <small style="font-size: 16px;">
@@ -27,7 +27,7 @@
     <br>
     <br>
     <!-- Imagem mostrando página de login -->
-        <img src="https://secitecformosa.online/images/entrar_email.png"  id="entrar" style="width: 60%; ">
+        <center><img src="https://secitecformosa.online/images/entrar_email.png"  id="entrar" style="width: 60%; "></center>
     <br>
     <small style="color: red;">Este email foi gerado e enviado automáticamente, por favor não responda essa mensagem</small>
 </body>
