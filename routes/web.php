@@ -75,5 +75,7 @@ Route::post('/redefinir-senha', [ValidarUsuariosController::class, 'redefinirSen
 // Rotas do UsuariosController para funções do usuário como visualizar, cadastrar eventos
 Route::get('/eventos', [UsuariosController::class, 'viewEventos']);
 Route::get('/meus-eventos', [UsuariosController::class, 'viewMeusEventos']);
+Route::get('/meu-perfil', [UsuariosController::class, 'viewMeuPerfil']);
+Route::post('/meu-perfil/atualizar', [UsuariosController::class, 'updateMeuPerfil']);
 Route::post('/usuarios/cadastarEvento', [UsuariosController::class, 'cadastrarEvento']);
 Route::post('/usuarios/cadastarHackathon', [UsuariosController::class, 'cadastrarHackathon']);
