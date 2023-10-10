@@ -14,7 +14,7 @@
                          <div class="input-group">
                             <input type="text" class="form-control" placeholder="Nome" name="nome" id="nome" required>
                         </div>
-                        <small class="ms-1 mb-4 opacity-50">Informe o seu nome completo. <a href="{{("/sobre#")}}" class="link-tutorial" target="_blank">Saiba mais</a>.</small>
+                        <small class="ms-1 mb-4 opacity-50">Informe o seu nome completo. <a href="{{("/sobre#1")}}" class="link-tutorial" target="_blank">Saiba mais</a>.</small>
                         
                         <div class="input-group">
                           <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" maxlength="14" onkeypress="return /[0-9]/i.test(event.key)" required>
