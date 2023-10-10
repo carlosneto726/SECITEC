@@ -79,7 +79,6 @@ class ValidarUsuariosController extends Controller
         $token = request("token");
         $usuario = DB::select("SELECT * FROM tb_usuario WHERE token = ?;", [$token]);
         if(count($usuario) > 0){
-            AlertController::alert("Cadastre a sua conta preenchendo os campos abaixo", "success");
             return view("usuarios.cadastrarUser.view", compact("token"));
         }else{
             AlertController::alert("Link inválido", "danger");
