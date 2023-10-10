@@ -11,7 +11,7 @@
 <section class="container section-padding">
 
     <div class="perfil-proponente">
-        @if($evento[0]->url)
+        @if($evento[0]->url && $evento[0]->url != "storage/images/avatar/placeholder.jpeg")
         <div class="img-wrapper-proponente">  
             <img src="{{asset($evento[0]->url)}}">
         </div>
