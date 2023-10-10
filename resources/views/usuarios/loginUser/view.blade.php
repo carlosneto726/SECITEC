@@ -67,7 +67,7 @@
                         <div>Nós iremos enviar um E-mail para a redefinição da sua senha.</div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
                 </form>

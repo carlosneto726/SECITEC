@@ -32,7 +32,7 @@ class ValidarUsuariosController extends Controller
 
         // condição para verificar caso o cpf seja válido ou não
         if(!$this->validaCPF($cpf)){
-            AlertController::alert("CPF inválido", "danger");
+            AlertController::alert("CPF inválido.", "danger");
             return redirect("/usuarios/cadastrar/".$token);
         }
 
