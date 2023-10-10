@@ -11,14 +11,15 @@
                         @csrf
                         @method('POST')
 
+
                         <div class="input-group mb-2">
                             <input type="text" class="form-control" placeholder="Nome" name="nome" id="nome" required>
                         </div>
                         <small class="ms-1 mb-3 opacity-50">Informe o seu nome completo. <a href="{{("/sobre#")}}" class="link-tutorial" target="_blank">Saiba mais</a>.</small>
-
                         <div class="input-group">
-                            <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" maxlength="11" onkeypress="return /[0-9]/i.test(event.key)" required>
+                          <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" maxlength="14" onkeypress="return /[0-9]/i.test(event.key)" required>
                         </div>
+                        
                         <small class="ms-1 mb-3 opacity-50">Apenas números. Sem símbolos.</small>
                         <div class="input-group mb-3">
                             <input type="password" class="form-control" placeholder="Senha" id="senha" name="senha" maxlength="255" required>
@@ -39,6 +40,29 @@
         </div>
     </div>
 </div>
+
+<script>
+// Obtém o elemento de input de ID "cpf"
+var inputCpf = document.getElementById("cpf");
+
+// Adiciona um ouvinte de evento para o evento "input"
+inputCpf.addEventListener("input", function () {
+    // Obtém o valor atual do campo de entrada
+    var valorCpf = inputCpf.value;
+
+    // Remove todos os caracteres não numéricos usando uma expressão regular
+    var valorNumerico = valorCpf.replace(/\D/g, "");
+
+    // Verifica se o valor numerico tem mais de 11 dígitos e, se sim, limita para 11
+    if (valorNumerico.length > 11) {
+        valorNumerico = valorNumerico.slice(0, 11);
+    }
+
+    // Define o valor do campo de entrada para o valor numérico filtrado
+    inputCpf.value = valorNumerico;
+});
+</script>
+
 <style>
     .link-tutorial{
         border-bottom: solid 2px #17882c;
