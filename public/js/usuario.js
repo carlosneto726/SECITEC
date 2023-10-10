@@ -24,7 +24,9 @@ function postHandler(endpoint, data){
 
 
 
-loading(this)
+function loading(btn){
+    btn.innerHTML = "<div class='spinner-border' role='status'><span class='visually-hidden'>Loading</span></div>";
+}
 
 
 
