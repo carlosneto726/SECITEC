@@ -138,6 +138,11 @@
 
         secoes[secaoIdx].classList.add('show');
     }
+    var urlAtual = window.location.href;
+    console.log(urlAtual);
+    if(urlAtual.includes("#")){
+        selecionarSecao(2);
+    }
 </script>
 
 @endsection
