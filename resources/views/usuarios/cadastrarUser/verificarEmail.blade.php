@@ -25,8 +25,9 @@
                         <div class="input-group mb-2">
                             <input type="email" class="form-control" placeholder="Email" name="email" id="email" required>
                         </div>
-                        <small class="ms-1 mb-3 opacity-50">Informe o seu email para verificarmos se o seu email exite. Nós iremos enviar um email com link para você se cadastrar. <br> <strong>Cheque o a sua caixa de entrada e sua caixa de spam</strong>.</small>
-
+                        <div class="container">
+                            <small class="opacity-50">Informe o seu email para verificarmos se o seu email exite. Será enviado um email com link para você se cadastrar. <br> <strong>Cheque o a sua caixa de entrada e sua caixa de spam</strong>.</small>
+                        </div>
                         <button class="btn btn-success w-100" type="submit" onclick="loading(this)">
                             Enviar email
                         </button>
