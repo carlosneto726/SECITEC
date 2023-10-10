@@ -33,13 +33,13 @@ class ValidarUsuariosController extends Controller
         // condição para verificar caso o cpf seja válido ou não
         if(!$this->validaCPF($cpf)){
             AlertController::alert("CPF inválido", "danger");
-            return redirect("/cadastrar");
+            return redirect("/usuarios/cadastrar/".$token);
         }
 
         $usuarios = DB::select("SELECT cpf FROM tb_usuario WHERE cpf = ?;", [$cpf]);
         if(count($usuarios) > 0){
             AlertController::alert("Email ou CPF já cadastrado(s)", "danger");
-            return redirect("/cadastrar");
+            return redirect("/usuarios/cadastrar/".$token);
         }else{
             try {
                 DB::update('UPDATE tb_usuario 
@@ -54,7 +54,7 @@ class ValidarUsuariosController extends Controller
                     return redirect("/login");
             } catch (\Throwable $th) {
                 AlertController::alert("Ocorreu um erro, tente novamente ou contate o suporte.", "danger");
-                return redirect("/cadastrar");
+                return redirect("/usuarios/cadastrar/".$token);
             }
         }
     }
@@ -79,9 +79,10 @@ class ValidarUsuariosController extends Controller
         $token = request("token");
         $usuario = DB::select("SELECT * FROM tb_usuario WHERE token = ?;", [$token]);
         if(count($usuario) > 0){
-            AlertController::alert("Link inválido", "danger");
+            AlertController::alert("Cadastre a sua conta preenchendo os campos abaixo", "success");
             return view("usuarios.cadastrarUser.view", compact("token"));
         }else{
+            AlertController::alert("Link inválido", "danger");
             return redirect("/cadastrar");
         }
     }

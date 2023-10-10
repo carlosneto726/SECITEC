@@ -24,7 +24,7 @@ function postHandler(endpoint, data){
 
 
 
-
+loading(this)
 
 
 
