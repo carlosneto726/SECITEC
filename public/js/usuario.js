@@ -22,13 +22,27 @@ function postHandler(endpoint, data){
     .catch(erro => console.error('Erro:', erro));
 }
 
+
+
+
+
+
+
+
 function cadastrarUsuario(endpoint, btn){
     btn.innerHTML = "<div class='spinner-border' role='status'><span class='visually-hidden'>Loading</span></div>";
     var dados = {
         nome: document.getElementById("nome").value,
         cpf: document.getElementById("cpf").value,
-        email: document.getElementById("email").value,
         senha: document.getElementById("senha").value
+    };
+    postHandler(endpoint, dados);
+}
+
+function verificarEmail(endpoint, btn){
+    btn.innerHTML = "<div class='spinner-border' role='status'><span class='visually-hidden'>Loading</span></div>";
+    var dados = {
+        email: document.getElementById("email").value
     };
     postHandler(endpoint, dados);
 }

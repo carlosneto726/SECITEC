@@ -15,6 +15,21 @@
     <title>SECITEC</title>
 </head>
 <body>
+
+    @if(@$_SESSION['mensagem'] != "")
+        <div class="z-3 position-fixed top-0 end-0" style="margin-top: 100px;">
+            <div class="alert alert-{{@$_SESSION['tipo']}} alert-dismissible" role="alert">
+                <div>{{$_SESSION['mensagem']}}</div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        @php
+            @$_SESSION['mensagem'] = "";
+            @$_SESSION['tipo'] = "";
+        @endphp
+    @endif
+
+
     <header>
         @include('layout.navbar')
     </header>
@@ -42,7 +57,7 @@
     <script src="{{asset('js/jquery.min.js')}}?v=1.0"></script>
     <script src="{{asset('js/jquery.sticky.js')}}?v=1.0"></script>
     <script src="{{asset('js/app.js')}}?v=1.1"></script>
-    <script src="{{asset('js/usuario.js')}}?v=1.2"></script>
+    <script src="{{asset('js/usuario.js')}}?v=1.3"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     <script>
         var alerta = document.getElementById("alert");
@@ -64,5 +79,9 @@
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     </script>
+
+
+
+
 </body>
 </html>

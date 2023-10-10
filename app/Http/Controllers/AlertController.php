@@ -10,5 +10,4 @@ class AlertController extends Controller
         $_SESSION["mensagem"] = $mensagem;
         $_SESSION["tipo"] = $tipo;
     }
-    
 }

@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\AtivarConta;
+use App\Http\Controllers\AlertController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,61 +26,61 @@ class ValidarUsuariosController extends Controller
     
     public function addUsuario(Request $request){
         $nome = $request->input("nome");
-        $email = $request->input("email");
         $cpf = $request->input("cpf");
         $senha = Hash::make($request->input("senha")); // Senha criptografada
-        $token = Str::random(60); // Token gerado aleatoriamente
+        $token = request("token"); // Token gerado aleatoriamente
 
         // condição para verificar caso o cpf seja válido ou não
         if(!$this->validaCPF($cpf)){
-            return response()->json(
-                [
-                    'message' => 'CPF inválido',
-                    'type' => 'danger',
-                    'endpoint' => '/cadastrar'
-                ]
-            );
+            AlertController::alert("CPF inválido", "danger");
+            return redirect("/cadastrar");
         }
 
-        $usuarios = DB::select("SELECT email, cpf FROM tb_usuario WHERE email = ? OR cpf = ?;", [$email, $cpf]);
+        $usuarios = DB::select("SELECT cpf FROM tb_usuario WHERE cpf = ?;", [$cpf]);
         if(count($usuarios) > 0){
-            return response()->json(
-                [
-                    'message' => 'Email ou CPF já cadastrado(s)',
-                    'type' => 'danger',
-                    'endpoint' => '/cadastrar'
-                ]
-            );
+            AlertController::alert("Email ou CPF já cadastrado(s)", "danger");
+            return redirect("/cadastrar");
         }else{
             try {
-                $this->enviarEmail($email, 'validar/usuario/'.$token, 'ativarConta');
-                DB::insert('INSERT INTO tb_usuario (nome, email, cpf, senha, token, status) 
-                            VALUES (?, ?, ?, ?, ?, 0);', 
-                            [$nome, $email, $cpf, $senha, $token]);
-                return response()->json(
-                    [
-                        'message' => 'Enviamos um Email para '.$email.'. Verifique a sua caixa de entrada e a caixa de spam.',
-                        'type' => 'warning',
-                        'endpoint' => '/login'
-                    ]
-                );
+                DB::update('UPDATE tb_usuario 
+                            SET nome = ?, 
+                            cpf = ?, 
+                            senha = ?, 
+                            status = 1 
+                            WHERE token  = ?;', 
+                            [$nome, $cpf, $senha, $token]);
+                            
+                    AlertController::alert("Conta criada com sucesso", "success");
+                    return redirect("/login");
             } catch (\Throwable $th) {
-                return response()->json(
-                    [
-                        'message' => 'Email inválido, por favor insira outro endereço de Email.',
-                        'type' => 'danger',
-                        'endpoint' => '/cadastrar'
-                    ]
-                );
+                AlertController::alert("Ocorreu um erro, tente novamente ou contate o suporte.", "danger");
+                return redirect("/cadastrar");
             }
         }
     }
 
     public function validarEmail(){
+        $email = request("email");
+        $token = Str::random(60);
+        $usuario = DB::select("SELECT email FROM tb_usuario WHERE email = ?;", [$email]);
+        if(count($usuario) > 0){
+            AlertController::alert("Email já cadastrado", "warning");
+            return redirect("/cadastrar");
+        }else{
+            DB::insert("INSERT INTO tb_usuario(email, token, status) VALUES(?, ?, 0)", [$email, $token]);
+            $this->enviarEmail($email, "usuarios/cadastrar/".$token, "ativarConta");
+
+            AlertController::alert("Email enviado.", "success");
+            return redirect("/");
+        }
+    }
+
+    public function viewUsuarioCadastrar(){
         $token = request("token");
-        $query = DB::update("UPDATE tb_usuario SET status = 1, token = '' WHERE token = ?", [$token]);
-        if($query){
-            return redirect("/login");
+        $usuario = DB::select("SELECT * FROM tb_usuario WHERE token = ?;", [$token]);
+        if(count($usuario) > 0){
+            AlertController::alert("Link inválido", "danger");
+            return view("usuarios.cadastrarUser.view", compact("token"));
         }else{
             return redirect("/cadastrar");
         }
@@ -95,30 +97,16 @@ class ValidarUsuariosController extends Controller
             if(Hash::check($senha, $usuarios[0]->senha)){ // A função Hasg::check compara o hash da senha do bd e a senha que o usário digitou.
                 setcookie("usuario", $usuarios[0]->id, time() + (86400 * 30), "/");
                 setcookie("nome_usuario", explode(" ", $usuarios[0]->nome)[0], time() + (86400 * 30), "/");
-                return response()->json(
-                    [
-                        'message' => 'Usuário validado com sucesso.',
-                        'type' => 'success',
-                        'endpoint' => '/eventos'
-                    ]
-                );
+
+                AlertController::alert("Usuário validado com sucesso.", "success");
+                return redirect("/eventos");
             }else{
-                return response()->json(
-                    [
-                        'message' => 'Email ou senha incorreto(s).',
-                        'type' => 'danger',
-                        'endpoint' => '/login'
-                    ]
-                );
+                AlertController::alert("Email ou senha incorreto(s).", "danger");
+                return redirect("/login");
             }
         }else{
-            return response()->json(
-                [
-                    'message' => 'Email ou senha incorreto(s).',
-                    'type' => 'danger',
-                    'endpoint' => '/login'
-                ]
-            );
+            AlertController::alert("Email ou senha incorreto(s).", "danger");
+            return redirect("/login");
         }
     }
 
@@ -131,28 +119,17 @@ class ValidarUsuariosController extends Controller
         return redirect("/");
     }
 
-
     public function redefinirSenhaEmail(){
         $email = request("email");
         $token = Str::random(60);
         $update_usuario = DB::update("UPDATE tb_usuario SET token = ? WHERE email = ?", [$token, $email]);
         if($update_usuario == 0){
-            return response()->json(
-                [
-                    'message' => 'Email inválido.',
-                    'type' => 'danger',
-                    'endpoint' => '/login'
-                ]
-            );
+            AlertController::alert("Email inválido.", "danger");
+            return redirect("/login");
         }
         $this->enviarEmail($email, 'atualizar-senha/'.$token, 'redefinirSenha');
-        return response()->json(
-            [
-                'message' => 'Email enviado.',
-                'type' => 'success',
-                'endpoint' => '/login'
-            ]
-        );
+        AlertController::alert("Email enviado.", "success");
+        return redirect("/login");
     }
 
     public function viewAtualizarSenha(){
