@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\ValidarUsuariosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -232,6 +234,45 @@ class UsuariosController extends Controller
             $evento->proponentes = $proponentes;
         }                                
         return view("meus-eventos.view", compact("eventos", "cpf", "cadastradoHackathon"));
+    }
+
+    public function viewMeuPerfil(){
+        $usuario = DB::select("SELECT * FROM tb_usuario WHERE id = ?", [$this->id_usuario])[0];
+        return view("usuarios.meuPerfil", compact("usuario"));
+    }
+
+    public function updateMeuPerfil(){
+        $nome = request("nome");
+        $email = request("email");
+        $cpf = request("cpf");
+        $validarUsuario = new ValidarUsuariosController;
+
+        if(!$validarUsuario->validaCPF($cpf)){
+            AlertController::alert("CPF inválido.", "danger");
+            return redirect("/meu-perfil");
+        }
+
+        if(request("senha")){
+            $senha = Hash::make(request("senha"));
+            DB::update("UPDATE tb_usuario 
+                        SET nome = ?, 
+                        email = ?, 
+                        cpf = ?, 
+                        senha = ? 
+                        WHERE id = ?;", 
+                        [$nome, $email, $cpf, $senha, $this->id_usuario]);
+            AlertController::alert("Conta atualizada com sucesso.", "success");
+            return redirect("/meu-perfil");
+        }else{
+            DB::update("UPDATE tb_usuario 
+                        SET nome = ?, 
+                        email = ?, 
+                        cpf = ?
+                        WHERE id = ?;", 
+                        [$nome, $email, $cpf, $this->id_usuario]);
+            AlertController::alert("Conta atualizada com sucesso.", "success");
+            return redirect("/meu-perfil");
+        }
     }
 
     function mapearEventos($eventos, $eventosCadastrados)

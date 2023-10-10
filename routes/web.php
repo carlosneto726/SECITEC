@@ -54,17 +54,28 @@ Route::post('/admin/presenca/checkout', [AdministradorController::class, 'checko
 Route::get('/admin/presenca/checkout/{id_evento}/{nome_evento}', [AdministradorController::class, 'viewCheckout']);
 // Rotas do FpdfController para gerar os certificados
 Route::get('/admin/usuario/certificados', [FpdfController::class, 'certificadoUsuario']);
+
+
+
 // Rotas do ValidarUsuariosController para validar o usuário, criar conta, validar email
-Route::post('/usuarios/cadastrar', [ValidarUsuariosController::class, 'addUsuario']);
+Route::post('/usuarios/cadastrar/{token}', [ValidarUsuariosController::class, 'addUsuario']);
+Route::get('/usuarios/cadastrar/{token}', [ValidarUsuariosController::class, 'viewUsuarioCadastrar']);
+
+Route::post('/usuarios/verificar-email', [ValidarUsuariosController::class, 'validarEmail']);
 Route::post('/usuarios/login', [ValidarUsuariosController::class, 'validarLogin']);
 Route::get('/usuarios/sair', [ValidarUsuariosController::class, 'sair']);
-Route::get('/validar/usuario/{token}', [ValidarUsuariosController::class, 'validarEmail']);
+Route::get('/validar/usuario', [ValidarUsuariosController::class, 'validarEmail']);
 
 Route::post('/redefinir-senha/{token}', [ValidarUsuariosController::class, 'redefinirSenha']);
 Route::get('/atualizar-senha/{token}', [ValidarUsuariosController::class, 'viewAtualizarSenha']);
 Route::post('/redefinir-senha', [ValidarUsuariosController::class, 'redefinirSenhaEmail']);
+
+
+
 // Rotas do UsuariosController para funções do usuário como visualizar, cadastrar eventos
 Route::get('/eventos', [UsuariosController::class, 'viewEventos']);
 Route::get('/meus-eventos', [UsuariosController::class, 'viewMeusEventos']);
+Route::get('/meu-perfil', [UsuariosController::class, 'viewMeuPerfil']);
+Route::post('/meu-perfil/atualizar', [UsuariosController::class, 'updateMeuPerfil']);
 Route::post('/usuarios/cadastarEvento', [UsuariosController::class, 'cadastrarEvento']);
 Route::post('/usuarios/cadastarHackathon', [UsuariosController::class, 'cadastrarHackathon']);

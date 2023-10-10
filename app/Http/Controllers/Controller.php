@@ -7,6 +7,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+
 session_start();
 
 class Controller extends BaseController
@@ -32,7 +33,7 @@ class Controller extends BaseController
         return view("usuarios.loginUser.view");
     }
     public function viewCadastrar(){
-        return view("usuarios.cadastrarUser.view");
+        return view("usuarios.cadastrarUser.verificarEmail");
     }
     public function viewTermos(){
         return view("home.termos");
