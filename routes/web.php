@@ -78,5 +78,6 @@ Route::get('/eventos', [UsuariosController::class, 'viewEventos']);
 Route::get('/meus-eventos', [UsuariosController::class, 'viewMeusEventos']);
 Route::get('/meu-perfil', [UsuariosController::class, 'viewMeuPerfil']);
 Route::post('/meu-perfil/atualizar', [UsuariosController::class, 'updateMeuPerfil']);
+Route::get('/meu-perfil/deletar', [UsuariosController::class, 'deletarMeuPerfil']);
 Route::post('/usuarios/cadastarEvento', [UsuariosController::class, 'cadastrarEvento']);
 Route::post('/usuarios/cadastarHackathon', [UsuariosController::class, 'cadastrarHackathon']);

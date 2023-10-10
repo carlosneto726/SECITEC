@@ -275,6 +275,19 @@ class UsuariosController extends Controller
         }
     }
 
+    public function deletarMeuPerfil(){
+        DB::delete("DELETE FROM tb_evento_usuario 
+                    WHERE id_usuario = ?;",[$this->id_usuario]);
+
+        DB::delete("DELETE FROM tb_usuario 
+            WHERE id = ?;",[$this->id_usuario]);
+        
+        $validarUsuario = new ValidarUsuariosController;
+        $validarUsuario->sair();
+        AlertController::alert("Conta apagada com sucesso.", "danger");
+        return redirect("/");
+    }
+
     function mapearEventos($eventos, $eventosCadastrados)
     {
         $eventosMapeados = [];
