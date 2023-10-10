@@ -26,7 +26,7 @@ class ValidarUsuariosController extends Controller
     
     public function addUsuario(Request $request){
         $nome = $request->input("nome");
-        $cpf = $request->input("cpf");
+        $cpf = preg_replace( '/[^0-9]/is', '', $request->input("cpf"));
         $senha = Hash::make($request->input("senha")); // Senha criptografada
         $token = request("token"); // Token gerado aleatoriamente
 
@@ -38,7 +38,7 @@ class ValidarUsuariosController extends Controller
 
         $usuarios = DB::select("SELECT cpf FROM tb_usuario WHERE cpf = ?;", [$cpf]);
         if(count($usuarios) > 0){
-            AlertController::alert("Email ou CPF já cadastrado(s)", "danger");
+            AlertController::alert("CPF já cadastrado(s)", "danger");
             return redirect("/usuarios/cadastrar/".$token);
         }else{
             try {
@@ -166,7 +166,7 @@ class ValidarUsuariosController extends Controller
     }
 
     function validaCPF($cpf) {
- 
+        
         // Extrai somente os números
         $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
          
@@ -191,7 +191,6 @@ class ValidarUsuariosController extends Controller
             }
         }
         return true;
-    
     }
     
 }
