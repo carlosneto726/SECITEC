@@ -244,7 +244,7 @@ class UsuariosController extends Controller
     public function updateMeuPerfil(){
         $nome = request("nome");
         $email = request("email");
-        $cpf = request("cpf");
+        $cpf = preg_replace( '/[^0-9]/is', '', request("cpf"));
         $validarUsuario = new ValidarUsuariosController;
 
         if(!$validarUsuario->validaCPF($cpf)){
