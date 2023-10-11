@@ -45,7 +45,6 @@ Route::get('/admin/eventos', [AdministradorController::class, 'viewEventos']);
 Route::post('/admin/eventos/cadastrar', [AdministradorController::class, 'insertEvento']);
 Route::post('/admin/eventos/alterar', [AdministradorController::class, 'updateEvento']);
 Route::post('/admin/eventos/deletar', [AdministradorController::class, 'deleteEvento']);
-Route::get('/admin/eventos/all', [AdministradorController::class, 'getEventos']);
 
 Route::get('/admin/proponente', [AdministradorController::class, 'viewProponente']);
 Route::post('/admin/proponente/cadastrar', [AdministradorController::class, 'insertProponente']);
@@ -66,7 +65,7 @@ Route::get('/admin/adicionar-usuario', [MonitorController::class, 'viewAdicionar
 Route::post('/admin/adicionar-usuario/cadastrar', [MonitorController::class, 'addUsuario']);
 Route::post('/admin/eventos/byId', [MonitorController::class, 'getEventosByUserId']);
 Route::post('/admin/adicionar-usuario-evento/cadastrar', [MonitorController::class, 'AddUsuariosEventos']);
-
+Route::get('/admin/eventos/all', [MonitorController::class, 'getEventos']);
 
 
 // Rotas do FpdfController para gerar os certificados
