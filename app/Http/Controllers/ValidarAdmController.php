@@ -44,9 +44,12 @@ class ValidarAdmController extends Controller
     }
 
     public function validarLogin($login, $senha){
-        @$credenciamento = DB::select("SELECT matricula, tipo FROM tb_credenciamento WHERE matricula = ?;", [$login]);
-        @$matricula = $credenciamento[0]->matricula;
-        @$tipo = $credenciamento[0]->tipo;
+        //@$credenciamento = DB::select("SELECT matricula, tipo FROM tb_credenciamento WHERE matricula = ?;", [$login]);
+        //@$matricula = $credenciamento[0]->matricula;
+        //@$tipo = $credenciamento[0]->tipo;
+
+        $matricula = "123321";
+        $tipo = "1";
 
         if($login == env('ADM_USER') && $senha == env('ADM_PASSWORD') && $tipo == 0){
             setcookie("ADM_USER", $login, time() + (86400 * 30), "/");
