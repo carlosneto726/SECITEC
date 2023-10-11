@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Controllers\AlertController;
-
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ValidarAdmController extends Controller
 {
@@ -44,26 +42,20 @@ class ValidarAdmController extends Controller
     }
 
     public function validarLogin($login, $senha){
-        //@$credenciamento = DB::select("SELECT matricula, tipo FROM tb_credenciamento WHERE matricula = ?;", [$login]);
-        //@$matricula = $credenciamento[0]->matricula;
-        //@$tipo = $credenciamento[0]->tipo;
-
-        $matricula = "2020";
-        $tipo = "0";
-
-        if($login == env('ADM_USER') && $senha == env('ADM_PASSWORD') && $tipo == 0){
+        
+        if($login == env('ADM_USER') && $senha == env('ADM_PASSWORD')){
             setcookie("ADM_USER", $login, time() + (86400 * 30), "/");
             setcookie("ADM_PASSWORD", $senha, time() + (86400 * 30), "/");
             setcookie("ADM_TIPO", "0", time() + (86400 * 30), "/");
             return true;
 
-        }else if($login == $matricula && $senha == env('ADM_MONITORAMENTO_PASSWORD') && $tipo == 1){
+        }else if($login == env('ADM_MONITORAMENTO_USER') && $senha == env('ADM_MONITORAMENTO_PASSWORD')){
             setcookie("ADM_USER", $login, time() + (86400 * 30), "/");
             setcookie("ADM_PASSWORD", $senha, time() + (86400 * 30), "/");
             setcookie("ADM_TIPO", "1", time() + (86400 * 30), "/");
             return true;
 
-        }else if($login == $matricula && $senha == env('ADM_PRESENCA_PASSWORD') && $tipo == 2){
+        }else if($login == env('ADM_PRESENCA_USER') && $senha == env('ADM_PRESENCA_PASSWORD')){
             setcookie("ADM_USER", $login, time() + (86400 * 30), "/");
             setcookie("ADM_PASSWORD", $senha, time() + (86400 * 30), "/");
             setcookie("ADM_TIPO", "2", time() + (86400 * 30), "/");
