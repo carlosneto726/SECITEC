@@ -67,19 +67,16 @@ btn.addEventListener('click', function () {
     var blob = new Blob([doc.output('blob')], { type: 'application/pdf' });
 
     if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-        window.navigator.msSaveOrOpenBlob(blob, 'arquivo.pdf');
+        window.navigator.msSaveOrOpenBlob(blob, 'cartao-de-entrada-SECITECFORMOSA'+data.getFullYear()+'-'+(data.getMonth()+1)+'-'+data.getDate()+'.pdf');
     } else {
         var objectUrl = URL.createObjectURL(blob);
         var link = document.createElement('a');
         link.href = objectUrl;
-        link.download = 'arquivo.pdf';
+        link.download = 'cartao-de-entrada-SECITECFORMOSA'+data.getFullYear()+'-'+(data.getMonth()+1)+'-'+data.getDate()+'.pdf';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
     }
-
-    //doc.save('cartao-de-entrada-SECITECFORMOSA'+data.getFullYear()+'-'+(data.getMonth()+1)+'-'+data.getDate()+'.pdf')
-
 });
 
 
