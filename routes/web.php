@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProgramacaoController;
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\ValidarAdmController;
+use App\Http\Controllers\PresencaController;
+use App\Http\Controllers\MonitorController;
+
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ValidarUsuariosController;
 use App\Http\Controllers\FpdfController;
@@ -35,8 +38,9 @@ Route::get('/programacao', [ProgramacaoController::class, 'viewProgramacao']);
 // Rotas do ValidarAdmController para validar o administrador
 Route::get('/admin', [ValidarAdmController::class, 'viewAdm']);
 Route::post('/admin/entrar', [ValidarAdmController::class, 'entrar']);
+Route::get('/admin/sair', [ValidarAdmController::class, 'sair']);
 // Rotas do AdministradorController para funções do administrador
-Route::get('/admin/sair', [AdministradorController::class, 'sair']);
+Route::get('/admin/home', [AdministradorController::class, 'viewHome']);
 Route::get('/admin/eventos', [AdministradorController::class, 'viewEventos']);
 Route::post('/admin/eventos/cadastrar', [AdministradorController::class, 'insertEvento']);
 Route::post('/admin/eventos/alterar', [AdministradorController::class, 'updateEvento']);
@@ -46,17 +50,20 @@ Route::post('/admin/proponente/cadastrar', [AdministradorController::class, 'ins
 Route::put('/admin/proponente/atualizar/{id_proponente}', [AdministradorController::class, 'updateProponente']);
 Route::post('/admin/proponente/deletar', [AdministradorController::class, 'deleteProponente']);
 Route::get('/admin/logs', [AdministradorController::class, 'viewLogs']);
-Route::get('/admin/adicionar-usuario', [AdministradorController::class, 'viewAdicionarUsuario']);
-Route::post('/admin/adicionar-usuario/cadastrar', [AdministradorController::class, 'addUsuario']);
 
-Route::post('/admin/presenca/checkin', [AdministradorController::class, 'checkin']);
-Route::get('/admin/presenca/checkin/{id_evento}/{nome_evento}', [AdministradorController::class, 'viewCheckin']);
-Route::post('/admin/presenca/checkout', [AdministradorController::class, 'checkout']);
-Route::get('/admin/presenca/checkout/{id_evento}/{nome_evento}', [AdministradorController::class, 'viewCheckout']);
+// PresencaController
+Route::get('/admin/presenca/eventos', [PresencaController::class, 'viewEventos']);
+Route::post('/admin/presenca/checkin', [PresencaController::class, 'checkin']);
+Route::get('/admin/presenca/checkin/{id_evento}/{nome_evento}', [PresencaController::class, 'viewCheckin']);
+Route::post('/admin/presenca/checkout', [PresencaController::class, 'checkout']);
+Route::get('/admin/presenca/checkout/{id_evento}/{nome_evento}', [PresencaController::class, 'viewCheckout']);
+
+// MonitorController
+Route::get('/admin/adicionar-usuario', [MonitorController::class, 'viewAdicionarUsuario']);
+Route::post('/admin/adicionar-usuario/cadastrar', [MonitorController::class, 'addUsuario']);
+
 // Rotas do FpdfController para gerar os certificados
 Route::get('/admin/usuario/certificados', [FpdfController::class, 'certificadoUsuario']);
-
-
 
 // Rotas do ValidarUsuariosController para validar o usuário, criar conta, validar email
 Route::post('/usuarios/cadastrar/{token}', [ValidarUsuariosController::class, 'addUsuario']);

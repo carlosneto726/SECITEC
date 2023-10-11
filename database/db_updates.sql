@@ -126,8 +126,8 @@ END;
 //
 DELIMITER ;
 
-
-
+-- Query 8:
+-- 
 ALTER TABLE tb_usuario
 MODIFY COLUMN tb_usuario.nome VARCHAR(255) DEFAULT NULL,
 MODIFY COLUMN tb_usuario.senha VARCHAR(255) DEFAULT NULL,
@@ -135,3 +135,13 @@ MODIFY COLUMN tb_usuario.cpf VARCHAR(255) DEFAULT NULL,
 MODIFY COLUMN tb_usuario.email VARCHAR(255) NOT NULL,
 MODIFY COLUMN tb_usuario.token VARCHAR(255) NOT NULL,
 MODIFY COLUMN tb_usuario.status VARCHAR(255) NOT NULL;
+
+-- Query 9:
+--
+CREATE TABLE tb_credenciamento(
+  matricula int(15) NOT NULL,
+  nome varchar(255) NOT NULL,
+  curso varchar(255) NOT NULL,
+  tipo int(1) NOT NULL,
+  PRIMARY KEY(matricula)
+);

@@ -64,7 +64,9 @@ class ValidarUsuariosController extends Controller
         $token = Str::random(60);
         $usuario = DB::select("SELECT email FROM tb_usuario WHERE email = ?;", [$email]);
         if(count($usuario) > 0){
-            AlertController::alert("Email já cadastrado", "warning");
+            DB::update("UPDATE tb_usuario SET token = ? WHERE email = ?;", [$token, $email]);
+            $this->enviarEmail($email, "usuarios/cadastrar/".$token, "ativarConta");
+            AlertController::alert("Email reenviado.", "warning");
             return redirect("/cadastrar");
         }else{
             DB::insert("INSERT INTO tb_usuario(email, token, status) VALUES(?, ?, 0)", [$email, $token]);
