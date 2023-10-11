@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ValidarUsuariosController;
@@ -44,7 +45,15 @@ trait MonitorTrait {
             $id_usuario = DB::getPdo()->lastInsertId();
             if (!empty($eventosSelecionados)) {
                 foreach ($eventosSelecionados as $eventoId) {
-                    DB::insert("INSERT INTO tb_evento_usuario(id_evento, id_usuario, status, data_insercao) VALUES(?,?,?,?);", [$eventoId, $id_usuario, 1, date('Y-m-d H:i:s')]);
+                    $usuarioCadastradoEvento = count(DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ? AND id_usuario = ?;", [$eventoId, $id_usuario])) > 0;
+                    if($usuarioCadastradoEvento) {
+                        break;
+                    }
+                    $usuariosController = new UsuariosController();
+                    $vagasTotais = DB::select("SELECT * FROM tb_evento WHERE id = ?", [$eventoId])[0]->vagas;
+                    $vagasRestantes = $usuariosController->calcularVagasRestantes($eventoId, $vagasTotais);
+                    $status = $vagasRestantes > 0 ? 0 : 1;
+                    DB::insert("INSERT INTO tb_evento_usuario(id_evento, id_usuario, status, data_insercao) VALUES(?,?,?,?);", [$eventoId, $id_usuario, $status, date('Y-m-d H:i:s')]);
                 }
             }
             return response()->json(['mensagem' => 'Cadastrado com sucesso!']);
@@ -60,7 +69,15 @@ trait MonitorTrait {
         try {
             if (!empty($eventosSelecionados)) {
                 foreach ($eventosSelecionados as $eventoId) {
-                    DB::insert("INSERT INTO tb_evento_usuario(id_evento, id_usuario, status, data_insercao) VALUES(?,?,?,?);", [$eventoId, $userId, 1, date('Y-m-d H:i:s')]);
+                    $usuarioCadastradoEvento = count(DB::select("SELECT * FROM tb_evento_usuario WHERE id_evento = ? AND id_usuario = ?;", [$eventoId, $userId])) > 0;
+                    if($usuarioCadastradoEvento) {
+                        break;
+                    }
+                    $usuariosController = new UsuariosController();
+                    $vagasTotais = DB::select("SELECT * FROM tb_evento WHERE id = ?", [$eventoId])[0]->vagas;
+                    $vagasRestantes = $usuariosController->calcularVagasRestantes($eventoId, $vagasTotais);
+                    $status = $vagasRestantes > 0 ? 0 : 1;
+                    DB::insert("INSERT INTO tb_evento_usuario(id_evento, id_usuario, status, data_insercao) VALUES(?,?,?,?);", [$eventoId, $userId, $status, date('Y-m-d H:i:s')]);
                 }
             }
             return response()->json(['mensagem' => 'Eventos cadastrados com sucesso!']);
@@ -71,6 +88,11 @@ trait MonitorTrait {
 
     public function getEventos(){
         $eventos = DB::select("SELECT * FROM tb_evento;");
+        foreach ($eventos as $evento) {
+            $usuariosController = new UsuariosController();
+            $vagasRestantes = $usuariosController->calcularVagasRestantes($evento->id, $evento->vagas);
+            $evento->vagasEsgotadas = !$vagasRestantes > 0;
+        }
         return response()->json($eventos);
     }
 
@@ -85,6 +107,13 @@ trait MonitorTrait {
                 SELECT id_evento
                 FROM tb_evento_usuario
                 WHERE id_usuario = ?);", [$userId]);
+
+            foreach ($eventos as $evento) {
+                $usuariosController = new UsuariosController();
+                $vagasRestantes = $usuariosController->calcularVagasRestantes($evento->id, $evento->vagas);
+                $evento->vagasEsgotadas = !$vagasRestantes > 0;
+            }
+            
             return response()->json($eventos);
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()]);
