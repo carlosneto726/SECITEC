@@ -23,8 +23,8 @@
                 <input type="email" class="form-control" id="email" name="email" value="{{$usuario->email}}" required>
             </div>
             <div class="mb-3">
-                <h6 class="text-success"><label for="senha" class="form-label">CPF:</label></h6>
-                <input type="text" class="form-control" id="cpf" name="cpf" value="{{$usuario->cpf}}" required>
+                <h6 class="text-success"><label for="cpf" class="form-label">CPF:</label></h6>
+                <input type="text" class="form-control" id="cpf" name="cpf" value="{{$usuario->cpf}}" maxlength="14" required>
                 <span style="font-size:12px;color: #717275">Ao alterar seu CPF você deve se atentar a baixar seu cartão de inscrição novamente, pois, o QR Code gerado é feito com o seu CPF.</span>
             </div>
 
