@@ -102,7 +102,6 @@
     var video = document.createElement("video");
     var canvasElement = document.getElementById("canvas");
     var canvas = canvasElement.getContext("2d");
-    var outputMessage = document.getElementById("outputMessage");
     var outputData = document.getElementById("cpfCheckout");
     var cpf = "";
     var stream;
@@ -139,7 +138,6 @@
             video.srcObject = null;
             document.getElementById("canvas").hidden = true;
             document.getElementById("fecharCamera").hidden=true;
-            outputMessage.hidden = true;
             outputData.value = "";
             cpf = "";
         }
@@ -160,7 +158,6 @@
                 drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
                 drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
                 drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
-                outputMessage.hidden = false;
                 outputData.value = code.data;
                 if(cpf != code.data){
                     checkinout('/admin/presenca/checkout', {{ request('id_evento') }}, this, false, 'out')
