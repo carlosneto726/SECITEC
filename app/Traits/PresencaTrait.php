@@ -48,7 +48,7 @@ trait PresencaTrait {
         $checkin = DB::select("SELECT * FROM tb_evento_usuario WHERE id = ?;", [$id_eventousuario]);
         date_default_timezone_set('America/Sao_Paulo');
         $horarioAtual = date("H:i:s");
-        if(($checkin[0]->checkin == null && $confirmacao == false && $checkin[0]->status == 0) || $confirmacao){
+        if(($confirmacao == false && $checkin[0]->status == 0) || $confirmacao){
             DB::update("UPDATE tb_evento_usuario
                         SET checkin = ?
                         WHERE id = ?;",
@@ -69,7 +69,6 @@ trait PresencaTrait {
             if($checkin[0]->status == 1){ 
                 return response()->json( ['id_modal' => 'fila'] ); 
             }
-            return response()->json( ['id_modal' => 'modalcheckin'] );
         }
     }
 
@@ -90,7 +89,7 @@ trait PresencaTrait {
         date_default_timezone_set('America/Sao_Paulo');
         $horarioAtual = date("H:i:s");
 
-        if(($checkout == null && $confirmacao == false) || $confirmacao){
+        if($confirmacao == false || $confirmacao){
             DB::update("UPDATE tb_evento_usuario
                         SET status = 1, checkout = ?
                         WHERE id = ?;",

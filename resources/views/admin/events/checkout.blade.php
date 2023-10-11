@@ -4,6 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="container pb-5">
     <h2 class=""><u class="text-success">{{ request('nome_evento') }}</u></h2>
+    <a class="text-success" href="{{url('/admin/presenca/checkin/'.request('id_evento').'/'.request('nome_evento'))}}">Deseja fazer checkin?</a>
 </div>
 
 <div class="container">
