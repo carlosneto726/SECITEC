@@ -213,6 +213,9 @@ por nome, cpf e evento"> <table class="table table-bordered table-striped shadow
                 </div>
                 <div class="row">
                     <form action="">
+                        <div id="cadastro-msg-edit" class="alert alert-success mt-20 d-none" role="alert">
+                            Eventos cadastrados com sucesso!
+                        </div>
                         <div class="dropdown-edit">
                             <input type="text" class="search-box-edit" placeholder="Pesquisar evento">
                             <ul class="options-list-edit" id="event-list-edit">
@@ -267,7 +270,6 @@ function getEventosById(userId) {
         id: userId
     },
     success: function (data) {
-      console.log(data);
         renderEventosDropdownEdit(data);
     },
     error: function (xhr, status, error) {
@@ -303,7 +305,6 @@ searchBox.addEventListener('input', () => {
   const searchTerm = searchBox.value.toLowerCase();
   options.forEach(option => {
     const label = option.querySelector('label');
-    console.log(label);
     const labelText = label.textContent.toLowerCase();
     if (labelText.includes(searchTerm)) {
       option.style.display = 'flex';
@@ -368,6 +369,7 @@ modalCadastro.addEventListener('hidden.bs.modal', function () {
 });
 
 modalEdicao.addEventListener('hidden.bs.modal', function () {
+  location.reload();
   clearModalEdit(false);
 });
 
@@ -404,6 +406,9 @@ function enviarRequisicao() {
 }
 
 function enviarRequisicaoCadastroEventos() {
+  if(getEventosSelecionadosEdit().length < 1) {
+    return;
+  }
     // tratar n ter evento adicionado
   $.ajax({
     url: "/admin/adicionar-usuario-evento/cadastrar",
@@ -415,6 +420,17 @@ function enviarRequisicaoCadastroEventos() {
     },
     success: function (data) {
       if (data.mensagem) {
+        // A FAZER
+        // MOSTRAR MENSAGEM DE SUCESSO
+        const cadastroAlertEdit = document.getElementById('cadastro-msg-edit');
+
+        if(cadastroAlertEdit.classList.contains('d-none')) {
+          cadastroAlertEdit.classList.remove('d-none'); 
+          setTimeout(() => {
+            cadastroAlertEdit.classList.add('d-none')
+          }, 3000);
+        } 
+        getEventosById(selectedUserIdEdit);
         clearModalCadastro(true);
       }
 
@@ -430,7 +446,7 @@ function renderEventosDropdown(eventos) {
         listaDeEventos.innerHTML += `
             <li class="option">
                 <input value="${evento.id}" class="check-evento" id="event-t${evento.id}" type="checkbox">
-                <label for="event-t${evento.id}">${evento.titulo}</label>
+                <label style="color: ${evento.vagasEsgotadas ? 'red' : ''}; for="event-t${evento.id}">${evento.titulo}</label>
             </li>
         `
     });
@@ -439,11 +455,12 @@ function renderEventosDropdown(eventos) {
 
 function renderEventosDropdownEdit(eventos) {
     const listaDeEventos = document.getElementById('event-list-edit');
+    listaDeEventos.innerHTML = "";
     eventos.forEach(evento => {
         listaDeEventos.innerHTML += `
             <li class="option-edit">
                 <input value="${evento.id}" class="check-evento-edit" id="event-t${evento.id}-edit" type="checkbox">
-                <label for="event-t${evento.id}-edit">${evento.titulo}</label>
+                <label style="color: ${evento.vagasEsgotadas ? 'red' : ''};" for="event-t${evento.id}-edit">${evento.titulo}</label>
             </li>
         `
     });
@@ -507,6 +524,11 @@ function desmarcarEventosEdit() {
 
 function clearModalEdit(cadastro){
     optionsListEdit.innerHTML = "";
+    const cadastroAlertEdit = document.getElementById('cadastro-msg-edit');
+    if(!cadastroAlertEdit.classList.contains('d-none')){
+      cadastroAlertEdit.classList.add('d-none');
+    }
+
     desmarcarEventosEdit();
 }
 
