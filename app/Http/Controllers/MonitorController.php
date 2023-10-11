@@ -10,12 +10,10 @@ use Illuminate\Support\Facades\DB;
 class MonitorController extends Controller
 {
     use MonitorTrait, AdminTrait;
-    public $matricula; 
+    public $tipo; 
     public function __construct() {
-        $this->matricula = $_COOKIE['ADM_USER'];
-        //$credenciamento = DB::select("SELECT * FROM tb_credenciamento WHERE matricula = ?;", [$this->matricula]);
-        $tipo = "0";
-        if($tipo == 2){
+        $this->tipo = $_COOKIE['ADM_TIPO'];
+        if($this->tipo == 2){
             abort(450);
         }
     }

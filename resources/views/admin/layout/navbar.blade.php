@@ -33,7 +33,7 @@
                             <li class="nav-item">
                                 <a class="nav-link px-3 fw-bold" href="{{url('/admin/logs')}}">LOGS</a>
                             </li>
-
+                            
                         @elseif($_COOKIE['ADM_TIPO'] == 1)
                             <li class="nav-item">
                                 <a class="nav-link px-3 fw-bold" href="{{url('/admin/adicionar-usuario')}}">USUÁRIOS</a>

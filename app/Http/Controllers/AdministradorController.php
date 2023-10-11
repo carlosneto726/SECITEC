@@ -21,7 +21,7 @@ class AdministradorController extends Controller
         if(!isset($this->nome_usuario) && !isset($this->senha_usuario)){
             abort(450);
         }
-        if($this->nome_usuario != env('ADM_USER') && $this->senha_usuario != env('ADM_PASSWORD')){
+        if($this->nome_usuario != env('ADM_USER') || $this->senha_usuario != env('ADM_PASSWORD')){
             abort(450);
         }
     }
