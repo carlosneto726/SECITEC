@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ValidarUsuariosController;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 trait MonitorTrait {
     public function viewAdicionarUsuario(){
@@ -26,6 +27,7 @@ trait MonitorTrait {
         $nome = request("nome");
         $senha = Hash::make("secitec2023"); // Senha criptografada
         $eventosSelecionados = request("eventosSelecionados");
+        $token = Str::random(60);
 
         $validarCPF = new ValidarUsuariosController;
         if(!$validarCPF->validaCPF($cpf)){
@@ -38,12 +40,11 @@ trait MonitorTrait {
         }
 
         try {
-            $maiorId = DB::table('tb_usuario')->max('id');
-            $novoId = $maiorId + 1;
-            DB::insert("INSERT INTO tb_usuario(id, nome, senha, cpf, email, status) VALUES(?,?,?,?,?,?);", [$novoId,$nome, $senha, $cpf, $email, "1"]);
+            DB::insert("INSERT INTO tb_usuario(nome, senha, cpf, email, token, status) VALUES(?,?,?,?,?,?);", [$nome, $senha, $cpf, $email, $token, "1"]);
+            $id_usuario = DB::getPdo()->lastInsertId();
             if (!empty($eventosSelecionados)) {
                 foreach ($eventosSelecionados as $eventoId) {
-                    DB::insert("INSERT INTO tb_evento_usuario(id_evento, id_usuario, status, data_insercao) VALUES(?,?,?,?);", [$eventoId, $novoId, 1, date('Y-m-d H:i:s')]);
+                    DB::insert("INSERT INTO tb_evento_usuario(id_evento, id_usuario, status, data_insercao) VALUES(?,?,?,?);", [$eventoId, $id_usuario, 1, date('Y-m-d H:i:s')]);
                 }
             }
             return response()->json(['mensagem' => 'Cadastrado com sucesso!']);
@@ -56,7 +57,6 @@ trait MonitorTrait {
     public function AddUsuariosEventos(Request $request){
         $userId = request("userId");
         $eventosSelecionados = request("eventosSelecionados");
-
         try {
             if (!empty($eventosSelecionados)) {
                 foreach ($eventosSelecionados as $eventoId) {

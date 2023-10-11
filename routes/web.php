@@ -53,8 +53,7 @@ Route::post('/admin/proponente/deletar', [AdministradorController::class, 'delet
 Route::get('/admin/logs', [AdministradorController::class, 'viewLogs']);
 
 // PresencaController
-Route::get('/admin/presenca/eventos', [PresencaController::class, 'viewEventos']);Route::post('/admin/adicionar-usuario-evento/cadastrar', [AdministradorController::class, 'AddUsuariosEventos']);
-
+Route::get('/admin/presenca/eventos', [PresencaController::class, 'viewEventos']);
 Route::post('/admin/presenca/checkin', [PresencaController::class, 'checkin']);
 Route::get('/admin/presenca/checkin/{id_evento}/{nome_evento}', [PresencaController::class, 'viewCheckin']);
 Route::post('/admin/presenca/checkout', [PresencaController::class, 'checkout']);
@@ -66,7 +65,6 @@ Route::post('/admin/adicionar-usuario/cadastrar', [MonitorController::class, 'ad
 Route::post('/admin/eventos/byId', [MonitorController::class, 'getEventosByUserId']);
 Route::post('/admin/adicionar-usuario-evento/cadastrar', [MonitorController::class, 'AddUsuariosEventos']);
 Route::get('/admin/eventos/all', [MonitorController::class, 'getEventos']);
-
 
 // Rotas do FpdfController para gerar os certificados
 Route::get('/admin/usuario/certificados', [FpdfController::class, 'certificadoUsuario']);
