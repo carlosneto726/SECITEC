@@ -16,7 +16,6 @@
 </head>
 <body>
 
-
     <section>
         @yield('content')
     </section>
