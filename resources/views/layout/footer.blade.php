@@ -23,8 +23,9 @@
         <!--column endereço-->
         <div class="col-lg-4 col-md-6 col-sm-6 col-4 mb-4 mb-md-0">
           <a href="https://www.google.com/maps/place/IFG+-+C%C3%A2mpus+Formosa/@-15.562847,-47.327808,10z/data=!4m6!3m5!1s0x9350a2f73fd3c36f:0xb8ffbb72c45a6bd6!8m2!3d-15.5628475!4d-47.3278082!16s%2Fg%2F11bbrlt0dm?hl=pt-BR&entry=ttu" target="_blank">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
-              <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+              <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+              <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
             </svg>
             <div class="d-none d-sm-block">
               <p class="fs-5 pt-3">Rua 64 - Parque Lago, Formosa - GO</p>
