@@ -8,7 +8,11 @@
 
 <div class="container">
     <div class="mx-auto">
-        <canvas class="img-fluid rounded" id="canvas" hidden></canvas>
+        <div class="position-relative">
+            <canvas class="img-fluid rounded" id="canvas" hidden></canvas>
+            <button class="btn btn-danger position-absolute top-0 end-0" id="fecharCamera" onclick="fecharCamera()" hidden>Fechar Câmera</button>
+        </div>
+
         <h4 class="text-danger" id="titulo">Checkout</h4>
         <div class="mb-3">
             <input type="text" name="cpf" id="cpfCheckout" class="form-control" placeholder="CPF">
@@ -100,6 +104,7 @@
     var outputMessage = document.getElementById("outputMessage");
     var outputData = document.getElementById("cpfCheckout");
     var cpf = "";
+    var stream;
 
     function drawLine(begin, end, color) {
         canvas.beginPath();
@@ -112,18 +117,33 @@
 
     function lerQrcode(){
         document.getElementById("canvas").hidden=false;
+        document.getElementById("fecharCamera").hidden=false;
         // Use facingMode: environment to attemt to get the front camera on phones
         navigator.mediaDevices.getUserMedia({
             video: {
                 facingMode: "environment"
             }
-        }).then(function(stream) {
+        }).then(function(str) {
+            stream = str; // Armazena o stream na variável global
             video.srcObject = stream;
             video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
             video.play();
             requestAnimationFrame(tick);
         });
     }
+
+    function fecharCamera() {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            video.srcObject = null;
+            document.getElementById("canvas").hidden = true;
+            document.getElementById("fecharCamera").hidden=true;
+            outputMessage.hidden = true;
+            outputData.value = "";
+            cpf = "";
+        }
+    }
+
 
     function tick() {
         if (video.readyState === video.HAVE_ENOUGH_DATA) {
