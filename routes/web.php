@@ -40,6 +40,8 @@ Route::get('/admin/eventos', [AdministradorController::class, 'viewEventos']);
 Route::post('/admin/eventos/cadastrar', [AdministradorController::class, 'insertEvento']);
 Route::post('/admin/eventos/alterar', [AdministradorController::class, 'updateEvento']);
 Route::post('/admin/eventos/deletar', [AdministradorController::class, 'deleteEvento']);
+Route::get('/admin/eventos/all', [AdministradorController::class, 'getEventos']);
+Route::post('/admin/eventos/byId', [AdministradorController::class, 'getEventosByUserId']);
 Route::get('/admin/proponente', [AdministradorController::class, 'viewProponente']);
 Route::post('/admin/proponente/cadastrar', [AdministradorController::class, 'insertProponente']);
 Route::put('/admin/proponente/atualizar/{id_proponente}', [AdministradorController::class, 'updateProponente']);
@@ -47,6 +49,7 @@ Route::post('/admin/proponente/deletar', [AdministradorController::class, 'delet
 Route::get('/admin/logs', [AdministradorController::class, 'viewLogs']);
 Route::get('/admin/adicionar-usuario', [AdministradorController::class, 'viewAdicionarUsuario']);
 Route::post('/admin/adicionar-usuario/cadastrar', [AdministradorController::class, 'addUsuario']);
+Route::post('/admin/adicionar-usuario-evento/cadastrar', [AdministradorController::class, 'AddUsuariosEventos']);
 
 Route::post('/admin/presenca/checkin', [AdministradorController::class, 'checkin']);
 Route::get('/admin/presenca/checkin/{id_evento}/{nome_evento}', [AdministradorController::class, 'viewCheckin']);
