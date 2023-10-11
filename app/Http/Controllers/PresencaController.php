@@ -13,8 +13,9 @@ class PresencaController extends Controller
     public $matricula; 
     public function __construct() {
         $this->matricula = $_COOKIE['ADM_USER'];
-        $credenciamento = DB::select("SELECT * FROM tb_credenciamento WHERE matricula = ?;", [$this->matricula]);
-        if(@$credenciamento[0]->tipo == 0 && @$credenciamento[0]->tipo == 2){
+        //$credenciamento = DB::select("SELECT * FROM tb_credenciamento WHERE matricula = ?;", [$this->matricula]);
+        $tipo = "0";
+        if($tipo == 1){
             abort(450);
         }
     }
