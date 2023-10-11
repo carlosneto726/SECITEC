@@ -32,7 +32,7 @@
                 <!-- Aparece o qr code e botão em ao lado menos no tamanho sm-->
                 <div class="col-md-3 float-sm-end ms-md-3">
                     <center>
-                        <div id="qrcode" style="width:100px; height:100px;"></div>
+                        <div id="qrcode"></div>
                         <br>
                         <p class="d-none d-md-block"><button class="btn btn-success" id="downloadPDF">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
@@ -41,8 +41,10 @@
                             </svg>
                             Cartão de Presença
                         </button></p>
+                        <div class="d-none" id="qrcodeImg"></div>
                         <p  class="d-block d-md-none">
-                            <a id="downloadLink" download="qrcode.png">
+                            
+                            <a id="downloadLink" download="qrcode_entrada_imagem.png">
                                 <button class="btn btn-success">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
@@ -338,17 +340,24 @@
     var cpf = {{ Js::from($cpf) }};
 
     var qrcode = new QRCode(document.getElementById("qrcode"), {
-        width : 100,
-        height : 100
+        width : 150,
+        height : 150
+    });
+
+    var qrcodeImg = new QRCode(document.getElementById("qrcodeImg"), {
+        width : 400,
+        height : 400
     });
 
     qrcode.makeCode( cpf );
+    qrcodeImg.makeCode( cpf );
 
     var qrImage = document.getElementById("qrcode").getElementsByTagName('img')[0];
+    var qrImageImg = document.getElementById("qrcodeImg").getElementsByTagName('img')[0];
     var logo = document.getElementById('logo');
 
     document.getElementById("downloadLink").addEventListener("click", function() {
-    var canvas = document.getElementById("qrcode").querySelector("canvas");
+    var canvas = document.getElementById("qrcodeImg").querySelector("canvas");
     this.href = canvas.toDataURL("image/png");
 
 });
