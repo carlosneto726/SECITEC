@@ -131,9 +131,9 @@ por nome, cpf e evento"> <table class="table table-bordered table-striped shadow
     <tbody>
         @foreach ($usuarios as $usuario)
         <tr>
-            <td class="align-middle text-center" id="nome-usuario">{{$usuario->nome}}</td>
-            <td class="align-middle text-center" id="cpf-usuario">{{$usuario->cpf}}</td>
-            <td class="align-middle text-center" id="nome-evento">
+            <td class="align-middle text-center text-break" id="nome-usuario">{{$usuario->nome}}</td>
+            <td class="align-middle text-center text-break" id="cpf-usuario">{{$usuario->cpf}}</td>
+            <td class="align-middle text-center text-break" id="nome-evento">
                 @foreach ($usuario->eventos as $evento)
                 {{$evento->titulo}}
                 @endforeach

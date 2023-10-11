@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">
                             --Selecione o(s) eventos(s) (OPCIONAL)--
                         </button>
                         <ul class="dropdown-menu">

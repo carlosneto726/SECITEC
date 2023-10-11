@@ -141,7 +141,7 @@
                                           
                                           <p>${evento.descricao}</p>
                                           
-                                          <h5 class=""><small style="font-size: 16px;" class="text-muted ${ evento.nome_tipo_evento == 'hackathon' ? 'remover-horario' : '' }"><i class="bi bi-clock text-primary me-2"></i> ${formatarHora(evento.horarioI)} às ${formatarHora(evento.horarioF)}</small></h5>
+                                          <h5 class=""><small style="font-size: 16px;" class="text-muted ${evento.nome_tipo_evento == 'hackathon' ? 'remover-horario' : ''}"><i class="bi bi-clock text-primary me-2"></i> ${formatarHora(evento.horarioI)} às ${formatarHora(evento.horarioF)}</small></h5>
       
                                           <span class="" style="color: green;">
                                               <i class="bi-layout-sidebar me-2"></i>

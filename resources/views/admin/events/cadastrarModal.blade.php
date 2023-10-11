@@ -1,4 +1,3 @@
-
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -12,23 +11,24 @@
                 <div class="modal-body">
                     <div class="d-flex mx-auto mb-3">
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">
                                 --Selecione o(s) proponente(s)--
                             </button>
                             <ul class="dropdown-menu">
                                 @foreach ($palestrantes as $palestrante)
                                     <li>
-                                        <div class="form-check ms-2 border-bottom">
-                                            <input class="form-check-input proponentes" type="checkbox" value="{{$palestrante->id}}" id="{{$palestrante->id}}">
-                                            <label class="form-check-label" for="{{$palestrante->id}}" >
-                                                {{$palestrante->nome}}
-                                            </label>
+                                        <div>
+                                            <div class="form-check ms-2 border-bottom">
+                                                <input type="checkbox" class="form-check-input proponentes"  value="{{$palestrante->id}}" id="{{$palestrante->id}}">
+                                                <label class="form-check-label" for="{{$palestrante->id}}">
+                                                    {{$palestrante->nome}}
+                                                </label>
+                                            </div>
                                         </div>
                                     </li>
-                                @endforeach                                
+                                @endforeach
                             </ul>
                         </div>
-
                         <span class="ms-2 mt-2">
                             ou
                             <a href="{{url('/admin/proponente')}}" class="border-bottom">Cadastre um</a>
