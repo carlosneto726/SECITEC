@@ -247,6 +247,17 @@
     color: #F94C10 !important;
 }
 
+.vagas-hackathon-row {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.vagas-hackathon-row div,  .vagas-hackathon-row p {
+    width: max-content;
+    color: white;
+}
+
 #jerry-rig {
     margin-top: 30px;
 }
