@@ -15,11 +15,8 @@
     <title>ERRO</title>
 </head>
 <body>
-
-
     <section>
         @yield('content')
     </section>
-
 </body>
 </html>
