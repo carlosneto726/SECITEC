@@ -125,7 +125,7 @@
     var canvas = canvasElement.getContext("2d");
     var outputData = document.getElementById("cpfCheckin");
     var cpf = "";
-    var str;
+    var stream;
 
     function drawLine(begin, end, color) {
         canvas.beginPath();
@@ -144,8 +144,8 @@
             video: {
                 facingMode: "environment"
             }
-        }).then(function(stream) {
-            str = stream; // Armazena o stream na variável global
+        }).then(function(str) {
+            stream = str; // Armazena o stream na variável global
             video.srcObject = stream;
             video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
             video.play();
