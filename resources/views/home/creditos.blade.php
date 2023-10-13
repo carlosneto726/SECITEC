@@ -27,7 +27,7 @@
             </p>
         </a>
         <a href="https://github.com/JulianoSchaurich" target="_blank" class="d-flex text-body-secondary pt-3 pb-1 border-bottom">
-            <img src="https://julianoschaurich.github.io/images/foto-perfil.png" class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="64" style="object-fit: cover">
+            <img src="https://julianoschaurich.github.io/images/foto-perfil.jpg" class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="64" height="64" style="object-fit: cover">
             <p class="pb-3 mb-0 small lh-sm">
                 <strong class="fw-bold d-block text-gray-dark">Juliano Schaurich</strong>
                 Graduando em Análise e Desenvolvimento de Sistemas e Técnico em Informática.
