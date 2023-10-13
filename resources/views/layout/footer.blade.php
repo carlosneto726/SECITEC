@@ -50,6 +50,10 @@
   <!-- Copyright -->
   <div class="text-center p-4" >
     <p class="fs-6">
+      A SECITEC recebeu financiamento pela chamada pública SNCT 01/2023
+      <a class="" href="http://memoria2.cnpq.br/web/guest/chamadas-publicas?p_p_id=resultadosportlet_WAR_resultadoscnpqportlet_INSTANCE_0ZaM&filtro=resultados&detalha=chamadaDivulgada&idDivulgacao=11385" target="_blank"><img src="{{asset('images/logo_cnpq.svg')}}" alt="" style="height:30px; widith:30px;"></a>
+    </p>
+    <p class="fs-6">
       © 2023 Copyright:
       <a class="text-dark link-underline-success link-tutorial" href="{{ url('/creditos') }}" target="_blank">Créditos</a>
     </p>
