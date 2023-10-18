@@ -6,7 +6,7 @@
         >
   <div class="container border-top pt-5">
     <!-- Section: Links -->
-      <div class="row justify-content-center text-center border-bottom mt-3 pb-3">
+      <div class="row justify-content-center text-center mt-3 pb-3">
         <!--column telefone-->
         <div class="col-lg-4 col-md-6 col-sm-6 col-4 mb-4 mb-md-0">
           <a href="{{("/suporte")}}" target="_blank">
@@ -48,21 +48,21 @@
   </div>
 
   <!-- Copyright -->
-  <div class="text-center p-4" >
-    <p class="fs-6">
-      A SECITEC recebeu financiamento pela chamada pública SNCT 01/2023
-      <a class="" href="http://memoria2.cnpq.br/web/guest/chamadas-publicas?p_p_id=resultadosportlet_WAR_resultadoscnpqportlet_INSTANCE_0ZaM&filtro=resultados&detalha=chamadaDivulgada&idDivulgacao=11385" target="_blank"><img src="{{asset('images/logo_cnpq.svg')}}" alt="" style="height:30px; widith:30px;"></a>
-    </p>
+  <div class="container text-center" >
+    <div class="row justify-content-center pb-5">
+      <div class="col-12">
+        <img src="{{asset('images/rodape.png')}}" alt="" class="img-fluid ">
+      </div>
+    </div>
+
     <p class="fs-6">
       © 2023 Copyright:
       <a class="text-dark link-underline-success link-tutorial" href="{{ url('/creditos') }}" target="_blank">Créditos</a>
     </p>
   </div>
-
+</footer>
 <style>
     .link-tutorial{
         border-bottom: solid 1px #17882c;
     }
 </style>
-
-</footer>
