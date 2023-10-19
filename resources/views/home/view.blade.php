@@ -24,7 +24,7 @@
                     <!--script para o cronômetro até o dia do evento-->
                     <script>
                         // Define a data alvo
-                        const targetDate = new Date('2023-10-23T00:00:00').getTime();
+                        const targetDate = new Date('2023-10-23T07:00:00').getTime();
 
                         // Atualiza o cronômetro a cada segundo
                         const countdown = setInterval(function() {
