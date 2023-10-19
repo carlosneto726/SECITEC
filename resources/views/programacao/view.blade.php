@@ -4,15 +4,6 @@
 <!--CSS PARA ICONES DOS PROPONENTES-->
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech&display=swap');
-    @media (max-width: 768px) {
-        .avatar-proponente {
-            display: flex;
-            overflow: hidden;
-        }
-    }
-    .avatar-proponente img{
-        border: 1px solid black;
-    }
     .custom-tooltip {
       --bs-tooltip-bg: #17882c;
       --bs-tooltip-color: var(--bs-white);
