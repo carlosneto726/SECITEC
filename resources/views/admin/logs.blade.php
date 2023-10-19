@@ -25,8 +25,8 @@
     <tbody>
         @foreach ($logs as $log)
             <tr>
-                <td class="align-middle text-center" id="nome-evento">{{$log->nome_evento}}</td>
-                <td class="align-middle text-center" id="nome-usuario">{{$log->nome_usuario}}</td>
+                <td class="align-middle text-center text-break" id="nome-evento">{{$log->nome_evento}}</td>
+                <td class="align-middle text-center text-break" id="nome-usuario">{{$log->nome_usuario}}</td>
                 <td class="align-middle text-center">{{$log->data_hora}}</td>
                 <td class="align-middle text-center">
                     @if ($log->tipo_operacao == "CADASTRAR")

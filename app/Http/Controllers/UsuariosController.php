@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\ValidarUsuariosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -232,6 +234,58 @@ class UsuariosController extends Controller
             $evento->proponentes = $proponentes;
         }                                
         return view("meus-eventos.view", compact("eventos", "cpf", "cadastradoHackathon"));
+    }
+
+    public function viewMeuPerfil(){
+        $usuario = DB::select("SELECT * FROM tb_usuario WHERE id = ?", [$this->id_usuario])[0];
+        return view("usuarios.meuPerfil", compact("usuario"));
+    }
+
+    public function updateMeuPerfil(){
+        $nome = request("nome");
+        $email = request("email");
+        $cpf = preg_replace( '/[^0-9]/is', '', request("cpf"));
+        $validarUsuario = new ValidarUsuariosController;
+
+        if(!$validarUsuario->validaCPF($cpf)){
+            AlertController::alert("CPF inválido.", "danger");
+            return redirect("/meu-perfil");
+        }
+
+        if(request("senha")){
+            $senha = Hash::make(request("senha"));
+            DB::update("UPDATE tb_usuario 
+                        SET nome = ?, 
+                        email = ?, 
+                        cpf = ?, 
+                        senha = ? 
+                        WHERE id = ?;", 
+                        [$nome, $email, $cpf, $senha, $this->id_usuario]);
+            AlertController::alert("Conta atualizada com sucesso.", "success");
+            return redirect("/meu-perfil");
+        }else{
+            DB::update("UPDATE tb_usuario 
+                        SET nome = ?, 
+                        email = ?, 
+                        cpf = ?
+                        WHERE id = ?;", 
+                        [$nome, $email, $cpf, $this->id_usuario]);
+            AlertController::alert("Conta atualizada com sucesso.", "success");
+            return redirect("/meu-perfil");
+        }
+    }
+
+    public function deletarMeuPerfil(){
+        DB::delete("DELETE FROM tb_evento_usuario 
+                    WHERE id_usuario = ?;",[$this->id_usuario]);
+
+        DB::delete("DELETE FROM tb_usuario 
+            WHERE id = ?;",[$this->id_usuario]);
+        
+        $validarUsuario = new ValidarUsuariosController;
+        $validarUsuario->sair();
+        AlertController::alert("Conta apagada com sucesso.", "danger");
+        return redirect("/");
     }
 
     function mapearEventos($eventos, $eventosCadastrados)

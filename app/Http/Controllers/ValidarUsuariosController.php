@@ -26,19 +26,19 @@ class ValidarUsuariosController extends Controller
     
     public function addUsuario(Request $request){
         $nome = $request->input("nome");
-        $cpf = $request->input("cpf");
+        $cpf = preg_replace( '/[^0-9]/is', '', $request->input("cpf"));
         $senha = Hash::make($request->input("senha")); // Senha criptografada
         $token = request("token"); // Token gerado aleatoriamente
 
         // condição para verificar caso o cpf seja válido ou não
         if(!$this->validaCPF($cpf)){
-            AlertController::alert("CPF inválido", "danger");
+            AlertController::alert("CPF inválido.", "danger");
             return redirect("/usuarios/cadastrar/".$token);
         }
 
         $usuarios = DB::select("SELECT cpf FROM tb_usuario WHERE cpf = ?;", [$cpf]);
         if(count($usuarios) > 0){
-            AlertController::alert("Email ou CPF já cadastrado(s)", "danger");
+            AlertController::alert("CPF já cadastrado(s)", "danger");
             return redirect("/usuarios/cadastrar/".$token);
         }else{
             try {
@@ -64,7 +64,9 @@ class ValidarUsuariosController extends Controller
         $token = Str::random(60);
         $usuario = DB::select("SELECT email FROM tb_usuario WHERE email = ?;", [$email]);
         if(count($usuario) > 0){
-            AlertController::alert("Email já cadastrado", "warning");
+            DB::update("UPDATE tb_usuario SET token = ? WHERE email = ?;", [$token, $email]);
+            $this->enviarEmail($email, "usuarios/cadastrar/".$token, "ativarConta");
+            AlertController::alert("Email reenviado.", "warning");
             return redirect("/cadastrar");
         }else{
             DB::insert("INSERT INTO tb_usuario(email, token, status) VALUES(?, ?, 0)", [$email, $token]);
@@ -166,7 +168,7 @@ class ValidarUsuariosController extends Controller
     }
 
     function validaCPF($cpf) {
- 
+        
         // Extrai somente os números
         $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
          
@@ -191,7 +193,6 @@ class ValidarUsuariosController extends Controller
             }
         }
         return true;
-    
     }
     
 }

@@ -18,6 +18,9 @@
     }     
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
 <script type="text/javascript" src="{{asset('js/qrcode.js')}}"></script>
 <img src="{{asset('images/logo_email.jpg')}}" id="logo" hidden>
 
@@ -29,18 +32,30 @@
                 <!-- Aparece o qr code e botão em ao lado menos no tamanho sm-->
                 <div class="col-md-3 float-sm-end ms-md-3">
                     <center>
-                        <div id="qrcode" style="width:100px; height:100px;"></div>
+                        <div id="qrcode"></div>
                         <br>
-                        <p><button class="btn btn-success" id="downloadPDF">
+                        <p class="d-none d-md-block"><button class="btn btn-success" id="downloadPDF">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
                                 <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
                                 <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
                             </svg>
                             Cartão de Presença
                         </button></p>
+                        <div class="d-none" id="qrcodeImg"></div>
+                        <p  class="d-block d-md-none">
+                            
+                            <a id="downloadLink" download="qrcode_entrada_imagem.png">
+                                <button class="btn btn-success">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                    </svg>
+                                    Imagem QR Code
+                                </button>
+                            </a>
+                        </p>
                     </center>
                 </div>
-
                 <!-- texto não aparece em tamanho sm-->
                 <h2 class="mb-5 d-none d-md-block">Seus <u class="text-success">Eventos Cadastrados</u></h2>
                 <p>
@@ -141,7 +156,7 @@
                                           
                                           <p>${evento.descricao}</p>
                                           
-                                          <h5 class=""><small style="font-size: 16px;" class="text-muted ${ evento.nome_tipo_evento == 'hackathon' ? 'remover-horario' : '' }"><i class="bi bi-clock text-primary me-2"></i> ${formatarHora(evento.horarioI)} às ${formatarHora(evento.horarioF)}</small></h5>
+                                          <h5 class=""><small style="font-size: 16px;" class="text-muted ${evento.nome_tipo_evento == 'hackathon' ? 'remover-horario' : ''}"><i class="bi bi-clock text-primary me-2"></i> ${formatarHora(evento.horarioI)} às ${formatarHora(evento.horarioF)}</small></h5>
       
                                           <span class="" style="color: green;">
                                               <i class="bi-layout-sidebar me-2"></i>
@@ -325,17 +340,30 @@
     var cpf = {{ Js::from($cpf) }};
 
     var qrcode = new QRCode(document.getElementById("qrcode"), {
-        width : 100,
-        height : 100
+        width : 150,
+        height : 150
+    });
+
+    var qrcodeImg = new QRCode(document.getElementById("qrcodeImg"), {
+        width : 400,
+        height : 400
     });
 
     qrcode.makeCode( cpf );
+    qrcodeImg.makeCode( cpf );
 
     var qrImage = document.getElementById("qrcode").getElementsByTagName('img')[0];
+    var qrImageImg = document.getElementById("qrcodeImg").getElementsByTagName('img')[0];
     var logo = document.getElementById('logo');
+
+    document.getElementById("downloadLink").addEventListener("click", function() {
+    var canvas = document.getElementById("qrcodeImg").querySelector("canvas");
+    this.href = canvas.toDataURL("image/png");
+
+});
 </script>
 
-<script type="text/javascript" src="{{asset('js/jsPDF.js')}}?v=1.7"></script>
+<script type="text/javascript" src="{{asset('js/jsPDF.js')}}?v=1.8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.16/jspdf.plugin.autotable.min.js"></script>
 @endsection

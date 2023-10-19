@@ -15,21 +15,36 @@
                         <li class="nav-item ">
                             <a class="nav-link px-3 fw-bold" href="{{url('/admin')}}">INÍCIO</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-3 fw-bold" href="{{url('/admin/proponente')}}">PROPONENTES</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-3 fw-bold" href="{{url('/admin/eventos')}}">EVENTOS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-3 fw-bold" href="{{url('/admin/adicionar-usuario')}}">USUÁRIOS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-3 fw-bold" href="{{url('/admin/usuario/certificados')}}">CERTIFICADOS USUARIOS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-3 fw-bold" href="{{url('/admin/logs')}}">LOGS</a>
-                        </li>                        
+
+
+                        @if ($_COOKIE['ADM_TIPO'] == 0)
+                            <li class="nav-item">
+                                <a class="nav-link px-3 fw-bold" href="{{url('/admin/proponente')}}">PROPONENTES</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 fw-bold" href="{{url('/admin/eventos')}}">EVENTOS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 fw-bold" href="{{url('/admin/adicionar-usuario')}}">USUÁRIOS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 fw-bold" href="{{url('/admin/usuario/certificados')}}">CERTIFICADOS USUARIOS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 fw-bold" href="{{url('/admin/logs')}}">LOGS</a>
+                            </li>
+                            
+                        @elseif($_COOKIE['ADM_TIPO'] == 1)
+                            <li class="nav-item">
+                                <a class="nav-link px-3 fw-bold" href="{{url('/admin/adicionar-usuario')}}">USUÁRIOS</a>
+                            </li>
+                        @elseif($_COOKIE['ADM_TIPO'] == 2)
+                            <li class="nav-item">
+                                <a class="nav-link px-3 fw-bold" href="{{url('/admin/presenca/eventos')}}">EVENTOS</a>
+                            </li>
+                        @endif
+
+
                         <li class="nav-item">
                             <a class="nav-link px-3 fw-bold  " href="{{url('/admin/sair')}}">LOGOUT</a>
                         </li>

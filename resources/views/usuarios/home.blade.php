@@ -321,10 +321,15 @@
                         </table>
                     </div>
                 </div>
-                <div id="hackBtn" style="margin-top: 20px;" onclick="enviarRequisicaoHackathon(${evento.id})"
-                    class="btn ${ evento.usuario_cadastrado ? 'btn-danger' : (evento.vagas_restantes == 0 ? 'btn-warning' : 'btn-success') }">
-                    ${ evento.usuario_cadastrado ? 'Descadastrar' : (evento.vagas_restantes == 0 ? 'Entrar na Fila' :
-                    'Cadastrar') }
+                <div class="row vagas-hackathon-row">
+                    <button id="hackBtn" style="width: 150px;" onclick="enviarRequisicaoHackathon(${evento.id})"
+                        class="btn ${ evento.usuario_cadastrado ? 'btn-danger' : (evento.vagas_restantes == 0 ? 'btn-warning' : 'btn-success') }">
+                        ${ evento.usuario_cadastrado ? 'Descadastrar' : (evento.vagas_restantes == 0 ? 'Entrar na Fila' :
+                        'Cadastrar') }
+                    </button>
+                    <div>
+                        Vagas: <strong style="color: ${evento.vagas_restantes > 40 ? '' : 'red'};" id="vagas_restantes${evento.id}">${evento.vagas_restantes}</strong>
+                    </div>
                 </div>
             </div>
             <div class="code-block">
@@ -478,6 +483,7 @@
 
         // FUNCAO QUE ENVIA REQUISICAO DE CADASTRO E DESCADASTRO.
         function enviarRequisicaoHackathon(eventoId) {
+            const vagas = document.getElementById(`vagas_restantes${eventosAgrupados.Hackathon[0].id}`)
             var usuarioId = `{{ $usuario->id }}`;
 
             $.ajax({
@@ -493,6 +499,10 @@
                     switch (data.mensagem) {
                         case 'Cadastrado':
                             mostrarAlerta("#42f59e", "Cadastrado com Sucesso!");
+                            vagas.innerHTML = parseInt(vagas.innerHTML) - 1;
+                            if(parseInt(vagas.innerHTML) == 40) {
+                                vagas.style.color = "red";
+                            }
                             hackBtn.classList.add('btn-danger');
                             hackBtn.classList.remove('btn-success');
                             hackBtn.innerHTML = 'Descadastrar';
@@ -502,6 +512,10 @@
                             hackBtn.classList.remove('btn-danger');
                             hackBtn.classList.add('btn-success');
                             hackBtn.innerHTML = 'Cadastrar';
+                            vagas.innerHTML = parseInt(vagas.innerHTML) + 1;
+                            if(parseInt(vagas.innerHTML) > 40) {
+                                vagas.style.color = "white";
+                            }
                             break;
                         default:
                             lancarAviso('Conflito de Horário',

@@ -48,9 +48,9 @@
         @foreach ($eventos as $dados)
             <tr>
                 <td class="d-none d-lg-table-cell align-middle text-center"><img src="{{asset($dados->url)}}" class="img-flex" width="64"></td>
-                <td class="align-middle text-center" id="evento-titulo">{{$dados->titulo}}</td>
+                <td class="align-middle text-center text-break" id="evento-titulo">{{$dados->titulo}}</td>
                 <td class="d-none d-lg-table-cell align-middle text-center text-transform:capitalize;">{{$dados->tipo_evento_nome}}</td>
-                <td class="d-none d-lg-table-cell align-middle text-center"> {{$dados->descricao}}</td>
+                <td class="d-none d-lg-table-cell align-middle text-center text-break"> {{$dados->descricao}}</td>
                 <td class="align-middle text-center">{{ date('d', strtotime($dados->dia)) }}</td>
                 <td class="align-middle text-center">{{ date('H:i', strtotime($dados->horarioI)) }}</td>
                 <td class="d-none d-lg-table-cell align-middle text-center">{{ date('H:i', strtotime($dados->horarioF)) }}</td>

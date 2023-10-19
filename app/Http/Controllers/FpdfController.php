@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Fpdf\FPDF;
-
 class FpdfController extends Controller
 {
     public function certificadoUsuario(){

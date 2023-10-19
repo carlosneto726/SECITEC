@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Mail\AtivarConta;
-use Illuminate\Support\Facades\Mail;
-use App\Http\Controllers\ValidarUsuariosController;
+use App\Traits\PresencaTrait;
+use App\Traits\MonitorTrait;
+use App\Traits\AdminTrait;
 use Illuminate\Support\Facades\Hash;
-
 
 class AdministradorController extends Controller
 {
+    use PresencaTrait, MonitorTrait, AdminTrait;
     public $nome_usuario; 
     public $senha_usuario;
     public function __construct() {
@@ -19,39 +19,11 @@ class AdministradorController extends Controller
         $this->senha_usuario = $_COOKIE['ADM_PASSWORD'];
 
         if(!isset($this->nome_usuario) && !isset($this->senha_usuario)){
-            abort(404, "Tem que se validar meu chapinha");
+            abort(450);
         }
-    }
-
-    public function sair(){
-        setcookie("ADM_USER", "", time() - 3600, "/");
-        setcookie("ADM_PASSWORD", "", time() - 3600, "/");
-        return redirect("/admin");
-    }
-
-    // Eventos
-    public function viewEventos(){
-        $eventos = DB::select(" SELECT e.*, te.nome AS tipo_evento_nome
-                                FROM tb_evento AS e
-                                INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
-                                WHERE te.id != 4 ORDER BY titulo;
-        ");
-
-        foreach ($eventos as $evento) {
-            $proponentes_nome = [];
-            $proponentes = DB::select(" SELECT nome FROM tb_proponente
-                                        INNER JOIN tb_proponente_evento ON tb_proponente.id = tb_proponente_evento.id_proponente
-                                        WHERE tb_proponente_evento.id_evento = ?;", [$evento->id]);
-            foreach ($proponentes as $proponente) {
-                array_push($proponentes_nome, $proponente->nome);
-            }
-            
-            $evento->proponentes = $proponentes_nome;
+        if($this->nome_usuario != env('ADM_USER') || $this->senha_usuario != env('ADM_PASSWORD')){
+            abort(450);
         }
-
-        $palestrantes = DB::select("SELECT * FROM tb_proponente WHERE id != 7 AND id != 8 AND id != 9 AND id != 10 ORDER BY nome;");
-        $tipoEventos = DB::select("SELECT * FROM tb_tipo_evento WHERE id != 4;");
-        return view("admin.events.view", compact("eventos", "palestrantes", "tipoEventos"));
     }
 
     public function updateEvento(Request $request){
@@ -154,133 +126,6 @@ class AdministradorController extends Controller
                 'endpoint' => '/admin/eventos' 
             ]
         );
-    }
-    public function viewCheckin(){
-        $orderBy = "ORDER BY tb_usuario.cpf, tb_evento_usuario.checkin;";
-        $usuarios_evento = $this->getUsuariosEvento(request('id_evento'), $orderBy);
-        return view("admin.events.checkin", compact("usuarios_evento"));
-    }
-
-    public function viewCheckout(){
-        $orderBy = "ORDER BY tb_usuario.cpf, tb_evento_usuario.checkout;";
-        $usuarios_evento = $this->getUsuariosEvento(request('id_evento'), $orderBy);
-        return view("admin.events.checkout", compact("usuarios_evento"));
-    }
-
-    private function getUsuariosEvento($id_evento, $orderBy){
-        $usuario_evento = DB::select("  SELECT tb_usuario.nome,
-                                        tb_usuario.id,
-                                        tb_usuario.cpf,
-                                        tb_evento_usuario.checkin,
-                                        tb_evento_usuario.checkout,
-                                        tb_evento_usuario.status,
-                                        tb_evento_usuario.data_insercao
-                                        FROM tb_evento_usuario
-                                        INNER JOIN tb_usuario ON tb_usuario.id = tb_evento_usuario.id_usuario
-                                        WHERE tb_evento_usuario.id_evento = ? ".$orderBy, [$id_evento]);
-        return $usuario_evento;
-    }
-
-    public function checkIn(){
-        $cpf = request("cpf"); // CPF
-        $id_evento = request("id_evento");
-        $confirmacao = request("confirmacao");
-
-        try {
-            $id_eventousuario = $this->getusUarioId($cpf, $id_evento)->id_evento;
-            $id_usuario = $this->getusUarioId($cpf, $id_evento)->id_usuario;
-        } catch (\Throwable $th) {
-            return response()->json(['id_modal' => 'modalerro']);
-        }
-
-
-        if($id_eventousuario == false){ return response()->json(['id_modal' => 'modalerro']); }
-        $checkin = DB::select("SELECT * FROM tb_evento_usuario WHERE id = ?;", [$id_eventousuario]);
-        date_default_timezone_set('America/Sao_Paulo');
-        $horarioAtual = date("H:i:s");
-        if(($checkin[0]->checkin == null && $confirmacao == false && $checkin[0]->status == 0) || $confirmacao){
-            DB::update("UPDATE tb_evento_usuario
-                        SET checkin = ?
-                        WHERE id = ?;",
-                        [$horarioAtual,$id_eventousuario]
-            );
-            return response()->json(
-                [
-                    'message' => 'Checkin efetuado com sucesso.',
-                    'type' => 'success',
-                    'reload' => 'false',
-                    'cpf' => $cpf,
-                    'hora_atual' => $horarioAtual,
-                    'id_usuario' => $id_usuario
-
-                ]
-            );
-        }else{
-            if($checkin[0]->status == 1){ 
-                return response()->json( ['id_modal' => 'fila'] ); 
-            }
-            return response()->json( ['id_modal' => 'modalcheckin'] );
-        }
-    }
-
-    public function checkOut(){
-        $cpf = request("cpf"); // CPF
-        $id_evento = request("id_evento");
-        $confirmacao = request("confirmacao");
-
-        try {
-            $id_eventousuario = $this->getusUarioId($cpf, $id_evento)->id_evento;
-            $id_usuario = $this->getusUarioId($cpf, $id_evento)->id_usuario;
-        } catch (\Throwable $th) {
-            return response()->json(['id_modal' => 'modalerro']);
-        }
-
-        if($id_eventousuario == false){ return response()->json(['id_modal' => 'modalerro']); }
-        $checkout = DB::select("SELECT * FROM tb_evento_usuario WHERE id = ?;", [$id_eventousuario])[0]->checkout;
-        date_default_timezone_set('America/Sao_Paulo');
-        $horarioAtual = date("H:i:s");
-
-        if(($checkout == null && $confirmacao == false) || $confirmacao){
-            DB::update("UPDATE tb_evento_usuario
-                        SET status = 1, checkout = ?
-                        WHERE id = ?;",
-                        [$horarioAtual, $id_eventousuario]);
-            return response()->json(
-                [
-                    'message' => 'Checkout efetuado com sucesso.',
-                    'type' => 'success',
-                    'reload' => 'false',
-                    'cpf' => $cpf,
-                    'hora_atual' => $horarioAtual,
-                    'id_usuario' => $id_usuario
-
-                ]
-            );
-        }else{
-            return response()->json(
-                [
-                    'id_modal' => 'modalcheckout'
-                ]
-            );
-        }
-    }
-
-    private function getusUarioId($cpf, $idevento){
-        $ideventousuario = DB::select(" SELECT tb_evento_usuario.id AS id_evento,
-                                        tb_evento_usuario.id_usuario AS id_usuario
-                                        FROM tb_evento_usuario
-                                        LEFT JOIN tb_usuario
-                                        ON tb_evento_usuario.id_usuario = tb_usuario.id
-                                        LEFT JOIN tb_evento
-                                        ON tb_evento_usuario.id_evento = tb_evento.id
-                                        WHERE tb_usuario.cpf = ? and tb_evento.id = ?;", 
-                                        [$cpf, $idevento]
-        );
-        if(count($ideventousuario) == 0){
-            return false;
-        }else{
-            return $ideventousuario[0];
-        }
     }
 
     // Proponente
@@ -388,25 +233,6 @@ class AdministradorController extends Controller
         }
 
         return view("admin.usuario.view", compact("usuarios"));
-    }
-
-    public function addUsuario(Request $request){
-        $email = request("email");
-        $cpf = request("cpf");
-        $nome = request("nome");
-        $senha = Hash::make("secitec2023"); // Senha criptografada
-
-        $validarCPF = new ValidarUsuariosController;
-        if(!$validarCPF->validaCPF($cpf)){
-            return "cpf inválido";
-        }
-
-        $usuarios = DB::select("SELECT email, cpf FROM tb_usuario WHERE email = ? OR cpf = ?;", [$email, $cpf]);
-        if(count($usuarios) > 0){
-            return "cpf ou email já cadastrado";
-        }
-        DB::insert("INSERT INTO tb_usuario(nome, senha, cpf, email, status) 
-                    VALUES(?,?,?,?,?);", [$nome, $senha, $cpf, $email, "1"]);
     }
 
     public function viewLogs(){

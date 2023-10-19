@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="{{asset("css\bootstrap\bootstrap.css")}}?v=1.0">
     <link rel="stylesheet" href="{{asset("css\bootstrap\bootstrap-icons.css")}}?v=1.0">
     <link rel="stylesheet" href="{{asset('css\templatemo-leadership-event.css')}}?v=1.0">
-    <link rel="stylesheet" href="{{asset("css\user.css")}}?v=1.5">
-    <link rel="stylesheet" href="{{asset("css\app.css")}}?v=1.1">
+    <link rel="stylesheet" href="{{asset("css\user.css")}}?v=1.6">
+    <link rel="stylesheet" href="{{asset("css\app.css")}}?v=1.2">
     <title>SECITEC</title>
 </head>
 <body>
@@ -19,7 +19,16 @@
     @if(@$_SESSION['mensagem'] != "")
         <div class="z-3 position-fixed top-0 end-0" style="margin-top: 100px;">
             <div class="alert alert-{{@$_SESSION['tipo']}} alert-dismissible" role="alert">
-                <div>{{$_SESSION['mensagem']}}</div>
+                <a href="{{ '/suporte' }}" target="_blanck">
+                    <div class="d-flex justify-content-center align-items-center">
+                        {{ $_SESSION['mensagem'] }}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-info-circle ps-1" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                        </svg>
+                        
+                    </div>
+                </a>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         </div>
@@ -28,7 +37,6 @@
             @$_SESSION['tipo'] = "";
         @endphp
     @endif
-
 
     <header>
         @include('layout.navbar')

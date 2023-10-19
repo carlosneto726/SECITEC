@@ -126,8 +126,8 @@ END;
 //
 DELIMITER ;
 
-
-
+-- Query 8:
+-- 
 ALTER TABLE tb_usuario
 MODIFY COLUMN tb_usuario.nome VARCHAR(255) DEFAULT NULL,
 MODIFY COLUMN tb_usuario.senha VARCHAR(255) DEFAULT NULL,
