@@ -45,7 +45,7 @@ class FpdfController extends Controller
         foreach($usuarios as $nome => $dadosUsuario){
             //inicial
             $pdf->AddPage();
-            $imagePath = 'images\Certificado_frente.png';
+            $imagePath = 'images/Certificado_frente.png';
             $pdf->Image($imagePath, 0,0,$pdf->GetPageWidth(), $pdf->GetPageHeight());
             $pdf->SetFont('Arial','',20);
             $pdf->Ln(100); //pula linha
@@ -72,7 +72,7 @@ class FpdfController extends Controller
 
             //verso
             $pdf->AddPage();
-            $imagePath = 'images\Certificado_verso.png';
+            $imagePath = 'images/Certificado_verso.png';
             $pdf->Image($imagePath, 0,0,$pdf->GetPageWidth(), $pdf->GetPageHeight());
             $pdf->SetFont('Arial','',16);
             $pdf->Ln(103); //pula linha           
@@ -119,7 +119,7 @@ class FpdfController extends Controller
             $tipo = $dado->tipo_evento;
 
             $pdf->AddPage();
-            $imagePath = 'images\Certificado_frente.png';
+            $imagePath = 'images/Certificado_frente.png';
             $pdf->Image($imagePath, 0,0,$pdf->GetPageWidth(), $pdf->GetPageHeight());
             $pdf->SetFont('Arial','',20);
             $pdf->Ln(100); //pula linha          
