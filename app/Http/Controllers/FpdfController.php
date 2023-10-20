@@ -45,7 +45,7 @@ class FpdfController extends Controller
         foreach($usuarios as $nome => $dadosUsuario){
             //inicial
             $pdf->AddPage();
-            $imagePath = public_path('images\Certificado_frente.png');
+            $imagePath = 'images\Certificado_frente.png';
             $pdf->Image($imagePath, 0,0,$pdf->GetPageWidth(), $pdf->GetPageHeight());
             $pdf->SetFont('Arial','',20);
             $pdf->Ln(100); //pula linha
@@ -72,7 +72,7 @@ class FpdfController extends Controller
 
             //verso
             $pdf->AddPage();
-            $imagePath = public_path('images\Certificado_verso.png');
+            $imagePath = 'images\Certificado_verso.png';
             $pdf->Image($imagePath, 0,0,$pdf->GetPageWidth(), $pdf->GetPageHeight());
             $pdf->SetFont('Arial','',16);
             $pdf->Ln(103); //pula linha           
@@ -119,7 +119,7 @@ class FpdfController extends Controller
             $tipo = $dado->tipo_evento;
 
             $pdf->AddPage();
-            $imagePath = public_path('images\Certificado_frente.png');
+            $imagePath = 'images\Certificado_frente.png';
             $pdf->Image($imagePath, 0,0,$pdf->GetPageWidth(), $pdf->GetPageHeight());
             $pdf->SetFont('Arial','',20);
             $pdf->Ln(100); //pula linha          
@@ -148,7 +148,7 @@ class FpdfController extends Controller
             $nome_pdf = iconv('UTF-8', 'ASCII//TRANSLIT', preg_replace("/[^a-zA-Z0-9.]/", "_", $nome."-".$evento));
             $pdf->Ln(135);
             $pdf->Line($x1,$y1,$x2,$y2);//
-            $pdf->Image(public_path('images/qrAutenticidade.png'), 740,485,100,100);
+            $pdf->Image('images/qrAutenticidade.png', 740,485,100,100);
             $pdf->SetFont("","",20);
             $pdf->Cell(0,20,utf8_decode("Comprovação de autenticidade"),0,1,"L",false);
             $pdf->Output("F","pdfs/proponentes/$nome_pdf.pdf");

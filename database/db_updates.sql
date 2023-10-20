@@ -87,13 +87,13 @@ FROM tb_evento INNER JOIN tb_tipo_evento ON tb_evento.id_tipo_evento = tb_tipo_e
 -- Query 7:
 -- 
 
-CREATE TABLE `log_tb_evento_usuario` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome_evento` varchar(255) NOT NULL,
-  `nome_usuario` varchar(255) NOT NULL,
-  `tipo_operacao` varchar(15) NOT NULL,
-  `data_hora` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE log_tb_evento_usuario (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  nome_evento varchar(255) NOT NULL,
+  nome_usuario varchar(255) NOT NULL,
+  tipo_operacao varchar(15) NOT NULL,
+  data_hora datetime NOT NULL,
+  PRIMARY KEY (id)
 );
 
 
@@ -140,11 +140,11 @@ MODIFY COLUMN tb_usuario.status VARCHAR(255) NOT NULL;
 --
 
 CREATE VIEW vw_proponente_evento AS
-SELECT `db_secitec`.`tb_proponente`.`nome` AS `nome`,
-`db_secitec`.`tb_evento`.`horas` AS `horas`,
-`db_secitec`.`tb_evento`.`titulo` AS `titulo`,
-`db_secitec`.`tb_tipo_evento`.`nome` AS `tipo_evento` 
-FROM (((`db_secitec`.`tb_proponente_evento` LEFT JOIN `db_secitec`.`tb_proponente` 
-ON(`db_secitec`.`tb_proponente_evento`.`id_proponente` = `db_secitec`.`tb_proponente`.`id`)) 
-LEFT JOIN `db_secitec`.`tb_evento` ON(`db_secitec`.`tb_proponente_evento`.`id_evento` = `db_secitec`.`tb_evento`.`id`)) 
-LEFT JOIN `db_secitec`.`tb_tipo_evento` ON(`db_secitec`.`tb_tipo_evento`.`id` = `db_secitec`.`tb_evento`.`id_tipo_evento`));
+SELECT tb_proponente.nome AS nome,
+tb_evento.horas AS horas,
+tb_evento.titulo AS titulo,
+tb_tipo_evento.nome AS tipo_evento 
+FROM (((tb_proponente_evento LEFT JOIN tb_proponente 
+ON(tb_proponente_evento.id_proponente = tb_proponente.id)) 
+LEFT JOIN tb_evento ON(tb_proponente_evento.id_evento = tb_evento.id)) 
+LEFT JOIN tb_tipo_evento ON(tb_tipo_evento.id = tb_evento.id_tipo_evento));
