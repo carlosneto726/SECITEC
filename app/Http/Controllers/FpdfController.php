@@ -48,15 +48,27 @@ class FpdfController extends Controller
             $imagePath = public_path('images\Certificado_frente.png');
             $pdf->Image($imagePath, 0,0,$pdf->GetPageWidth(), $pdf->GetPageHeight());
             $pdf->SetFont('Arial','',20);
-            $pdf->Ln(103); //pula linha          
+            $pdf->Ln(100); //pula linha
+            $pdf->Ln(80); //pula linha
+
             $soma = $dadosUsuario['horasTotal'];
             $eventos = $dadosUsuario['eventos'];
-            $pdf->Ln(130); //pula linha
-            $texto = utf8_decode("Certificamos que, ".$nome." participou do evento Semana de Educação, Ciência e Tecnologia (SECITEC) 2023, realizado nos dias 23 à 26 de outubro, com carga horário total de ".$soma.":00 hora(s), conforme descrito no verso.");
-            $pdf->MultiCell(0,20,$texto,0,"C",false);
-            $pdf->SetFont('arial','I',12);
 
-
+            $pdf->SetFont('Arial','',20);
+            //Texto 1
+            $pdf->Cell(0,20,utf8_decode("Certificamos que,"),0,1,"C",false);
+            $pdf->Ln(20);
+            
+            //Nome do proponente
+            $pdf->SetTextColor(0, 128, 0); // Cor verde claro (R, G, B)
+            $pdf->SetFont('Arial','B',24);
+            $pdf->Cell(0,20,utf8_decode($nome),0,1,"C",false);
+            $pdf->Ln(20);
+            
+            //Texto 2
+            $pdf->SetTextColor(0, 0, 0); // Cor preta (R, G, B)
+            $pdf->SetFont('Arial','',20);
+            $pdf->MultiCell(0,20,utf8_decode(" participou do evento Semana de Educação, Ciência e Tecnologia (SECITEC) 2023, realizado nos dias 23 à 26 de outubro, com carga horário total de ".$soma.":00 hora(s), conforme descrito no verso."),0,"C",false);
 
             //verso
             $pdf->AddPage();
@@ -91,4 +103,47 @@ class FpdfController extends Controller
         //$pdf->MultiCell(1000,10, $i);
         $pdf->Output("D","Certificado.pdf");
     }
+
+    //------------------------------------------------------------------------//
+
+    //Certificado para os proponentes
+
+    public function certificadoProponente(){
+        //inicial   
+        $pdf = new FPDF("L","pt","A4");
+
+        $vw_proponente = DB::select("SELECT * FROM vw_proponente_evento");
+        foreach($vw_proponente as $dado){
+            $nome = $dado->nome;
+            $horas = $dado->horas;
+            $evento = $dado->titulo;
+            $tipo = $dado->tipo_evento;
+
+            $pdf->AddPage();
+            $imagePath = public_path('images\Certificado_frente.png');
+            $pdf->Image($imagePath, 0,0,$pdf->GetPageWidth(), $pdf->GetPageHeight());
+            $pdf->SetFont('Arial','',20);
+            $pdf->Ln(100); //pula linha          
+            $pdf->Ln(80); //pula linha
+
+            $pdf->SetFont('Arial','',20);
+            //Texto 1
+            $pdf->Cell(0,20,utf8_decode("Certificamos que,"),0,1,"C",false);
+            $pdf->Ln(20);
+
+            //Nome do proponente
+            $pdf->SetTextColor(0, 128, 0); // Cor verde claro (R, G, B)
+            $pdf->SetFont('Arial','B',24);
+            $pdf->Cell(0,20,utf8_decode($nome),0,1,"C",false);
+            $pdf->Ln(20);
+
+            //Texto 2
+            $pdf->SetTextColor(0, 0, 0); // Cor preta (R, G, B)
+            $pdf->SetFont('Arial','',20);
+            $pdf->MultiCell(0,20,utf8_decode("participou da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG, como proponente ministrando o(a) $tipo de $evento."),0,"C",false);
+        }
+        $pdf->Output("D","Certificado.pdf");
+    }
 }
+
+
