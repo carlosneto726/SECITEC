@@ -28,9 +28,6 @@
                                 <a class="nav-link px-3 fw-bold" href="{{url('/admin/adicionar-usuario')}}">USUÁRIOS</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-3 fw-bold" href="{{url('/admin/usuario/certificados')}}">CERTIFICADOS USUARIOS</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link px-3 fw-bold" href="{{url('/admin/logs')}}">LOGS</a>
                             </li>
                             

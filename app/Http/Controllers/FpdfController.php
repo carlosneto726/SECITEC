@@ -101,7 +101,7 @@ class FpdfController extends Controller
         $pdf->SetX(200);
         $pdf->SetX(200);
         //$pdf->MultiCell(1000,10, $i);
-        $pdf->Output("D","Certificado.pdf");
+        $pdf->Output("F","pdfs/usuarios/certificado_usuarios.pdf");
     }
 
     //------------------------------------------------------------------------//
@@ -110,12 +110,11 @@ class FpdfController extends Controller
 
     public function certificadoProponente(){
         //inicial   
-        $pdf = new FPDF("L","pt","A4");
-
         $vw_proponente = DB::select("SELECT * FROM vw_proponente_evento");
         foreach($vw_proponente as $dado){
+            $pdf = new FPDF("L","pt","A4");
             $nome = $dado->nome;
-            $horas = $dado->horas;
+            $horas = ($dado->horas * 2);
             $evento = $dado->titulo;
             $tipo = $dado->tipo_evento;
 
@@ -140,10 +139,24 @@ class FpdfController extends Controller
             //Texto 2
             $pdf->SetTextColor(0, 0, 0); // Cor preta (R, G, B)
             $pdf->SetFont('Arial','',20);
-            $pdf->MultiCell(0,20,utf8_decode("participou da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG, como proponente ministrando o(a) $tipo de $evento."),0,"C",false);
+            $pdf->MultiCell(0,20,utf8_decode("participou da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG, como proponente ministrando o(a) $tipo de $evento, com carga horária total de $horas:00 hora(s)."),0,"C",false);
+            
+            $x1 = 0;
+            $y1 = 475;
+            $x2 = 900;
+            $y2 = 475;
+            $nome_pdf = iconv('UTF-8', 'ASCII//TRANSLIT', preg_replace("/[^a-zA-Z0-9.]/", "_", $nome.$evento));
+            $pdf->Ln(135);
+            $pdf->Line($x1,$y1,$x2,$y2);//
+            $pdf->Image(public_path('images/qrAutenticidade.png'), 740,485,100,100);
+            $pdf->SetFont("","",20);
+            $pdf->Cell(0,20,utf8_decode("Comprovação de autenticidade"),0,1,"L",false);
+            $pdf->Output("F","pdfs/proponentes/$nome_pdf.pdf");
         }
-        $pdf->Output("D","Certificado.pdf");
+        //$pdf->Output("D","Certificado.pdf");
     }
+
+    
 }
 
 
