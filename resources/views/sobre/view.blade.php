@@ -3,17 +3,16 @@
 <!--Sobre-->
 <section class="about section-padding" id="section_2">
     <div class="container">
-        <ul class="nav nav-tabs">
-            <li class="nav-item dropdown">
-                <h2><a class=" dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Sobre</a>
-                <ul class="dropdown-menu">
+        <div class="dropdown">
+            <button class="btn custom-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Sobre
+            </button>
+            <ul class="dropdown-menu">
                 <li><a onclick="selecionarSecao(0)" class="dropdown-item" href="#"><p>O que é a <u class="text-success">SECITEC?</u></p></a></li>
                 <li><a onclick="selecionarSecao(1)" class="dropdown-item" href="#"><p>O que <u class="text-success">promovemos?</u></p></a></li>
                 <li><a onclick="selecionarSecao(2)" class="dropdown-item" href="#"><p>Como <u class="text-success">participar?</u></p></a></li>
-                </ul>
-                </h2>
-            </li>
-        </ul>
+            </ul>
+        </div>
         <!--SOBRE O EVENTO-->
         <div class="row show" id="sobre-section">
             <div class="col-lg-12 col-12 p-5 ">
