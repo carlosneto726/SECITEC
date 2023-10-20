@@ -1,2 +1,3 @@
 User-agent: *
 Disallow: /resources/views/admin/
+Disallow: /public/pdfs/

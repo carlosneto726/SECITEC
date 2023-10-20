@@ -135,3 +135,16 @@ MODIFY COLUMN tb_usuario.cpf VARCHAR(255) DEFAULT NULL,
 MODIFY COLUMN tb_usuario.email VARCHAR(255) NOT NULL,
 MODIFY COLUMN tb_usuario.token VARCHAR(255) NOT NULL,
 MODIFY COLUMN tb_usuario.status VARCHAR(255) NOT NULL;
+
+-- Query 9:
+--
+
+CREATE VIEW vw_proponente_evento AS
+SELECT `db_secitec`.`tb_proponente`.`nome` AS `nome`,
+`db_secitec`.`tb_evento`.`horas` AS `horas`,
+`db_secitec`.`tb_evento`.`titulo` AS `titulo`,
+`db_secitec`.`tb_tipo_evento`.`nome` AS `tipo_evento` 
+FROM (((`db_secitec`.`tb_proponente_evento` LEFT JOIN `db_secitec`.`tb_proponente` 
+ON(`db_secitec`.`tb_proponente_evento`.`id_proponente` = `db_secitec`.`tb_proponente`.`id`)) 
+LEFT JOIN `db_secitec`.`tb_evento` ON(`db_secitec`.`tb_proponente_evento`.`id_evento` = `db_secitec`.`tb_evento`.`id`)) 
+LEFT JOIN `db_secitec`.`tb_tipo_evento` ON(`db_secitec`.`tb_tipo_evento`.`id` = `db_secitec`.`tb_evento`.`id_tipo_evento`));

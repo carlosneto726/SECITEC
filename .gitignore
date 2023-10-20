@@ -3,6 +3,9 @@
 /public/build
 /public/hot
 /public/storage
+/public/pdfs/proponentes/*
+/public/pdfs/credenciamento/*
+/public/pdfs/usuarios/*
 /storage/*.key
 /vendor
 .env
