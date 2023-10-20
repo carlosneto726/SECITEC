@@ -14,7 +14,14 @@
             <button class="btn btn-danger position-absolute top-0 end-0" id="fecharCamera" onclick="fecharCamera()" hidden>Fechar Câmera</button>
         </div>
 
-        <h4 class="text-danger" id="titulo">Checkout</h4>
+        <div class="d-flex">
+            <h4 class="text-danger" id="titulo">Checkout</h4>
+            <span class="ms-auto">
+                <input type="checkbox" class="btn-check" id="btncheck-auto" autocomplete="off">
+                <label class="btn btn-sm btn-outline-danger" for="btncheck-auto">Checkout automático</label>
+            </span>
+        </div>
+
         <div class="mb-3">
             <input type="text" name="cpf" id="cpfCheckout" class="form-control" placeholder="CPF">
         </div>
@@ -159,11 +166,14 @@
                 drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
                 drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
                 outputData.value = code.data;
-                if(cpf != code.data){
-                    checkinout('/admin/presenca/checkout', {{ request('id_evento') }}, this, false, 'out')
-                    document.getElementById("cpfCheckout").value = "";
+
+                if(document.getElementById("btncheck-auto").checked){
+                    if(cpf != code.data){
+                        checkinout('/admin/presenca/checkout', {{ request('id_evento') }}, this, false, 'out')
+                        document.getElementById("cpfCheckout").value = "";
+                    }
+                    cpf = code.data;
                 }
-                cpf = code.data;
             } else {
 
             }
