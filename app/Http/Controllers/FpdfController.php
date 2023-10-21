@@ -139,13 +139,36 @@ class FpdfController extends Controller
 
             //Texto 2
             $pdf->SetTextColor(0, 0, 0); // Cor preta (R, G, B)
-            $pdf->SetFont('Arial','',20);
+            $pdf->SetFont('Arial','',20);               
 
+            if($tipo == "palestra"){
+                $texto = "ministrando a palestra de $evento";
+            }
+            if($tipo == "mini-curso"){
+                $texto = "ministrando o mini-curso de $evento";
+            }
+            if($tipo == "oficina"){
+                $texto = "ministrando a oficina de $evento";
+            }
+            if($tipo == "hackathon"){
+                $texto = "ministrando o hackathon de $evento";
+            }
+            if($tipo == "exposição"){
+                $texto = "realizou a exposição de $evento";
+            }
             if($tipo == "mesa redonda"){
-                $texto = "intermediando a ".$tipo;
+                $texto = "intermediando a mesa redonda de $evento";
+            }
+            if($tipo == "visita técnica"){
+                $texto = "ministrando para como instrutor da visita técnica de $evento";
+            }
+            if($tipo == "encontro de egressos"){
+                $texto = "intermediando a mesa redonda de $evento";
             }else{
                 $texto = "ministrando o(a) $tipo de $evento";
             }
+
+            
             $pdf->MultiCell(0,20,utf8_decode("participou da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, $texto, com carga horária total de $horas:00 hora(s)."),0,"C",false);
             
             $x1 = 0;
