@@ -110,7 +110,6 @@ class FpdfController extends Controller
 
     public function certificadoProponente(){
         $inicio = microtime(true);
-        ini_set('max_execution_time', 1800);
         //inicial   
         $vw_proponente = DB::select("SELECT * FROM vw_proponente_evento");
         foreach($vw_proponente as $dado){
@@ -162,7 +161,7 @@ class FpdfController extends Controller
             $pdf->Output("F","pdfs/proponentes/$nome_pdf.pdf");
         }
         $fim = microtime(true);
-        echo "terminou, demorou $fim - $inicio";
+        echo "terminou, demorou ".($fim - $inicio)."s";
     }
     private function converteNomeArquivo($nome, $evento) {
         return strtoupper(preg_replace("/[^a-zA-Z0-9.]/", "_", iconv('UTF-8', 'ASCII//TRANSLIT', $nome."-".$evento)));

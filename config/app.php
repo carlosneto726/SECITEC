@@ -144,6 +144,14 @@ return [
         // 'store'  => 'redis',
     ],
 
+
+
+
+
+    'http' => [
+        'timeout' => 1800, // Valor em segundos (5 minutos)
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
