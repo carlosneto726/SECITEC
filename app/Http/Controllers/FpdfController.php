@@ -109,6 +109,8 @@ class FpdfController extends Controller
     //Certificado para os proponentes
 
     public function certificadoProponente(){
+        $inicio = microtime(true);
+        ini_set('max_execution_time', 1800);
         //inicial   
         $vw_proponente = DB::select("SELECT * FROM vw_proponente_evento");
         foreach($vw_proponente as $dado){
@@ -139,7 +141,13 @@ class FpdfController extends Controller
             //Texto 2
             $pdf->SetTextColor(0, 0, 0); // Cor preta (R, G, B)
             $pdf->SetFont('Arial','',20);
-            $pdf->MultiCell(0,20,utf8_decode("participou da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG, como proponente ministrando o(a) $tipo de $evento, com carga horária total de $horas:00 hora(s)."),0,"C",false);
+
+            if($tipo == "mesa redonda"){
+                $texto = "intermediando a ".$tipo;
+            }else{
+                $texto = "ministrando o(a) $tipo de $evento";
+            }
+            $pdf->MultiCell(0,20,utf8_decode("participou da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, $texto, com carga horária total de $horas:00 hora(s)."),0,"C",false);
             
             $x1 = 0;
             $y1 = 475;
@@ -153,10 +161,12 @@ class FpdfController extends Controller
             $pdf->Cell(0,20,utf8_decode("Comprovação de autenticidade"),0,1,"L",false);
             $pdf->Output("F","pdfs/proponentes/$nome_pdf.pdf");
         }
-        //$pdf->Output("D","Certificado.pdf");
+        $fim = microtime(true);
+        echo "terminou, demorou $fim - $inicio";
     }
-
-    
+    private function converteNomeArquivo($nome, $evento) {
+        return strtoupper(preg_replace("/[^a-zA-Z0-9.]/", "_", iconv('UTF-8', 'ASCII//TRANSLIT', $nome."-".$evento)));
+    }
 }
 
 

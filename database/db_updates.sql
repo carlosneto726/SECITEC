@@ -144,7 +144,11 @@ SELECT tb_proponente.nome AS nome,
 tb_evento.horas AS horas,
 tb_evento.titulo AS titulo,
 tb_tipo_evento.nome AS tipo_evento 
-FROM (((tb_proponente_evento LEFT JOIN tb_proponente 
-ON(tb_proponente_evento.id_proponente = tb_proponente.id)) 
-LEFT JOIN tb_evento ON(tb_proponente_evento.id_evento = tb_evento.id)) 
-LEFT JOIN tb_tipo_evento ON(tb_tipo_evento.id = tb_evento.id_tipo_evento));
+FROM 
+(
+  (
+    (tb_proponente_evento LEFT JOIN tb_proponente ON tb_proponente_evento.id_proponente = tb_proponente.id) 
+    LEFT JOIN tb_evento ON tb_proponente_evento.id_evento = tb_evento.id
+  ) 
+  LEFT JOIN tb_tipo_evento ON tb_tipo_evento.id = tb_evento.id_tipo_evento
+);
