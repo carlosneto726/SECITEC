@@ -145,28 +145,26 @@ class FpdfController extends Controller
             if($tipo == "palestra"){
                 $texto = "ministrando a palestra de $evento";
             }
-            if($tipo == "mini-curso"){
+            else if($tipo == "mini-curso"){
                 $texto = "ministrando o mini-curso de $evento";
             }
-            if($tipo == "oficina"){
+            else if($tipo == "oficina"){
                 $texto = "ministrando a oficina de $evento";
             }
-            if($tipo == "hackathon"){
-                $texto = "ministrando o hackathon de $evento";
+            else if($tipo == "hackathon"){
+                $texto = "ministrando o Hackathon";
             }
-            if($tipo == "exposição"){
+            else if($tipo == "exposição"){
                 $texto = "realizou a exposição de $evento";
             }
-            if($tipo == "mesa redonda"){
+            else if($tipo == "mesa redonda"){
                 $texto = "intermediando a mesa redonda de $evento";
             }
-            if($tipo == "visita técnica"){
+            else if($tipo == "visita técnica"){
                 $texto = "ministrando para como instrutor da visita técnica de $evento";
             }
-            if($tipo == "encontro de egressos"){
+            else if($tipo == "encontro de egressos"){
                 $texto = "intermediando a mesa redonda de $evento";
-            }else{
-                $texto = "ministrando o(a) $tipo de $evento";
             }
 
             
