@@ -68,7 +68,7 @@ Route::get('/admin/eventos/all', [MonitorController::class, 'getEventos']);
 
 // Rotas do FpdfController para gerar os certificados
 Route::get('/admin/usuario/certificados', [FpdfController::class, 'certificadoUsuario']);
-Route::get('/admin/proponente/certificados', [FpdfController::class, 'certificadoProponente']);
+Route::get('/admin/proponente/certificados/{id_proponente}', [FpdfController::class, 'certificadoProponente']);
 
 // Rotas do ValidarUsuariosController para validar o usuário, criar conta, validar email
 Route::post('/usuarios/cadastrar/{token}', [ValidarUsuariosController::class, 'addUsuario']);

@@ -109,9 +109,10 @@ class FpdfController extends Controller
     //Certificado para os proponentes
 
     public function certificadoProponente(){
-        $inicio = microtime(true);
         //inicial   
-        $vw_proponente = DB::select("SELECT * FROM vw_proponente_evento");
+        $id_proponente = request("id_proponente");
+
+        $vw_proponente = DB::select("SELECT * FROM vw_proponente_evento WHERE pid = ?;", [$id_proponente]);
         foreach($vw_proponente as $dado){
             $pdf = new FPDF("L","pt","A4");
             $nome = $dado->nome;
@@ -183,8 +184,8 @@ class FpdfController extends Controller
             $pdf->Cell(0,20,utf8_decode("Comprovação de autenticidade"),0,1,"L",false);
             $pdf->Output("F","pdfs/proponentes/$nome_pdf.pdf");
         }
-        $fim = microtime(true);
-        echo "terminou, demorou ".($fim - $inicio)."s";
+        return redirect("/admin/proponente");
+
     }
     private function converteNomeArquivo($nome, $evento) {
         return strtoupper(preg_replace("/[^a-zA-Z0-9.]/", "_", iconv('UTF-8', 'ASCII//TRANSLIT', $nome."-".$evento)));

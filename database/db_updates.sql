@@ -141,6 +141,7 @@ MODIFY COLUMN tb_usuario.status VARCHAR(255) NOT NULL;
 
 CREATE VIEW vw_proponente_evento AS
 SELECT tb_proponente.nome AS nome,
+tb_proponente.id AS pid,
 tb_evento.horas AS horas,
 tb_evento.titulo AS titulo,
 tb_tipo_evento.nome AS tipo_evento 
