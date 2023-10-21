@@ -93,3 +93,7 @@ Route::post('/meu-perfil/atualizar', [UsuariosController::class, 'updateMeuPerfi
 Route::get('/meu-perfil/deletar', [UsuariosController::class, 'deletarMeuPerfil']);
 Route::post('/usuarios/cadastarEvento', [UsuariosController::class, 'cadastrarEvento']);
 Route::post('/usuarios/cadastarHackathon', [UsuariosController::class, 'cadastrarHackathon']);
+
+
+
+Route::get('/monitoramento', [Controller::class, 'viewMonitoramento']);

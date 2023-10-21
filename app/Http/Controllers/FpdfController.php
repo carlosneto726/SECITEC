@@ -8,7 +8,6 @@ use App\Fpdf\FPDF;
 class FpdfController extends Controller
 {
     public function certificadoUsuario(){
-        $pdf = new FPDF("L","pt","A4");
         $vw_evento = DB::select("SELECT * FROM vw_evento");
         $usuarios = []; // Array para armazenar os dados de cada usuário
 
@@ -43,6 +42,7 @@ class FpdfController extends Controller
 
 
         foreach($usuarios as $nome => $dadosUsuario){
+            $pdf = new FPDF("L","pt","A4");
             //inicial
             $pdf->AddPage();
             $imagePath = 'images/Certificado_frente.png';
@@ -152,34 +152,35 @@ class FpdfController extends Controller
                 $texto = "ministrando a oficina de $evento";
             }
             else if($tipo == "hackathon"){
-                $texto = "ministrando o Hackathon";
+                $texto = "promovendo o Hackathon";
             }
             else if($tipo == "exposição"){
-                $texto = "realizou a exposição de $evento";
+                $texto = "realizando a exposição de $evento";
             }
             else if($tipo == "mesa redonda"){
                 $texto = "intermediando a mesa redonda de $evento";
             }
             else if($tipo == "visita técnica"){
-                $texto = "ministrando para como instrutor da visita técnica de $evento";
+                $texto = "como instrutor da visita técnica de $evento";
             }
             else if($tipo == "encontro de egressos"){
                 $texto = "intermediando a mesa redonda de $evento";
             }
 
             
-            $pdf->MultiCell(0,20,utf8_decode("participou da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, $texto, com carga horária total de $horas:00 hora(s)."),0,"C",false);
+            $pdf->MultiCell(0,20,utf8_decode("participou da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, $texto, com carga horária total de $horas hora(s)."),0,"C",false);
             
             $x1 = 0;
             $y1 = 475;
             $x2 = 900;
             $y2 = 475;
             $nome_pdf = $this->converteNomeArquivo($nome, $evento);
-            $pdf->Line($x1,$y1,$x2,$y2);//
+            $pdf->Line($x1,$y1,$x2,$y2);
+            $pdf->Image('images/assinaturas.png', 220, 485, 400);
             $pdf->Image('images/qrAutenticidade.png', 740,485,100,100);
-            $pdf->SetFont("","",20);
-            $pdf->SetY(500);
-            $pdf->Cell(0,20,utf8_decode("Comprovação de autenticidade"),0,1,"L",false);
+            $pdf->SetY(485);
+            $pdf->SetFont("","",12);
+            $pdf->Cell(0,5,utf8_decode("Comprovação de autenticidade"),0,1,"L",false);
             $pdf->Output("F","pdfs/proponentes/$nome_pdf.pdf");
         }
         return redirect("/admin/proponente");
