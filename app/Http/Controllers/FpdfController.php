@@ -175,10 +175,10 @@ class FpdfController extends Controller
             $x2 = 900;
             $y2 = 475;
             $nome_pdf = $this->converteNomeArquivo($nome, $evento);
-            $pdf->Ln(135);
             $pdf->Line($x1,$y1,$x2,$y2);//
             $pdf->Image('images/qrAutenticidade.png', 740,485,100,100);
             $pdf->SetFont("","",20);
+            $pdf->SetY(500);
             $pdf->Cell(0,20,utf8_decode("Comprovação de autenticidade"),0,1,"L",false);
             $pdf->Output("F","pdfs/proponentes/$nome_pdf.pdf");
         }
