@@ -192,21 +192,6 @@ class FpdfController extends Controller
     private function converteNomeArquivo($nome, $evento) {
         return strtoupper(preg_replace("/[^a-zA-Z0-9.]/", "_", iconv('UTF-8', 'ASCII//TRANSLIT', $nome."-".$evento)));
     }
-
-    public function tarefaDemoradaAsync()
-    {
-        $loop = Factory::create();
-
-        $promise = new Promise(function ($resolve, $reject) use ($loop) {
-            $this->certificadoUsuario();
-
-        });
-
-        $loop->run();
-
-        return $promise;
-    }
-
 }
 
 
