@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Fpdf\FPDF;
+use React\EventLoop\Factory;
+use React\Promise\Promise;
+
 class FpdfController extends Controller
 {
     public function certificadoUsuario(){
@@ -189,6 +192,21 @@ class FpdfController extends Controller
     private function converteNomeArquivo($nome, $evento) {
         return strtoupper(preg_replace("/[^a-zA-Z0-9.]/", "_", iconv('UTF-8', 'ASCII//TRANSLIT', $nome."-".$evento)));
     }
+
+    public function tarefaDemoradaAsync()
+    {
+        $loop = Factory::create();
+
+        $promise = new Promise(function ($resolve, $reject) use ($loop) {
+            $this->certificadoUsuario();
+
+        });
+
+        $loop->run();
+
+        return $promise;
+    }
+
 }
 
 
