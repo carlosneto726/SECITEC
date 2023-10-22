@@ -9,7 +9,11 @@ trait AdminTrait {
         $eventos = DB::select(" SELECT e.*, te.nome AS tipo_evento_nome
                                 FROM tb_evento AS e
                                 INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
-                                WHERE te.id != 4 ORDER BY titulo;
+                                WHERE te.id != 4
+                                AND e.id != 80
+                                AND e.id != 83
+                                AND e.id != 84
+                                ORDER BY titulo;
         ");
 
         foreach ($eventos as $evento) {
