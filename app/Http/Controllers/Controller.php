@@ -70,9 +70,4 @@ class Controller extends BaseController
                                     WHERE tb_proponente_evento.id_evento = ?;", [$id]);
         return view("evento.view", compact("evento", "proponentes"));
     }
-
-
-    public function viewMonitoramento(Request $request){
-        return view("monitoramento.view");
-    }
 }

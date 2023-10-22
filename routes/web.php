@@ -96,4 +96,4 @@ Route::post('/usuarios/cadastarHackathon', [UsuariosController::class, 'cadastra
 
 
 
-Route::get('/monitoramento', [Controller::class, 'viewMonitoramento']);
+Route::get('/monitoramento', [UsuariosController::class, 'viewMonitoramento']);

@@ -41,6 +41,10 @@ class UsuariosController extends Controller
         }
     }
 
+    public function viewMonitoramento(Request $request){
+        $usuario = DB::select("SELECT * FROM tb_usuario WHERE id = ?;", [$this->id_usuario])[0];
+        return view("monitoramento.view", compact('usuario'));
+    }
 
     public function cadastrarHackathon(Request $request)
     {
@@ -208,6 +212,8 @@ class UsuariosController extends Controller
                                 FROM tb_evento AS e
                                 INNER JOIN tb_tipo_evento AS te ON e.id_tipo_evento = te.id
                                 WHERE e.id != 80
+                                AND e.id != 83
+                                AND e.id != 84
                                 ORDER BY dia, horarioI
         ");
         $usuario = DB::select("SELECT * FROM tb_usuario WHERE id = ?;", [$this->id_usuario])[0];
