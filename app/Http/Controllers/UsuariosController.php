@@ -187,9 +187,6 @@ class UsuariosController extends Controller
 
     public function verificaConflito($eventoId, $usuarioId)
     {
-        if($eventoId == 39 or $eventoId == 41 or $eventoId == 52 or $eventoId == 77) {
-            return false;
-        }
         $evento = DB::select("SELECT * FROM tb_evento WHERE id = ?;", [$eventoId])[0];
         $dia = $evento->dia;
         $horarioI = $evento->horarioI;
