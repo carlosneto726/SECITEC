@@ -43,8 +43,8 @@
             <tr>
                 <th scope="col">nome</th>
                 <th scope="col">cpf</th>
-                <th scope="col">checkin</th>
-                <th scope="col">checkout</th>
+                <th scope="col">in</th>
+                <th scope="col">out</th>
                 <th class="d-none d-md-block" scope="col">status</th>
                 <th scope="col">data</th>
             </tr>
@@ -56,10 +56,10 @@
 
                 @endphp
                 <tr>
-                    <td>{{$usuario->nome}}</td>
+                    <td class="text-break">{{$usuario->nome}}</td>
                     <td class="text-break">{{$usuario->cpf}}</td>
-                    <td id="{{$usuario->id}}">{{$usuario->checkin}}</td>
-                    <td>{{$usuario->checkout}}</td>
+                    <td class="text-break" id="{{$usuario->id}}">{{$usuario->checkin}}</td>
+                    <td class="text-break" >{{$usuario->checkout}}</td>
                     <td class="d-none d-md-block">{{$usuario->status}}</td>
                     <td>{{ date_format($datetime, 'd/m') }}</td>
 
