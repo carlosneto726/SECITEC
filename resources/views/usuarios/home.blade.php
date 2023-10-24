@@ -123,6 +123,8 @@
 
         // FUNCOES AUXILIARES 
         function agruparEventosPorDia(eventos) {
+            const hoje = new Date().getDate();
+            eventos = eventos.filter(e => parseInt(e.dia.slice(-2)) >= hoje)
             const grupos = { Hackathon: [] };
 
             eventos.forEach(evento => {
@@ -365,7 +367,7 @@
             }
         }
 
-        function renderizarEventosDia(dia, filtroTitulo) {
+function renderizarEventosDia(dia, filtroTitulo) {
     let eventos = "";
     eventosAgrupados[dia].forEach(evento => {
         if (filtroTitulo === "" || evento.titulo.toLowerCase().includes(filtroTitulo.toLowerCase())) {
