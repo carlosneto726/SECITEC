@@ -147,7 +147,6 @@ class UsuariosController extends Controller
 
     public function verificarConflitoHackathon($eventoId, $usuarioId, $cadastroHackathon)
     {
-
         if ($cadastroHackathon) {
             $queryConflitoAbertura = "SELECT COUNT(*) AS total_conflitos FROM tb_evento AS evento
                 INNER JOIN tb_evento_usuario AS eventoRelacao ON evento.id = eventoRelacao.id_evento
@@ -188,6 +187,9 @@ class UsuariosController extends Controller
     public function verificaConflito($eventoId, $usuarioId)
     {
         $evento = DB::select("SELECT * FROM tb_evento WHERE id = ?;", [$eventoId])[0];
+        if($evento->id_tipo_evento == 5) {
+            return false;
+        }
         $dia = $evento->dia;
         $horarioI = $evento->horarioI;
         $horarioF = "$evento->horarioF";
@@ -196,6 +198,7 @@ class UsuariosController extends Controller
                   WHERE eventoRelacao.id_usuario = ? 
                   AND evento.dia = ? 
                   AND evento.id_tipo_evento != 4
+                  AND evento.id_tipo_evento != 5
                   AND ('$horarioI' < evento.horarioF) AND ('$horarioF' > evento.horarioI)";
         $resultado = DB::select($query, [$usuarioId, $dia]);
         if ($resultado[0]->total_conflitos > 0) {
