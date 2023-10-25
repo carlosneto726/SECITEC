@@ -394,7 +394,7 @@ function renderizarEventosDia(dia, filtroTitulo) {
                                         Vagas: <strong style="color: ${evento.vagas_restantes > 0 ? '' : 'red'};" id="vagas_restantes${evento.id}">${evento.vagas_restantes}</strong></p>  
                                     <div class="row">
                                         <div class="col-6">
-                                            <button ${evento.titulo.slice(0, 8) == 'CANCELAD' ? 'disabled' : ''} id="${evento.id}" onclick="enviarRequisicao(${evento.id})"
+                                            <button ${evento.titulo.slice(0, 8) == 'CANCELAD' && !evento.usuario_cadastrado ? 'disabled' : ''} id="${evento.id}" onclick="enviarRequisicao(${evento.id})"
                                                 class="btn ${situacaoCadastroRender(evento.usuario_cadastrado, evento.vagas_restantes > 0, true)}">
 
                                                 ${situacaoCadastroRender(evento.usuario_cadastrado, evento.vagas_restantes > 0, false)}
@@ -533,6 +533,7 @@ function renderizarEventosDia(dia, filtroTitulo) {
             })
         }
         function enviarRequisicao(eventoId) {
+            const eventoTitulo = eventosMapeados.find(e => e.id == eventoId).titulo;
             var usuarioId = `{{ $usuario->id }}`;
 
             $.ajax({
@@ -556,12 +557,18 @@ function renderizarEventosDia(dia, filtroTitulo) {
                             if (vagas.style.color == 'red') {
                                 vagas.style.color = 'gray';
                             }
+                            if(eventoTitulo.slice(0, 8) == 'CANCELAD') {
+                                eventoBtn.disabled = true;
+                            }      
                             mostrarAlerta("#f05d5d", "Descadastrado com Sucesso!");
                             break;
                         case "saiuFila":
                             eventoBtn.classList.remove('btn-danger');
                             eventoBtn.classList.add('btn-warning');
                             eventoBtn.innerHTML = 'Entrar na Fila'
+                            if(eventoTitulo.slice(0, 8) == 'CANCELAD') {
+                                eventoBtn.disabled = true;
+                            }
                             mostrarAlerta("#f05d5d", "Descadastrado com Sucesso!");
                             break;
                         case "cadastroNormal":
@@ -580,7 +587,9 @@ function renderizarEventosDia(dia, filtroTitulo) {
                             eventoBtn.classList.remove('btn-danger');
                             eventoBtn.classList.add('btn-warning');
                             eventoBtn.innerHTML = 'Entrar na Fila'
-                            // TALVEZ COLOCAR UM AVISO E UM BOTAO PARA SABER SE REALMENTE QUER SE DESCADASTRAR
+                            if(eventoTitulo.slice(0, 8) == 'CANCELAD') {
+                                eventoBtn.disabled = true;
+                            }                            
                             mostrarAlerta("#f05d5d", "Descadastrado com Sucesso!");
                             break;
 
