@@ -60,11 +60,11 @@ Route::post('/admin/presenca/checkout', [PresencaController::class, 'checkout'])
 Route::get('/admin/presenca/checkout/{id_evento}/{nome_evento}', [PresencaController::class, 'viewCheckout']);
 
 // MonitorController
-Route::get('/admin/adicionar-usuario', [MonitorController::class, 'viewAdicionarUsuario']);
-Route::post('/admin/adicionar-usuario/cadastrar', [MonitorController::class, 'addUsuario']);
-Route::post('/admin/eventos/byId', [MonitorController::class, 'getEventosByUserId']);
-Route::post('/admin/adicionar-usuario-evento/cadastrar', [MonitorController::class, 'AddUsuariosEventos']);
-Route::get('/admin/eventos/all', [MonitorController::class, 'getEventos']);
+Route::get('/admin/adicionar-usuario', [PresencaController::class, 'viewAdicionarUsuario']);
+Route::post('/admin/adicionar-usuario/cadastrar', [PresencaController::class, 'addUsuario']);
+Route::post('/admin/eventos/byId', [PresencaController::class, 'getEventosByUserId']);
+Route::post('/admin/adicionar-usuario-evento/cadastrar', [PresencaController::class, 'AddUsuariosEventos']);
+Route::get('/admin/eventos/all', [PresencaController::class, 'getEventos']);
 
 // Rotas do FpdfController para gerar os certificados
 Route::get('/admin/usuario/certificados', [FpdfController::class, 'certificadoUsuario']);
