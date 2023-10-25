@@ -394,12 +394,12 @@ function renderizarEventosDia(dia, filtroTitulo) {
                                         Vagas: <strong style="color: ${evento.vagas_restantes > 0 ? '' : 'red'};" id="vagas_restantes${evento.id}">${evento.vagas_restantes}</strong></p>  
                                     <div class="row">
                                         <div class="col-6">
-                                            <div id="${evento.id}" onclick="enviarRequisicao(${evento.id})"
+                                            <button ${evento.titulo.slice(0, 8) == 'CANCELAD' ? 'disabled' : ''} id="${evento.id}" onclick="enviarRequisicao(${evento.id})"
                                                 class="btn ${situacaoCadastroRender(evento.usuario_cadastrado, evento.vagas_restantes > 0, true)}">
 
                                                 ${situacaoCadastroRender(evento.usuario_cadastrado, evento.vagas_restantes > 0, false)}
                                                 
-                                            </div>
+                                            </button>
                                         </div>
                                         <div class="col-6 tipo-evento-wrapper">
                                             <span class="tipo-evento">${evento.tipo_evento_nome}</span>
