@@ -91,7 +91,7 @@ trait PresencaTrait {
 
         if($confirmacao == false || $confirmacao){
             DB::update("UPDATE tb_evento_usuario
-                        SET status = 0, checkout = ?
+                        SET status = 1, checkout = ?
                         WHERE id = ?;",
                         [$horarioAtual, $id_eventousuario]);
             return response()->json(
