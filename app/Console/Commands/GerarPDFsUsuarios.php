@@ -79,7 +79,7 @@ class GerarPDFsUsuarios extends Command
             //Nome do proponente
             $pdf->SetTextColor(0, 128, 0); // Cor verde claro (R, G, B)
             $pdf->SetFont('Arial','B',24);
-            $pdf->Cell(0,20,utf8_decode($nome),0,1,"C",false);
+            $pdf->Cell(0,20,utf8_decode(strtoupper($nome)),0,1,"C",false);
             $pdf->Ln(20);
             
             //Texto 2

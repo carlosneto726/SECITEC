@@ -28,7 +28,7 @@
                         <div class="container">
                             <small class="opacity-50">Informe o seu email para verificarmos se o seu email exite. Será enviado um email com link para você se cadastrar. <br> <strong>Cheque o a sua caixa de entrada e sua caixa de spam</strong>.</small>
                         </div>
-                        <button class="btn btn-success w-100" type="submit" onclick="loading(this)">
+                        <button class="btn btn-success w-100 disabled" type="submit" onclick="loading(this)">
                             Enviar email
                         </button>
                     </form>
