@@ -57,7 +57,7 @@
                 @endphp
                 <tr>
                     <td class="text-break">{{$usuario->nome}}</td>
-                    <td class="text-break">{{$usuario->cpf}}</td>
+                    <td class="text-break"><a href="#" onclick="preencherCPF('{{$usuario->cpf}}'); checkinout('/admin/presenca/checkin', {{ request('id_evento') }}, this, false, 'in')">{{$usuario->cpf}}</a></td>
                     <td class="text-break" id="{{$usuario->id}}">{{$usuario->checkin}}</td>
                     <td class="text-break" >{{$usuario->checkout}}</td>
                     <td class="d-none d-md-block">{{$usuario->status}}</td>
@@ -199,6 +199,10 @@
             }
         }
         requestAnimationFrame(tick);
+    }
+
+    function preencherCPF(cpf){
+        document.getElementById("cpfCheckin").value = cpf;
     }
 </script>
 <script src="{{ asset('js/admin.js') }}?v=1.1"></script>
