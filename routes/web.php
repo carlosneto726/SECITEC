@@ -67,9 +67,7 @@ Route::post('/admin/adicionar-usuario-evento/cadastrar', [PresencaController::cl
 Route::get('/admin/eventos/all', [PresencaController::class, 'getEventos']);
 
 // Rotas do FpdfController para gerar os certificados
-Route::get('/admin/usuario/certificados', [FpdfController::class, 'certificadoUsuario']);
 Route::get('/admin/proponente/certificados/{id_proponente}', [FpdfController::class, 'certificadoProponente']);
-Route::get('/teste', [FpdfController::class, 'tarefaDemoradaAsync']);
 
 // Rotas do ValidarUsuariosController para validar o usuário, criar conta, validar email
 Route::post('/usuarios/cadastrar/{token}', [ValidarUsuariosController::class, 'addUsuario']);
@@ -94,7 +92,3 @@ Route::post('/meu-perfil/atualizar', [UsuariosController::class, 'updateMeuPerfi
 Route::get('/meu-perfil/deletar', [UsuariosController::class, 'deletarMeuPerfil']);
 Route::post('/usuarios/cadastarEvento', [UsuariosController::class, 'cadastrarEvento']);
 Route::post('/usuarios/cadastarHackathon', [UsuariosController::class, 'cadastrarHackathon']);
-
-
-
-Route::get('/monitoramento', [UsuariosController::class, 'viewMonitoramento']);

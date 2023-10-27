@@ -99,12 +99,14 @@ class FpdfController extends Controller
             $pdf->Cell(200,20,"0".$soma.":00:00",1,1,"R");
             $pdf->Ln(30);
             $pdf->Ln(30); //pula linha
+            
+            $pdf->Ln(30);
+            $pdf->SetX(200);
+            $pdf->SetX(200);
+            //$pdf->MultiCell(1000,10, $i);
+            $nome_pdf = $this->converteNomeArquivo($nome, "");
+            $pdf->Output("F","pdfs/usuarios/$nome_pdf.pdf");
         }
-        $pdf->Ln(30);
-        $pdf->SetX(200);
-        $pdf->SetX(200);
-        //$pdf->MultiCell(1000,10, $i);
-        $pdf->Output("F","pdfs/usuarios/certificado_usuarios.pdf");
     }
 
     //------------------------------------------------------------------------//
