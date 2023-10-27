@@ -115,11 +115,17 @@ CREATE TABLE tb_evento_usuario (
 -- (Veja abaixo para a visão atual)
 --
 CREATE VIEW vw_evento AS 
-SELECT tb_usuario.nome AS nome, 
-        tb_evento.horas AS horas, 
-        tb_evento.titulo AS titulo 
-FROM (tb_evento_usuario LEFT JOIN tb_usuario ON (tb_evento_usuario.id_usuario = tb_usuario.id))
-    LEFT JOIN tb_evento ON(tb_evento_usuario.id_evento = tb_evento.id);
+SELECT tb_usuario.id AS id, 
+	tb_usuario.nome AS nome, 
+	tb_evento.horas AS horas, 
+	tb_evento.titulo AS titulo, 
+	tb_evento_usuario.checkin as checkin, 
+	tb_evento_usuario.checkout as checkout 
+FROM tb_evento_usuario 
+LEFT JOIN tb_usuario ON tb_evento_usuario.id_usuario = tb_usuario.id 
+LEFT JOIN tb_evento ON tb_evento_usuario.id_evento = tb_evento.id 
+WHERE tb_evento_usuario.checkin != '' 
+OR tb_evento_usuario.checkout != '';
 
 
 -- --------------------------------------------------------

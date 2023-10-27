@@ -59,8 +59,8 @@
                 <tr>
                     <td class="text-break">{{$usuario->nome}}</td>
                     <td class="text-break">{{$usuario->cpf}}</td>
-                    <td class="text-break" id="{{$usuario->id}}">{{$usuario->checkin}}</td>
-                    <td class="text-break" >{{$usuario->checkout}}</td>
+                    <td class="text-break">{{$usuario->checkin}}</td>
+                    <td class="text-break" id="{{$usuario->id}}">{{$usuario->checkout}}</td>
                     <td class="d-none d-md-block">{{$usuario->status}}</td>
                     <td>{{ date_format($datetime, 'd/m') }}</td>
 

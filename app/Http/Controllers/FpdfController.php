@@ -11,7 +11,8 @@ use React\Promise\Promise;
 class FpdfController extends Controller
 {
     public function certificadoUsuario(){
-        $vw_evento = DB::select("SELECT * FROM vw_evento");
+        $id_usuario = request("id_usuario");
+        $vw_evento = DB::select("SELECT * FROM vw_evento WHERE vw_evento.id = ?;", [$id_usuario]);
         $usuarios = []; // Array para armazenar os dados de cada usuário
 
         foreach($vw_evento as $linha){
@@ -79,7 +80,7 @@ class FpdfController extends Controller
             $pdf->Image($imagePath, 0,0,$pdf->GetPageWidth(), $pdf->GetPageHeight());
             $pdf->SetFont('Arial','',16);
             $pdf->Ln(103); //pula linha           
-            $vw_evento2 = DB::select("SELECT * FROM vw_evento"); //Retorna um array com informações do banco de dados da view vw_evento
+            $vw_evento2 = DB::select("SELECT * FROM vw_evento WHERE vw_evento.id = ?;", [$id_usuario]); //Retorna um array com informações do banco de dados da view vw_evento
             $pdf->SetFont('arial','B',14);
             $pdf->Cell(585,20,utf8_decode('Eventos participados'),1,0,"C");
             $pdf->Cell(200,20,'Horas',1,1,"C");
