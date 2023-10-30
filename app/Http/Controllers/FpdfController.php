@@ -74,6 +74,19 @@ class FpdfController extends Controller
             $pdf->SetFont('Arial','',20);
             $pdf->MultiCell(0,20,utf8_decode(" participou do evento Semana de Educação, Ciência e Tecnologia (SECITEC) 2023, realizado nos dias 23 à 26 de outubro, com carga horário total de ".$soma.":00 hora(s), conforme descrito no verso."),0,"C",false);
 
+
+            $x1 = 0;
+            $y1 = 475;
+            $x2 = 900;
+            $y2 = 475;
+            $pdf->Line($x1,$y1,$x2,$y2);
+            $pdf->Image('images/assinaturas.png', 220, 485, 400);
+            $pdf->Image('images/qrAutenticidade.png', 740,485,100,100);
+            $pdf->SetY(485);
+            $pdf->SetFont("","",12);
+            $pdf->Cell(0,5,utf8_decode("Comprovação de autenticidade"),0,1,"L",false);
+
+
             //verso
             $pdf->AddPage();
             $imagePath = 'images/Certificado_verso.png';
@@ -192,6 +205,60 @@ class FpdfController extends Controller
         return redirect("/admin/proponente");
 
     }
+
+
+    public function certificadoDesenvolvedor(){
+
+        $desenvolvedor = DB::select("SELECT * FROM tb_desenvolvedor;");
+
+        foreach($desenvolvedor as $dado){
+            $pdf = new FPDF("L","pt","A4");
+            $nome = $dado->nome;
+            $horas = 80;
+
+
+            $pdf->AddPage();
+            $imagePath = 'images/Certificado_frente.png';
+            $pdf->Image($imagePath, 0,0,$pdf->GetPageWidth(), $pdf->GetPageHeight());
+            $pdf->SetFont('Arial','',20);
+            $pdf->Ln(100); //pula linha          
+            $pdf->Ln(80); //pula linha
+
+            $pdf->SetFont('Arial','',20);
+            //Texto 1
+            $pdf->Cell(0,20,utf8_decode("Certificamos que,"),0,1,"C",false);
+            $pdf->Ln(20);
+
+            //Nome do proponente
+            $pdf->SetTextColor(0, 128, 0); // Cor verde claro (R, G, B)
+            $pdf->SetFont('Arial','B',24);
+            $pdf->Cell(0,20,utf8_decode($nome),0,1,"C",false);
+            $pdf->Ln(20);
+
+            //Texto 2
+            $pdf->SetTextColor(0, 0, 0); // Cor preta (R, G, B)
+            $pdf->SetFont('Arial','',20);
+            
+            $pdf->MultiCell(0,20,utf8_decode("participou ativamente na criação e desenvolvimento do sistema de divulgação e credenciamento para a Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, com carga horária total de $horas hora(s)."),0,"C",false);
+            
+            $x1 = 0;
+            $y1 = 475;
+            $x2 = 900;
+            $y2 = 475;
+            $nome_pdf = $this->converteNomeArquivo($nome, "");
+            $pdf->Line($x1,$y1,$x2,$y2);
+            $pdf->Image('images/assinaturas.png', 220, 485, 400);
+            $pdf->Image('images/qrAutenticidade.png', 740,485,100,100);
+            $pdf->SetY(485);
+            $pdf->SetFont("","",12);
+            $pdf->Cell(0,5,utf8_decode("Comprovação de autenticidade"),0,1,"L",false);
+            $pdf->Output("F","pdfs/proponentes/$nome_pdf.pdf");
+        }
+        return redirect("/admin/proponente");
+
+    }
+
+
     private function converteNomeArquivo($nome, $evento) {
         return strtoupper(preg_replace("/[^a-zA-Z0-9.]/", "_", iconv('UTF-8', 'ASCII//TRANSLIT', $nome."-".$evento)));
     }
