@@ -72,15 +72,61 @@ class Controller extends BaseController
     }
 
     public function viewCertificados(Request $request){
-        $certificados = [];
+        $certificados_usuario = [];
+        $certificados_proponente = [];
+        $certificados_monitor = [];
+        $certificados_desenvolvedor = [];
+        $certificados_credenciamento = [];
+        $certificados_comissao = [];
 
         $files = scandir('pdfs/usuarios');
         
         foreach ($files as $file) {
             if ($file != '.' && $file != '..') {
-                array_push($certificados, $file);
+                array_push($certificados_usuario, $file);
             }
         }
-        return view("certificados.view", compact("certificados"));
+
+        $files = scandir('pdfs/proponentes');
+        
+        foreach ($files as $file) {
+            if ($file != '.' && $file != '..') {
+                array_push($certificados_proponente, $file);
+            }
+        }
+
+        $files = scandir('pdfs/organizadores/MONITORES');
+        
+        foreach ($files as $file) {
+            if ($file != '.' && $file != '..') {
+                array_push($certificados_monitor, $file);
+            }
+        }
+
+        $files = scandir('pdfs/organizadores\DESENVOLVEDORES');
+        
+        foreach ($files as $file) {
+            if ($file != '.' && $file != '..') {
+                array_push($certificados_desenvolvedor, $file);
+            }
+        }
+
+        $files = scandir('pdfs/organizadores/COMISSAO');
+        
+        foreach ($files as $file) {
+            if ($file != '.' && $file != '..') {
+                array_push($certificados_comissao, $file);
+            }
+        }
+
+        $files = scandir('pdfs/organizadores/CREDENCIAMENTO');
+        
+        foreach ($files as $file) {
+            if ($file != '.' && $file != '..') {
+                array_push($certificados_credenciamento, $file);
+            }
+        }
+
+        return view("certificados.view", compact("certificados_usuario", "certificados_proponente", "certificados_monitor", "certificados_desenvolvedor", "certificados_comissao", "certificados_credenciamento"));
     }
 }
