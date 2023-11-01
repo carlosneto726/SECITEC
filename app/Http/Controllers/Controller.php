@@ -70,4 +70,17 @@ class Controller extends BaseController
                                     WHERE tb_proponente_evento.id_evento = ?;", [$id]);
         return view("evento.view", compact("evento", "proponentes"));
     }
+
+    public function viewCertificados(Request $request){
+        $certificados = [];
+
+        $files = scandir('pdfs/usuarios');
+        
+        foreach ($files as $file) {
+            if ($file != '.' && $file != '..') {
+                array_push($certificados, $file);
+            }
+        }
+        return view("certificados.view", compact("certificados"));
+    }
 }

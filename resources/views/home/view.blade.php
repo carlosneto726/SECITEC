@@ -18,7 +18,8 @@
                     </div>  
 
                     <p class="fs-1 pt-5 pb-2 text-light cronometro" id="countdown">
-                        Muito obrigado SECITEC 2023!!! 
+                        Muito obrigado SECITEC 2023!!! <br>
+                        Acesse os certificados no botão abaixo.
                     </p>
 
                     <!--script para o cronômetro até o dia do evento
@@ -53,13 +54,11 @@
                             <h6><a class="nav-link btn text-light pt-2 pb-2 ps-4 pe-4 mt-1 rounded-pill" href="{//{ url('/cadastrar') }}" id="botao_cadastrar">Cadastre-se</a></h6>
                         </div>
                     @//endif
-                    
+                    -->
 
                     <div class="nav-item d-flex align-items-center justify-content-center">
-                        <h6><a class="nav-link btn text-light pt-2 pb-2 ps-4 pe-4 mt-1 rounded-pill" href="{//{ url('/certificados') }}" id="botao_cadastrar">Certificados</a></h6>
+                        <h6><a class="nav-link btn text-light pt-2 pb-2 ps-4 pe-4 mt-1 rounded-pill" href="{{ url('/certificados') }}" id="botao_cadastrar">Certificados</a></h6>
                     </div>
-                    -->
-                    
                 </div>
             </div>
         </div>

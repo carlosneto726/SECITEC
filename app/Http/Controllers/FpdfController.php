@@ -104,13 +104,13 @@ class FpdfController extends Controller
 
                     $pdf->SetFont('arial','I',012);
                     $pdf->Cell(585,20,utf8_decode($titulo),1,0,"L");
-                    $pdf->Cell(200,20,"0".$horas.":00:00",1,1,"R");
+                    $pdf->Cell(200,20,$horas.":00:00",1,1,"R");
                 }
             }
             //Resultado da soma
             $pdf->SetFont('arial','B',14);
             $pdf->Cell(585,20,"TOTAL",1,0,"L");
-            $pdf->Cell(200,20,"0".$soma.":00:00",1,1,"R");
+            $pdf->Cell(200,20,$soma.":00:00",1,1,"R");
             $pdf->Ln(30);
             $pdf->Ln(30); //pula linha
             
@@ -162,7 +162,7 @@ class FpdfController extends Controller
             $pdf->SetFont('Arial','',20);               
 
             if($tipo == "palestra"){
-                $texto = "ministrando a palestra de $evento";
+                $texto = "do Núcleo Epidemiológico, atualizando a caderneta de vacinas da paletra $evento";
             }
             else if($tipo == "mini-curso"){
                 $texto = "ministrando o mini-curso de $evento";
@@ -187,7 +187,7 @@ class FpdfController extends Controller
             }
 
             
-            $pdf->MultiCell(0,20,utf8_decode("participou da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, $texto, com carga horária total de $horas hora(s)."),0,"C",false);
+            $pdf->MultiCell(0,20,utf8_decode("participou da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa $texto, com carga horária total de $horas hora(s)."),0,"C",false);
             
             $x1 = 0;
             $y1 = 475;

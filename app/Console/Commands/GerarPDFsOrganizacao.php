@@ -27,12 +27,25 @@ class GerarPDFsOrganizacao extends Command
      */
     public function handle()
     {
-        //$organizador = DB::select("SELECT * FROM tb_desenvolvedor;");
+        mb_internal_encoding('UTF-8');
 
-        //foreach($organizador as $dado){
+        $organizador = array(
+            [
+                'nome' => 'Carlos Henrique Teixeira de Carvalho Neto',
+                'horas' => 80
+            ],
+
+
+
+
+            
+        );
+
+        foreach($organizador as $dado){
             $pdf = new FPDF("L","pt","A4");
-            $nome = "Anna Clara Matias Saraiva"; //$dado->nome;
-            $horas = 10;
+
+            $nome = $dado['nome'];
+            $horas = $dado['horas'];
 
 
             $pdf->AddPage();
@@ -57,7 +70,7 @@ class GerarPDFsOrganizacao extends Command
             $pdf->SetTextColor(0, 0, 0); // Cor preta (R, G, B)
             $pdf->SetFont('Arial','',20);
             
-            $pdf->MultiCell(0,20,utf8_decode("participou ativamente no monitoramento dos eventos durante a Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, com carga horária total de $horas hora(s)."),0,"C",false);
+            $pdf->MultiCell(0,20,utf8_decode("participou ativamente na criação e desenvolvimento do sistema de divulgação e credenciamento para a Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, com carga horária total de $horas hora(s)."),0,"C",false);
             
             $x1 = 0;
             $y1 = 475;
@@ -69,7 +82,7 @@ class GerarPDFsOrganizacao extends Command
             $pdf->SetY(485);
             $pdf->SetFont("","",12);
             $pdf->Cell(0,5,utf8_decode("Comprovação de autenticidade"),0,1,"L",false);
-            $pdf->Output("F","public/pdfs/organizadores/".str_replace(" ", "_", strtoupper($nome)).".pdf");
-        //}
+            $pdf->Output("F","public/pdfs/organizadores/DESENVOLVEDORES/_".mb_strtoupper($nome)."_.pdf");
+        }
     }
 }

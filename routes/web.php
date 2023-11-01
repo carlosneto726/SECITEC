@@ -32,6 +32,7 @@ Route::get('/proponente/{id}', [Controller::class, 'viewProponente']);
 Route::get('/evento/{id}', [Controller::class, 'viewEvento']);
 Route::get('/creditos', [Controller::class, 'viewCreditos']);
 Route::get('/suporte', [Controller::class, 'viewSuporte']);
+Route::get('/certificados', [Controller::class, 'viewCertificados']);
 
 Route::get('/programacao', [ProgramacaoController::class, 'viewProgramacao']);
 

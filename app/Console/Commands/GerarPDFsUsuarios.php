@@ -27,6 +27,10 @@ class GerarPDFsUsuarios extends Command
      */
     public function handle()
     {
+
+        mb_internal_encoding('UTF-8');
+
+        $tempoInicial = microtime(true);
         $vw_evento = DB::select("SELECT * FROM vw_evento");
         $usuarios = []; // Array para armazenar os dados de cada usuário
 
@@ -87,6 +91,17 @@ class GerarPDFsUsuarios extends Command
             $pdf->SetFont('Arial','',20);
             $pdf->MultiCell(0,20,utf8_decode(" participou do evento Semana de Educação, Ciência e Tecnologia (SECITEC) 2023, realizado nos dias 23 à 26 de outubro, com carga horário total de ".$soma.":00 hora(s), conforme descrito no verso."),0,"C",false);
 
+            $x1 = 0;
+            $y1 = 475;
+            $x2 = 900;
+            $y2 = 475;
+            $pdf->Line($x1,$y1,$x2,$y2);
+            $pdf->Image('public/images/assinaturas.png', 220, 485, 400);
+            $pdf->Image('public/images/qrAutenticidade.png', 740,485,100,100);
+            $pdf->SetY(485);
+            $pdf->SetFont("","",12);
+            $pdf->Cell(0,5,utf8_decode("Comprovação de autenticidade"),0,1,"L",false);
+
             //verso
             $pdf->AddPage();
             $imagePath = 'public/images/Certificado_verso.png';
@@ -104,13 +119,13 @@ class GerarPDFsUsuarios extends Command
 
                     $pdf->SetFont('arial','I',012);
                     $pdf->Cell(585,20,utf8_decode($titulo),1,0,"L");
-                    $pdf->Cell(200,20,"0".$horas.":00:00",1,1,"R");
+                    $pdf->Cell(200,20,$horas.":00:00",1,1,"R");
                 }
             }
             //Resultado da soma
             $pdf->SetFont('arial','B',14);
             $pdf->Cell(585,20,"TOTAL",1,0,"L");
-            $pdf->Cell(200,20,"0".$soma.":00:00",1,1,"R");
+            $pdf->Cell(200,20,$soma.":00:00",1,1,"R");
             $pdf->Ln(30);
             $pdf->Ln(30); //pula linha
             
@@ -118,7 +133,13 @@ class GerarPDFsUsuarios extends Command
             $pdf->SetX(200);
             $pdf->SetX(200);
             //$pdf->MultiCell(1000,10, $i);
-            $pdf->Output("F","public/pdfs/usuarios/".str_replace(" ", "_", strtoupper($nome)).".pdf");
+
+            $resultado = $pdf->Output("F","public/pdfs/usuarios/_".str_replace("'", " ", mb_strtoupper($nome))."_.pdf");            
         }
+
+        $tempoFinal = microtime(true);
+
+        echo "==========TEMPO TOTAL DE EXECUÇÃO: ".($tempoFinal - $tempoInicial)." =============\n\n\n";
+        
     }
 }
