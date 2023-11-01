@@ -13,7 +13,7 @@
                                     aria-selected="true">ENTRAR</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link text-dark " id="tab-register" data-mdb-toggle="pill"
+                                <a class="nav-link text-dark disabled" id="tab-register" data-mdb-toggle="pill"
                                     href="{{ url('/cadastrar') }}" role="tab" aria-controls="pills-register"
                                     aria-selected="false">CADASTRAR</a>
                             </li>

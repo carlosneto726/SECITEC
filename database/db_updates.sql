@@ -153,3 +153,31 @@ FROM
   ) 
   LEFT JOIN tb_tipo_evento ON tb_tipo_evento.id = tb_evento.id_tipo_evento
 );
+
+-- Query 10:
+--
+
+CREATE TABLE tb_organizador(
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    carga_horaria INT(11),
+    tipo CHAR NOT NULL,
+    PRIMARY KEY (id)
+);
+
+
+
+INSERT INTO tb_organizador(nome, carga_horaria, tipo)
+VALUES
+('Carlos Henrique Teixeira de Carvalho Neto', 80, 'D'),
+('Pedro Henrique Barros', 80, 'D'),
+('Maycon Douglas', 80, 'D'),
+('Juliano Shaurich', 80, 'D'),
+('Otávio Profeta', 80, 'D'),
+('Matheus Rodrigues', 40, 'D'),
+('Daniela Soares', 40, 'D'),
+('João Gabriel Grandotto', 40, 'D'),
+('Arthur José Fernandes', 40, 'D'),
+('Luan Emanoel', 40, 'D'),
+('Afranio Furtado de Oliveira Neto', 40, 'D'),
+('Uyara Ferreira Silva', 40, 'D'),

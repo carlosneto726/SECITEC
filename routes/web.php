@@ -32,6 +32,7 @@ Route::get('/proponente/{id}', [Controller::class, 'viewProponente']);
 Route::get('/evento/{id}', [Controller::class, 'viewEvento']);
 Route::get('/creditos', [Controller::class, 'viewCreditos']);
 Route::get('/suporte', [Controller::class, 'viewSuporte']);
+Route::get('/certificados', [Controller::class, 'viewCertificados']);
 
 Route::get('/programacao', [ProgramacaoController::class, 'viewProgramacao']);
 
@@ -60,16 +61,15 @@ Route::post('/admin/presenca/checkout', [PresencaController::class, 'checkout'])
 Route::get('/admin/presenca/checkout/{id_evento}/{nome_evento}', [PresencaController::class, 'viewCheckout']);
 
 // MonitorController
-Route::get('/admin/adicionar-usuario', [MonitorController::class, 'viewAdicionarUsuario']);
-Route::post('/admin/adicionar-usuario/cadastrar', [MonitorController::class, 'addUsuario']);
-Route::post('/admin/eventos/byId', [MonitorController::class, 'getEventosByUserId']);
-Route::post('/admin/adicionar-usuario-evento/cadastrar', [MonitorController::class, 'AddUsuariosEventos']);
-Route::get('/admin/eventos/all', [MonitorController::class, 'getEventos']);
+Route::get('/admin/adicionar-usuario', [PresencaController::class, 'viewAdicionarUsuario']);
+Route::post('/admin/adicionar-usuario/cadastrar', [PresencaController::class, 'addUsuario']);
+Route::post('/admin/eventos/byId', [PresencaController::class, 'getEventosByUserId']);
+Route::post('/admin/adicionar-usuario-evento/cadastrar', [PresencaController::class, 'AddUsuariosEventos']);
+Route::get('/admin/eventos/all', [PresencaController::class, 'getEventos']);
 
 // Rotas do FpdfController para gerar os certificados
-Route::get('/admin/usuario/certificados', [FpdfController::class, 'certificadoUsuario']);
 Route::get('/admin/proponente/certificados/{id_proponente}', [FpdfController::class, 'certificadoProponente']);
-Route::get('/teste', [FpdfController::class, 'tarefaDemoradaAsync']);
+Route::get('/admin/usuario/certificados/{id_usuario}', [FpdfController::class, 'certificadoUsuario']);
 
 // Rotas do ValidarUsuariosController para validar o usuário, criar conta, validar email
 Route::post('/usuarios/cadastrar/{token}', [ValidarUsuariosController::class, 'addUsuario']);
@@ -94,7 +94,3 @@ Route::post('/meu-perfil/atualizar', [UsuariosController::class, 'updateMeuPerfi
 Route::get('/meu-perfil/deletar', [UsuariosController::class, 'deletarMeuPerfil']);
 Route::post('/usuarios/cadastarEvento', [UsuariosController::class, 'cadastrarEvento']);
 Route::post('/usuarios/cadastarHackathon', [UsuariosController::class, 'cadastrarHackathon']);
-
-
-
-Route::get('/monitoramento', [UsuariosController::class, 'viewMonitoramento']);
