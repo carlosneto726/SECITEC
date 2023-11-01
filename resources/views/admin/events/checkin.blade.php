@@ -57,7 +57,7 @@
                 @endphp
                 <tr>
                     <td class="text-break">{{$usuario->nome}}</td>
-                    <td class="text-break">{{$usuario->cpf}}</td>
+                    <td class="text-break" id="cpf-usuario">{{$usuario->cpf}}</td>
                     <td class="text-break" id="{{$usuario->id}}">{{$usuario->checkin}}</td>
                     <td class="text-break" >{{$usuario->checkout}}</td>
                     <td class="d-none d-md-block">{{$usuario->status}}</td>
@@ -202,4 +202,33 @@
     }
 </script>
 <script src="{{ asset('js/admin.js') }}?v=1.1"></script>
+
+<script>
+    // Obtém a referência do campo de entrada de pesquisa e a tabela de eventos
+    var searchInputCPF = document.getElementById('cpfCheckin');
+    var table = document.querySelector('.table');
+
+    // Adicione um ouvinte de evento ao campo de pesquisa
+    searchInputCPF.addEventListener('input', function() {
+        var searchText = searchInputCPF.value.toLowerCase(); // Obtém o texto de pesquisa em letras minúsculas
+
+        // Obtém todas as linhas da tabela, exceto a primeira (cabeçalho)
+        var rows = table.querySelectorAll('tr:not(:first-child)');
+
+        // Itera sobre as linhas e verifica se o texto de pesquisa está presente na coluna de CPF
+        rows.forEach(function(row) {
+            var cpfCell = row.querySelector('#cpf-usuario'); // Assume que o id "cpf-usuario" está associado à coluna de CPF
+            if (cpfCell) {
+                var cpf = cpfCell.textContent.toLowerCase(); // Obtém o texto do CPF em letras minúsculas
+
+                // Se o CPF contiver o texto de pesquisa, mostra a linha; caso contrário, oculta-a
+                if (cpf.includes(searchText)) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    });
+</script>
 @endsection
