@@ -84,7 +84,7 @@ class GerarPDFsOrganizacao extends Command
             $pdf->SetY(485);
             $pdf->SetFont("","",12);
             $pdf->Cell(0,5,utf8_decode("Comprovação de autenticidade"),0,1,"L",false);
-            $pdf->Output("F","public/pdfs/organizadores/DESENVOLVEDORES/_".mb_strtoupper($nome)."_.pdf");
+            $pdf->Output("F","public/pdfs/organizadores/$folder/_".mb_strtoupper($nome)."_.pdf");
         }
     }
 }
