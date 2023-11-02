@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use App\Fpdf\FPDF;
+use App\Fpdf\fpdf;
 
 class GerarPDFsProponentes extends Command
 {
