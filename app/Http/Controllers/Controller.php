@@ -92,10 +92,8 @@ class Controller extends BaseController
 
         foreach ($files as $file) {
 
-            error_log($file);
-
             if ($file != "." && $file != ".." && $file != "") {
-                list($nome, $evento) = explode("-", $file);
+                @list($nome, $evento) = explode("-", $file);
                 if (!isset($certificados_proponente[$nome])) {
                     $certificados_proponente[$nome] = [];
                 }
