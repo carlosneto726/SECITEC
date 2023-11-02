@@ -83,7 +83,7 @@ class GerarPDFsUsuarios extends Command
             //Nome do proponente
             $pdf->SetTextColor(0, 128, 0); // Cor verde claro (R, G, B)
             $pdf->SetFont('Arial','B',24);
-            $pdf->Cell(0,20,utf8_decode(strtoupper($nome)),0,1,"C",false);
+            $pdf->Cell(0,20,utf8_decode(mb_strtoupper($nome)),0,1,"C",false);
             $pdf->Ln(20);
             
             //Texto 2
@@ -134,7 +134,7 @@ class GerarPDFsUsuarios extends Command
             $pdf->SetX(200);
             //$pdf->MultiCell(1000,10, $i);
 
-            $resultado = $pdf->Output("F","public/pdfs/usuarios/_".str_replace("'", " ", mb_strtoupper($nome))."_.pdf");            
+            $pdf->Output("F","public/pdfs/usuarios/_".str_replace("'", " ", mb_strtoupper($nome))."_.pdf");            
         }
 
         $tempoFinal = microtime(true);

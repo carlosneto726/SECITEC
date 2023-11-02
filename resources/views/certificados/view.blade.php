@@ -136,15 +136,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($certificados_proponente as $certificado)
+                    @foreach ($certificados_proponente as $nome => $links)
                         <tr>
-                            <th class="text-break" scope="row" id="nome-usuario">{{ strtoupper(str_replace(['_', '.pdf'], ' ', $certificado)) }}</th>
-                            <td class="text-end"><a href="{{ asset('pdfs/proponentes/' . $certificado) }}" target="_blank">
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                </svg>
-                                </a>
+                            <th class="text-break" scope="row" id="nome-usuario">{{ strtoupper(str_replace(['_', '.pdf'], ' ', $nome)) }}</th>
+                            <td class="text-end">
+                                @if(count($links) > 1)
+
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                        </svg>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @foreach ($links as $link)
+                                            <li><a class="dropdown-item" href="{{asset("pdfs/proponentes/".$link)}}" target="_blank">{{str_replace("_.pdf", "", explode("-", $link)[1])}}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                    
+                                @else
+                                    <a href="{{ asset('pdfs/proponentes/' . $links[0]) }}" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                        </svg>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -191,6 +210,7 @@
     display: block;
     }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
 
 <script>
     var input = document.getElementById('searchInput');
@@ -239,5 +259,7 @@
     input.addEventListener('input', function () {
         pesquisar();
     });
+
+
 </script>
 @endsection

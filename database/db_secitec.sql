@@ -164,7 +164,6 @@ tb_evento.vagas AS vagas,
 tb_evento.horas AS horas, 
 tb_evento.local AS local, 
 tb_evento.url AS url, 
-tb_evento.id_proponente AS id_proponente, 
 tb_tipo_evento.nome AS nome_tipo_evento
 FROM tb_evento INNER JOIN tb_tipo_evento ON tb_evento.id_tipo_evento = tb_tipo_evento.id;
 
@@ -193,6 +192,22 @@ SELECT DISTINCT tb_usuario.nome AS nome
 FROM ((tb_evento_usuario 
   LEFT JOIN tb_usuario ON(tb_evento_usuario.id_usuario = tb_usuario.id)) 
   LEFT JOIN tb_evento ON(tb_evento_usuario.id_evento = tb_evento.id));
+
+
+CREATE VIEW vw_proponente_evento AS
+SELECT tb_proponente.nome AS nome,
+tb_proponente.id AS pid,
+tb_evento.horas AS horas,
+tb_evento.titulo AS titulo,
+tb_tipo_evento.nome AS tipo_evento 
+FROM 
+(
+  (
+    (tb_proponente_evento LEFT JOIN tb_proponente ON tb_proponente_evento.id_proponente = tb_proponente.id) 
+    LEFT JOIN tb_evento ON tb_proponente_evento.id_evento = tb_evento.id
+  ) 
+  LEFT JOIN tb_tipo_evento ON tb_tipo_evento.id = tb_evento.id_tipo_evento
+);
 
 
 INSERT INTO tb_tipo_evento (nome) VALUES
