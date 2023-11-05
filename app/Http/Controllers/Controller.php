@@ -7,6 +7,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use ZipArchive;
 
 session_start();
 
@@ -88,12 +89,19 @@ class Controller extends BaseController
         }
 
         $files = scandir('pdfs/proponentes');
-        
+
         foreach ($files as $file) {
-            if ($file != '.' && $file != '..') {
-                array_push($certificados_proponente, $file);
+
+            if ($file != "." && $file != ".." && $file != "") {
+                @list($nome, $evento) = explode("-", $file);
+                if (!isset($certificados_proponente[$nome])) {
+                    $certificados_proponente[$nome] = [];
+                }
+                
+                $certificados_proponente[$nome][] = $file;
             }
         }
+
 
         $files = scandir('pdfs/organizadores/MONITORES');
         
@@ -103,7 +111,7 @@ class Controller extends BaseController
             }
         }
 
-        $files = scandir('pdfs/organizadores\DESENVOLVEDORES');
+        $files = scandir('pdfs/organizadores/DESENVOLVEDORES');
         
         foreach ($files as $file) {
             if ($file != '.' && $file != '..') {

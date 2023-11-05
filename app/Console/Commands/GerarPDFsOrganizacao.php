@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use App\Fpdf\FPDF;
+use App\Fpdf\fpdf;
 
 class GerarPDFsOrganizacao extends Command
 {
@@ -29,139 +29,15 @@ class GerarPDFsOrganizacao extends Command
     {
         mb_internal_encoding('UTF-8');
 
-        $organizador = array(
-            [
-            'nome' => 'Aline da Conceição Lopes Braz',
-            'horas' => 60
-            ],
-
-            [
-            'nome' => 'Alice Yasmim Santos Dourado',
-            'horas' => 20
-            ],
-
-            [
-            'nome' => 'Ana Clara Monteiro de Andrade',
-            'horas' => 40
-            ],
-
-            [
-            'nome' => 'Andressa Carvalho Vieira da Silva',
-            'horas' => 20
-            ],
-
-            [
-            'nome' => 'Bruno Calazans Carritilha',
-            'horas' => 10
-            ],
-
-            [
-            'nome' => 'Carlos Henrique Teixeira de Carvalho Neto',
-            'horas' => 60
-            ],
-
-            [
-            'nome' => 'Deivison Barbosa do Nascimento',
-            'horas' => 40
-            ],
-
-            [
-            'nome' => 'Eliane Fernandes Pereira da Cruz',
-            'horas' => 10
-            ],
-
-            [
-            'nome' => 'Erik Takeshi Miura',
-            'horas' => 60
-            ],
-
-            [
-            'nome' => 'Flávia Espindula dos Santos',
-            'horas' => 40
-            ],
-
-            [
-            'nome' => 'Hendrew Neres de Queiroz',
-            'horas' => 20
-            ],
-
-            [
-            'nome' => 'Henrique Anthony Carneiro Silva',
-            'horas' => 20
-            ],
-
-            [
-            'nome' => 'Ícaro Maia Mendonça',
-            'horas' => 40
-            ],
-
-            [
-            'nome' => 'Jamily Luiza Marques Lourenço',
-            'horas' => 60
-            ],
-
-            [
-            'nome' => 'João Marcos de Sousa Pieniz',
-            'horas' => 60
-            ],
-
-            [
-            'nome' => 'Juciely Sivirino Vieira',
-            'horas' => 60
-            ],
-
-            [
-            'nome' => 'Kelly Cristina da Silva Leite',
-            'horas' => 20
-            ],
-
-            [
-            'nome' => 'Letícia Bittencourt Vieira',
-            'horas' => 60
-            ],
-
-            [
-            'nome' => 'Leandro Sousa dos Santos',
-            'horas' => 60
-            ],
-
-            [
-            'nome' => 'Luciano Jose Vieira',
-            'horas' => 20
-            ],
-
-            [
-            'nome' => 'Matheus Costa Gonçalves',
-            'horas' => 20
-            ],
-
-            [
-            'nome' => 'Matheus Damacena Carvalho',
-            'horas' => 20
-            ],
-
-            [
-            'nome' => 'Maycon Douglas Dias da Silva',
-            'horas' => 60
-            ],
-
-            [
-            'nome' => 'Naoki Rafael Miura',
-            'horas' => 40
-            ],
-
-            [
-            'nome' => 'Sthéfanny Mémore do Carmo',
-            'horas' => 40
-            ]
-
-        );
+        $organizador = DB::select("SELECT * FROM tb_organizacao_certificados");
 
         foreach($organizador as $dado){
             $pdf = new FPDF("L","pt","A4");
 
-            $nome = $dado['nome'];
-            $horas = $dado['horas'];
+            $nome = $dado->nome;
+            $horas = $dado->horas;
+            $tipo = $dado->tipo;
+
 
             $pdf->AddPage();
             $imagePath = 'public/images/Certificado_frente.png';
@@ -178,14 +54,25 @@ class GerarPDFsOrganizacao extends Command
             //Nome do proponente
             $pdf->SetTextColor(0, 128, 0); // Cor verde claro (R, G, B)
             $pdf->SetFont('Arial','B',24);
-            $pdf->Cell(0,20,utf8_decode($nome),0,1,"C",false);
+            $pdf->Cell(0,20,mb_strtoupper(utf8_decode($nome)),0,1,"C",false);
             $pdf->Ln(20);
 
             //Texto 2
             $pdf->SetTextColor(0, 0, 0); // Cor preta (R, G, B)
             $pdf->SetFont('Arial','',20);
-            
-            $pdf->MultiCell(0,20,utf8_decode("participou da comissão organizadora da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa., com carga horária total de $horas hora(s)."),0,"C",false);
+            if($tipo == "D"){ // Desenvolvimento
+                $pdf->MultiCell(0,20,utf8_decode("participou ativamente na criação e desenvolvimento do sistema de divulgação e credenciamento para a Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, com carga horária total de $horas hora(s)."),0,"C",false);
+                $folder = "DESENVOLVEDORES";
+            }else if($tipo == "M"){
+                $pdf->MultiCell(0,20,utf8_decode("participou ativamente no monitoramento dos eventos durante a Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, com carga horária total de $horas hora(s)."),0,"C",false);
+                $folder = "MONITORES";
+            }else if($tipo == "C"){
+                $pdf->MultiCell(0,20,utf8_decode("participou ativamente no processo de credenciamento durante a Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, com carga horária total de $horas hora(s)."),0,"C",false);
+                $folder = "CREDENCIAMENTO";
+            }else if($tipo == "O"){
+                $pdf->MultiCell(0,20,utf8_decode("participou da comissão organizadora da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa., com carga horária total de $horas hora(s)."),0,"C",false);
+                $folder = "COMISSAO";
+            }
             
             $x1 = 0;
             $y1 = 475;
@@ -197,7 +84,7 @@ class GerarPDFsOrganizacao extends Command
             $pdf->SetY(485);
             $pdf->SetFont("","",12);
             $pdf->Cell(0,5,utf8_decode("Comprovação de autenticidade"),0,1,"L",false);
-            $pdf->Output("F","public/pdfs/organizadores/COMISSAO/_".mb_strtoupper($nome)."_.pdf");
+            $pdf->Output("F","public/pdfs/organizadores/$folder/_".mb_strtoupper($nome)."_$folder-_.pdf");
         }
     }
 }

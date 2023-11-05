@@ -57,7 +57,7 @@
                     -->
 
                     <div class="nav-item d-flex align-items-center justify-content-center">
-                        <h6><a class="nav-link btn text-light pt-2 pb-2 ps-4 pe-4 mt-1 rounded-pill" href="{{ url('/certificados#') }}" id="botao_cadastrar">Certificados</a></h6>
+                        <h6><a class="nav-link btn text-light pt-2 pb-2 ps-4 pe-4 mt-1 rounded-pill" href="{{ url('/certificados') }}#" id="botao_cadastrar">Certificados</a></h6>
                     </div>
                 </div>
             </div>

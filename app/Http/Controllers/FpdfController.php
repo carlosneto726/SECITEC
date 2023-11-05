@@ -162,7 +162,7 @@ class FpdfController extends Controller
             $pdf->SetFont('Arial','',20);               
 
             if($tipo == "palestra"){
-                $texto = "do Núcleo Epidemiológico, atualizando a caderneta de vacinas da paletra $evento";
+                $texto = "ministrando a palestra de $evento";
             }
             else if($tipo == "mini-curso"){
                 $texto = "ministrando o mini-curso de $evento";
@@ -187,7 +187,7 @@ class FpdfController extends Controller
             }
 
             
-            $pdf->MultiCell(0,20,utf8_decode("participou da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa $texto, com carga horária total de $horas hora(s)."),0,"C",false);
+            $pdf->MultiCell(0,20,utf8_decode("participou da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, $texto, com carga horária total de $horas hora(s)."),0,"C",false);
             
             $x1 = 0;
             $y1 = 475;
