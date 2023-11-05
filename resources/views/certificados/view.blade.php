@@ -2,21 +2,25 @@
 @section('content')
 
 <section class="schedule section-padding" id="section-2">
-
+    <div class="container">
+        <div class="col-lg-12 col-12">
+            <h2 class="mb-5"><u class="text-success">Certificados</u></h2>
+        </div>
+    </div>
+    
     <div class="container p-4">
-        <div class="dropdown ms-4 mb-5">
-            <button class="btn custom-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Certificados
-            </button>
+       
+        <div class="dropdown-center mb-5">
+            <button id="dropdown-button" class="btn custom-btn dropdown-toggle fs-5" type="button" data-bs-toggle="dropdown" aria-expanded="false">Selecione uma opção</button>
             <ul class="dropdown-menu">
                 <li><a onclick="selecionarSecao(0)" class="dropdown-item" href="#">Participantes</a></li>
-                <li><a onclick="selecionarSecao(1)"class="dropdown-item" href="#">Monitoria</a></li>
+                <li><a onclick="selecionarSecao(1)" class="dropdown-item" href="#">Monitoria</a></li>
                 <li><a onclick="selecionarSecao(2)" class="dropdown-item" href="#">Desenvolvedor</a></li>
                 <li><a onclick="selecionarSecao(3)" class="dropdown-item" href="#">Credenciamento</a></li>
                 <li><a onclick="selecionarSecao(4)" class="dropdown-item" href="#">Proponentes</a></li>
                 <li><a onclick="selecionarSecao(5)" class="dropdown-item" href="#">Comissão Organizadora</a></li>
             </ul>
-        </div> 
+        </div>
 
         <div class="row">
             <input type="text" id="searchInput" class="form-control mt-5 col-12 mb-5" placeholder="Pesquisar por nome.">
@@ -197,6 +201,33 @@
     var table = document.querySelector('.table.show');
 
     function selecionarSecao(secaoIdx){
+        var nomeSecao;
+        switch (secaoIdx) {
+            case 0:
+                nomeSecao = "Participantes";
+                break;
+            case 1:
+                nomeSecao = "Monitoria";
+                break;
+            case 2:
+                nomeSecao = "Desenvolvedor";
+                break;
+            case 3:
+                nomeSecao = "Credenciamento";
+                break;
+            case 4:
+                nomeSecao = "Proponentes";
+                break;
+            case 5:
+                nomeSecao = "Comissão Organizadora";
+                break;
+            default:
+                nomeSecao = "Selecione uma opção";
+        }
+
+        // Atualize o conteúdo do botão com o nome da seção selecionada
+        document.getElementById("dropdown-button").textContent = nomeSecao;
+
         const secoes = Array.from(document.querySelectorAll("#sobre-section"));
         
         secoes.forEach(secao => {
