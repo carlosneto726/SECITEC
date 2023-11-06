@@ -38,7 +38,7 @@
                 <tbody>
                     @foreach ($certificados_usuario as $certificado)
                         <tr>
-                            <th class="text-break" scope="row" id="nome-usuario">{{ strtoupper(str_replace(['_', '.pdf'], '', $certificado)) }}</th>
+                            <th class="text-break" scope="row" id="nome-usuario">{{ strtoupper(str_replace(['participante', '_', '.pdf'], '', $certificado)) }}</th>
                             <td class="text-end"><a href="{{ asset('pdfs/usuarios/' . $certificado) }}" target="_blank">
                                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
                                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
