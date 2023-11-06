@@ -134,7 +134,7 @@ class GerarPDFsUsuarios extends Command
             $pdf->SetX(200);
             //$pdf->MultiCell(1000,10, $i);
 
-            $pdf->Output("F","public/pdfs/usuarios/_".str_replace("'", " ", mb_strtoupper($nome))."_participante_.pdf");            
+            $pdf->Output("F","public/pdfs/usuarios/_".str_replace(["'", "."], " ", mb_strtoupper($nome))."_participante_.pdf");            
         }
 
         $tempoFinal = microtime(true);
