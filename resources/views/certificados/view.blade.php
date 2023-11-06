@@ -5,6 +5,7 @@
     <div class="container">
         <div class="col-lg-12 col-12">
             <h2 class="mb-5"><u class="text-success">Certificados</u></h2>
+            <h5 class="mb-5">Os certificados ficarão disponíveis por tempo limitado no site</h5>
         </div>
     </div>
     
