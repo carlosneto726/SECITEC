@@ -70,7 +70,7 @@ class GerarPDFsOrganizacao extends Command
                 $pdf->MultiCell(0,20,utf8_decode("participou ativamente no processo de credenciamento durante a Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, com carga horária total de $horas hora(s)."),0,"C",false);
                 $folder = "CREDENCIAMENTO";
             }else if($tipo == "O"){
-                $pdf->MultiCell(0,20,utf8_decode("participou da comissão organizadora da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa., com carga horária total de $horas hora(s)."),0,"C",false);
+                $pdf->MultiCell(0,20,utf8_decode("participou da comissão organizadora da Semana de Educação, Ciência e Tecnologia (SECITEC) 2023 do IFG Campus Formosa, com carga horária total de $horas hora(s)."),0,"C",false);
                 $folder = "COMISSAO";
             }
             
