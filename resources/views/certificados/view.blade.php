@@ -5,6 +5,7 @@
     <div class="container">
         <div class="col-lg-12 col-12">
             <h2 class="mb-5"><u class="text-success">Certificados</u></h2>
+            <h5 class="mb-5">Os certificados ficarão disponíveis por tempo limitado no site</h5>
         </div>
     </div>
     
@@ -146,7 +147,7 @@
                             <td class="text-end">
                                 @if(count($links) > 1)
 
-                                <div class="dropdown">
+                                <div class="dropdown dropstart">
                                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
                                             <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
